@@ -1,20 +1,19 @@
-// app/layout.js
-import { Inter } from 'next/font/google';
+import Header from '@/components/header';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
-
-export const metadata = {
-  title:
-    'MD Pabel - Full Stack Developer & Security Specialist | 3 Zero Digital',
-  description:
-    'Expert full-stack developer and security specialist. Delivering zero vulnerability, zero downtime, and zero error solutions.',
-};
-
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang='en'>
-      <body className={inter.className}>{children}</body>
+      <body>
+        <div className='grid grid-rows-[auto_1fr_auto] bg-slate-900 w-full min-h-[100dvh]'>
+          <Header />
+          <main>{children}</main>
+        </div>
+      </body>
     </html>
   );
 }
