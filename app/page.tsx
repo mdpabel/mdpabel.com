@@ -1,9 +1,11 @@
+import CaseStudies from '@/components/case-studies';
 import ComponentWrapper from '@/components/component-wrapper';
+import FeaturedTemplates from '@/components/featured-templates';
 import Hero from '@/components/hero';
 import Links from '@/components/links';
+import Reviews from '@/components/reviews';
 import Services from '@/components/services';
 import Stats from '@/components/stats';
-import React from 'react';
 
 const HomePage = () => {
   return (
@@ -12,6 +14,8 @@ const HomePage = () => {
       <Links />
       <Stats />
       <Services />
+      <FeaturedTemplates />
+      <CaseStudies />
     </div>
   );
 };

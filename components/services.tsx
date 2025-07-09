@@ -6,6 +6,7 @@ import {
   Wrench,
   CheckCircle,
   Monitor,
+  ShieldCheck,
 } from 'lucide-react';
 import ComponentWrapper from './component-wrapper';
 import Title from './title';
@@ -20,13 +21,13 @@ const Services = () => {
 
         <ComponentWrapper>
           {/* Malware Removal with Process */}
-          <div className='relative bg-slate-900 p-8 border border-slate-800 hover:border-slate-600 rounded-lg transition-all duration-300'>
+          <div className='relative bg-slate-900 mb-6 p-8 border border-slate-800 hover:border-slate-600 rounded-lg transition-all duration-300'>
             <div className='gap-8 grid grid-cols-1 lg:grid-cols-2'>
               <div>
                 <div className='flex items-center gap-4 mb-6'>
                   <Shield className='w-8 h-8 text-slate-400' />
                   <div>
-                    <h3 className='font-bold text-slate-300 text-2xl'>
+                    <h3 className='font-bold text-slate-300 text-xl'>
                       WordPress Malware Removal
                     </h3>
                     <p className='text-slate-400'>Complete Security Solution</p>
@@ -41,29 +42,29 @@ const Services = () => {
 
                 <div className='flex items-center gap-4 text-sm'>
                   <div className='flex items-center gap-2'>
-                    <CheckCircle className='w-4 h-4 text-slate-400' />
-                    <span className='text-slate-300'>99.9% Success Rate</span>
+                    <CheckCircle className='w-4 h-4 text-purple-400' />
+                    <span className='text-slate-400'>99.9% Success Rate</span>
                   </div>
                   <div className='flex items-center gap-2'>
-                    <CheckCircle className='w-4 h-4 text-slate-400' />
-                    <span className='text-slate-300'>4500+ Sites Cleaned</span>
+                    <CheckCircle className='w-4 h-4 text-purple-400' />
+                    <span className='text-slate-400'>4500+ Sites Cleaned</span>
                   </div>
                   <div className='flex items-center gap-2'>
-                    <CheckCircle className='w-4 h-4 text-slate-400' />
-                    <span className='text-slate-300'>24-48h Delivery</span>
+                    <CheckCircle className='w-4 h-4 text-purple-400' />
+                    <span className='text-slate-400'>24-48h Delivery</span>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h4 className='mb-4 font-semibold text-slate-300 text-lg'>
+                <h4 className='mb-4 font-semibold text-slate-400 text-lg'>
                   Our Process
                 </h4>
                 <div className='space-y-3'>
                   <div className='flex items-center gap-3'>
-                    <Search className='w-6 h-6 text-slate-400' />
+                    <ShieldCheck className='w-4 h-4 text-purple-400' />
                     <div>
-                      <div className='font-medium text-slate-300'>
+                      <div className='font-medium text-slate-400'>
                         Deep Scanning
                       </div>
                       <div className='text-slate-400 text-sm'>
@@ -73,9 +74,9 @@ const Services = () => {
                   </div>
 
                   <div className='flex items-center gap-3'>
-                    <Wrench className='w-6 h-6 text-slate-400' />
+                    <ShieldCheck className='w-4 h-4 text-purple-400' />
                     <div>
-                      <div className='font-medium text-slate-300'>
+                      <div className='font-medium text-slate-400'>
                         Malware Removal
                       </div>
                       <div className='text-slate-400 text-sm'>
@@ -85,9 +86,9 @@ const Services = () => {
                   </div>
 
                   <div className='flex items-center gap-3'>
-                    <Shield className='w-6 h-6 text-slate-400' />
+                    <ShieldCheck className='w-4 h-4 text-purple-400' />
                     <div>
-                      <div className='font-medium text-slate-300'>
+                      <div className='font-medium text-slate-400'>
                         Security Hardening
                       </div>
                       <div className='text-slate-400 text-sm'>
@@ -97,9 +98,9 @@ const Services = () => {
                   </div>
 
                   <div className='flex items-center gap-3'>
-                    <Monitor className='w-6 h-6 text-slate-400' />
+                    <ShieldCheck className='w-4 h-4 text-purple-400' />
                     <div>
-                      <div className='font-medium text-slate-300'>
+                      <div className='font-medium text-slate-400'>
                         Monitoring Setup
                       </div>
                       <div className='text-slate-400 text-sm'>
@@ -137,17 +138,17 @@ const Services = () => {
 
               <div className='space-y-2'>
                 <div className='flex justify-between items-center'>
-                  <span className='text-slate-300 text-sm'>
+                  <span className='text-slate-400 text-sm'>
                     Planning & Design
                   </span>
                   <span className='text-slate-400 text-sm'>1-2 days</span>
                 </div>
                 <div className='flex justify-between items-center'>
-                  <span className='text-slate-300 text-sm'>Development</span>
+                  <span className='text-slate-400 text-sm'>Development</span>
                   <span className='text-slate-400 text-sm'>1-3 weeks</span>
                 </div>
                 <div className='flex justify-between items-center'>
-                  <span className='text-slate-300 text-sm'>
+                  <span className='text-slate-400 text-sm'>
                     Testing & Launch
                   </span>
                   <span className='text-slate-400 text-sm'>2-3 days</span>
@@ -170,19 +171,19 @@ const Services = () => {
 
               <div className='space-y-2'>
                 <div className='flex justify-between items-center'>
-                  <span className='text-slate-300 text-sm'>
+                  <span className='text-slate-400 text-sm'>
                     Analysis & Cleanup
                   </span>
                   <span className='text-slate-400 text-sm'>1-2 days</span>
                 </div>
                 <div className='flex justify-between items-center'>
-                  <span className='text-slate-300 text-sm'>
+                  <span className='text-slate-400 text-sm'>
                     Blacklist Removal
                   </span>
                   <span className='text-slate-400 text-sm'>3-5 days</span>
                 </div>
                 <div className='flex justify-between items-center'>
-                  <span className='text-slate-300 text-sm'>Monitoring</span>
+                  <span className='text-slate-400 text-sm'>Monitoring</span>
                   <span className='text-slate-400 text-sm'>Ongoing</span>
                 </div>
               </div>
