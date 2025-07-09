@@ -154,9 +154,9 @@ const Header = () => {
 
             {/* Mobile AI Tutor equivalent */}
             <Link
-              href='/resources'
+              href='/services'
               className='group sm:hidden inline relative text-gray-400 hover:text-white'>
-              Resources
+              Services
             </Link>
 
             {/* Desktop navigation items */}
