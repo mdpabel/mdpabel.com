@@ -84,7 +84,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
         )}
 
         {/* Blog Content */}
-        <article className='max-w-none text-gray-300 prose prose-lg'>
+        <article className='prose-invert max-w-none text-gray-300 prose prose-lg'>
           <div dangerouslySetInnerHTML={{ __html: post.content }} />
         </article>
 

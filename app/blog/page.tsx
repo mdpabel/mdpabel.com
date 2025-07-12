@@ -60,12 +60,12 @@ const Blogs = async () => {
               </div>
 
               <h2 className='mb-4 font-bold text-white text-2xl lg:text-3xl'>
-                <a
+                <Link
                   href={`/blog/${featuredPost.slug}`}
                   className='hover:text-purple-400 transition-colors'
                   dangerouslySetInnerHTML={{
                     __html: featuredPost.title,
-                  }}></a>
+                  }}></Link>
               </h2>
 
               <p
@@ -124,11 +124,11 @@ const Blogs = async () => {
                 </div>
 
                 <h4 className='mb-2 font-semibold text-white group-hover:text-purple-400 transition-colors'>
-                  <a
+                  <Link
                     href={`/blog/${post.slug}`}
                     dangerouslySetInnerHTML={{
                       __html: post.title,
-                    }}></a>
+                    }}></Link>
                 </h4>
 
                 <p
@@ -176,11 +176,11 @@ const Blogs = async () => {
                   </div>
 
                   <h4 className='mb-2 font-semibold text-white group-hover:text-purple-400 text-lg transition-colors'>
-                    <a
+                    <Link
                       href={`/blog/${post.slug}`}
                       dangerouslySetInnerHTML={{
                         __html: post.title,
-                      }}></a>
+                      }}></Link>
                   </h4>
 
                   <p
