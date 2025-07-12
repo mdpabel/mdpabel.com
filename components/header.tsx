@@ -1,4 +1,3 @@
-// components/component-wrapper.tsx
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -13,7 +12,6 @@ import {
   Scale,
   RotateCcw,
   BookOpen,
-  FolderOpen,
   User,
   Rocket,
 } from 'lucide-react';
@@ -31,7 +29,7 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const servicesDropdownRef = useRef<HTMLDivElement>(null);
-  const resourcesDropdownRef = useRef<HTMLDivElement>(null);
+  const mainDropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -39,8 +37,8 @@ const Header = () => {
       if (
         servicesDropdownRef.current &&
         !servicesDropdownRef.current.contains(event.target as Node) &&
-        resourcesDropdownRef.current &&
-        !resourcesDropdownRef.current.contains(event.target as Node)
+        mainDropdownRef.current &&
+        !mainDropdownRef.current.contains(event.target as Node)
       ) {
         setActiveDropdown(null);
       }
@@ -52,13 +50,13 @@ const Header = () => {
 
   const servicesItems: DropdownItem[] = [
     {
-      icon: <Shield className='inline-block w-5 h-5' />,
+      icon: <Shield className='inline-block !w-5 !h-5' />,
       title: 'Malware Removal',
       description: 'Complete malware cleanup & security hardening',
       href: '/services/malware-removal',
     },
     {
-      icon: <Wrench className='inline-block w-5 h-5' />,
+      icon: <Wrench className='inline-block !w-5 h-5' />,
       title: 'Website Maintenance',
       description: 'Ongoing support & performance optimization',
       href: '/services/website-maintenance',
@@ -71,27 +69,40 @@ const Header = () => {
     },
   ];
 
-  const resourcesItems: DropdownItem[] = [
+  // Main dropdown: About, Contact, Blogs, Terms, Refund, Privacy
+  const mainDropdownItems: DropdownItem[] = [
     {
-      icon: <BookOpen className='inline-block w-5 h-5' />,
+      icon: <User className='inline-block !w-5 !h-5' />,
+      title: 'About',
+      description: 'Learn more about us',
+      href: '/about',
+    },
+    {
+      icon: <FileText className='inline-block !w-5 !h-5' />,
+      title: 'Contact',
+      description: 'Get in touch with us',
+      href: '/contact',
+    },
+    {
+      icon: <BookOpen className='inline-block !w-5 !h-5' />,
       title: 'Blogs',
       description: 'Latest insights and tutorials',
       href: '/blog',
     },
     {
-      icon: <FileText className='inline-block w-5 h-5' />,
+      icon: <FileText className='inline-block !w-5 !h-5' />,
       title: 'Terms and Conditions',
       description: 'Legal terms and agreements',
       href: '/terms',
     },
     {
-      icon: <RotateCcw className='inline-block w-5 h-5' />,
+      icon: <RotateCcw className='inline-block !w-5 !h-5' />,
       title: 'Refund Policy',
       description: 'Our refund and cancellation policy',
       href: '/refund-policy',
     },
     {
-      icon: <Scale className='inline-block w-5 h-5' />,
+      icon: <Scale className='inline-block !w-5 !h-5' />,
       title: 'Privacy Policy',
       description: 'How we handle your data',
       href: '/privacy',
@@ -102,18 +113,27 @@ const Header = () => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
 
+  const closeDropdown = () => {
+    setActiveDropdown(null);
+  };
+
   const DropdownMenu = ({
     items,
     isOpen,
     onClose,
+    dropdownRef,
   }: {
     items: DropdownItem[];
     isOpen: boolean;
     onClose: () => void;
+    dropdownRef?: React.RefObject<HTMLDivElement | null>;
   }) => (
     <div
-      className={`pointer-events-none invisible absolute left-0 top-full z-90 mt-2 w-48 min-w-[320px] -translate-y-1 rounded-lg bg-slate-800 py-2 opacity-0 shadow-xl transition-all duration-100 ${
-        isOpen ? 'pointer-events-auto visible translate-y-0 opacity-100' : ''
+      ref={dropdownRef}
+      className={`absolute left-0 top-full z-50 mt-2 w-48 min-w-[320px] rounded-lg bg-slate-800 py-2 shadow-xl transition-all duration-200 ${
+        isOpen
+          ? 'pointer-events-auto visible translate-y-0 opacity-100'
+          : 'pointer-events-none invisible -translate-y-1 opacity-0'
       }`}
       role='menu'>
       {items.map((item, index) => (
@@ -123,7 +143,7 @@ const Header = () => {
           className='group flex items-center gap-3 hover:bg-slate-700 px-4 py-2.5 text-gray-400 transition-colors'
           role='menuitem'
           onClick={onClose}>
-          <span className='flex justify-center items-center bg-slate-600 group-hover:bg-slate-500 rounded-full w-[40px] h-[40px] group-hover:text-slate-100 transition-colors'>
+          <span className='flex justify-center items-center bg-slate-600 group-hover:bg-slate-500 rounded-full !w-10 !h-10 overflow-hidden group-hover:text-slate-100 transition-colors'>
             {item.icon}
           </span>
           <span className='flex flex-col'>
@@ -147,64 +167,34 @@ const Header = () => {
               className='flex items-center font-medium text-white text-lg'
               href='/'
               aria-label='Home'>
-              <div className='flex justify-center items-center bg-linear-to-b from-purple-50 to-purple-100 rounded w-8 h-8'>
+              <div className='flex justify-center items-center bg-gradient-to-b from-purple-50 to-purple-100 rounded w-8 h-8'>
                 <Rocket className='w-5 h-5 text-slate-900' />
               </div>
             </Link>
 
-            {/* Mobile AI Tutor equivalent */}
+            {/* Mobile Services */}
             <Link
               href='/services'
-              className='group sm:hidden inline relative text-gray-400 hover:text-white'>
+              className='group sm:hidden inline relative text-gray-400 hover:text-white cursor-pointer'>
               Services
             </Link>
 
             {/* Desktop navigation items */}
             <div className='hidden sm:flex sm:items-center gap-5'>
               {/* Hamburger Menu Button */}
-              <div className='relative flex items-center'>
+              <div className='relative flex items-center' ref={mainDropdownRef}>
                 <button
-                  className='text-gray-400 hover:text-white'
+                  className='text-gray-400 hover:text-white cursor-pointer'
                   aria-label='Open Navigation Dropdown'
-                  onMouseEnter={() => toggleDropdown('main')}>
+                  type='button'
+                  onClick={() => toggleDropdown('main')}>
                   <Menu className='w-5 h-5' />
                 </button>
-                <div
-                  className={`pointer-events-none invisible absolute left-0 top-full z-90 mt-2 w-48 min-w-[320px] -translate-y-1 rounded-lg bg-slate-800 py-2 opacity-0 shadow-xl transition-all duration-100 ${
-                    activeDropdown === 'main'
-                      ? 'pointer-events-auto visible translate-y-0 opacity-100'
-                      : ''
-                  }`}
-                  role='menu'>
-                  <Link
-                    href='/about'
-                    className='group flex items-center gap-3 hover:bg-slate-700 px-4 py-2.5 text-gray-400 transition-colors'
-                    role='menuitem'>
-                    <span className='flex justify-center items-center bg-slate-600 group-hover:bg-slate-500 rounded-full w-[40px] h-[40px] group-hover:text-slate-100 transition-colors'>
-                      <User className='inline-block w-5 h-5' />
-                    </span>
-                    <span className='flex flex-col'>
-                      <span className='font-medium text-slate-300 group-hover:text-slate-100 transition-colors'>
-                        About
-                      </span>
-                      <span className='text-sm'>Learn more about us</span>
-                    </span>
-                  </Link>
-                  <Link
-                    href='/contact'
-                    className='group flex items-center gap-3 hover:bg-slate-700 px-4 py-2.5 text-gray-400 transition-colors'
-                    role='menuitem'>
-                    <span className='flex justify-center items-center bg-slate-600 group-hover:bg-slate-500 rounded-full w-[40px] h-[40px] group-hover:text-slate-100 transition-colors'>
-                      <FileText className='inline-block w-5 h-5' />
-                    </span>
-                    <span className='flex flex-col'>
-                      <span className='font-medium text-slate-300 group-hover:text-slate-100 transition-colors'>
-                        Contact
-                      </span>
-                      <span className='text-sm'>Get in touch with us</span>
-                    </span>
-                  </Link>
-                </div>
+                <DropdownMenu
+                  items={mainDropdownItems}
+                  isOpen={activeDropdown === 'main'}
+                  onClose={closeDropdown}
+                />
               </div>
 
               <Link href='/hire-me' className='text-gray-400 hover:text-white'>
@@ -216,9 +206,10 @@ const Header = () => {
                 className='relative flex items-center'
                 ref={servicesDropdownRef}>
                 <button
-                  className='text-pink-100 hover:text-white'
+                  className='text-gray-400 hover:text-white cursor-pointer'
                   aria-label='Open Services Dropdown'
-                  onMouseEnter={() => toggleDropdown('services')}>
+                  type='button'
+                  onClick={() => toggleDropdown('services')}>
                   <span>
                     Services <ChevronDown className='inline-block w-3 h-3' />
                   </span>
@@ -226,29 +217,16 @@ const Header = () => {
                 <DropdownMenu
                   items={servicesItems}
                   isOpen={activeDropdown === 'services'}
-                  onClose={() => setActiveDropdown(null)}
+                  onClose={closeDropdown}
                 />
               </div>
 
-              {/* Resources Dropdown */}
-              <div
-                className='relative flex items-center'
-                ref={resourcesDropdownRef}>
-                <button
-                  className='text-gray-400 hover:text-white'
-                  aria-label='Open Resources Dropdown'
-                  onMouseEnter={() => toggleDropdown('resources')}>
-                  <span className='group relative flex items-center gap-1 mr-3 hover:text-white'>
-                    Resources
-                    <ChevronDown className='inline-block w-3 h-3' />
-                  </span>
-                </button>
-                <DropdownMenu
-                  items={resourcesItems}
-                  isOpen={activeDropdown === 'resources'}
-                  onClose={() => setActiveDropdown(null)}
-                />
-              </div>
+              {/* Templates (no submenu) */}
+              <Link
+                href='/templates'
+                className='text-gray-400 hover:text-white'>
+                Templates
+              </Link>
 
               <Link
                 href='/case-studies'
@@ -267,7 +245,7 @@ const Header = () => {
             </li>
             <li className='flex items-center gap-2'>
               <Link
-                className='flex justify-center items-center bg-linear-to-b from-purple-50 to-purple-100 px-4 py-2 rounded-full w-28 h-8 font-medium text-slate-900 text-sm transition-all duration-300 cursor-pointer'
+                className='flex justify-center items-center bg-gradient-to-b from-purple-50 to-purple-100 px-4 py-2 rounded-full w-28 h-8 font-medium text-slate-900 text-sm transition-all duration-300 cursor-pointer'
                 href='/signup'>
                 <span>Sign Up</span>
               </Link>
@@ -284,7 +262,7 @@ const Header = () => {
 
           {/* Mobile Navigation Items */}
           <div
-            className={`fixed top-0 right-0 bottom-0 left-0 z-40 flex items-center bg-slate-900 ${
+            className={`fixed bottom-0 left-0 right-0 top-0 z-40 flex items-center bg-slate-900 ${
               isMobileMenuOpen ? 'block' : 'hidden'
             }`}>
             <button
@@ -298,35 +276,88 @@ const Header = () => {
               <li>
                 <Link
                   href='/services'
-                  className='hover:text-blue-300 md:text-lg text-xl'>
+                  className='hover:text-blue-300 md:text-lg text-xl'
+                  onClick={() => setIsMobileMenuOpen(false)}>
                   Services
                 </Link>
               </li>
               <li>
                 <Link
-                  href='/resources'
-                  className='hover:text-blue-300 md:text-lg text-xl'>
-                  Resources
+                  href='/about'
+                  className='hover:text-blue-300 md:text-lg text-xl'
+                  onClick={() => setIsMobileMenuOpen(false)}>
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href='/contact'
+                  className='hover:text-blue-300 md:text-lg text-xl'
+                  onClick={() => setIsMobileMenuOpen(false)}>
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href='/blog'
+                  className='hover:text-blue-300 md:text-lg text-xl'
+                  onClick={() => setIsMobileMenuOpen(false)}>
+                  Blogs
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href='/terms'
+                  className='hover:text-blue-300 md:text-lg text-xl'
+                  onClick={() => setIsMobileMenuOpen(false)}>
+                  Terms and Conditions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href='/refund-policy'
+                  className='hover:text-blue-300 md:text-lg text-xl'
+                  onClick={() => setIsMobileMenuOpen(false)}>
+                  Refund Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href='/privacy'
+                  className='hover:text-blue-300 md:text-lg text-xl'
+                  onClick={() => setIsMobileMenuOpen(false)}>
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href='/templates'
+                  className='hover:text-blue-300 md:text-lg text-xl'
+                  onClick={() => setIsMobileMenuOpen(false)}>
+                  Templates
                 </Link>
               </li>
               <li>
                 <Link
                   href='/case-studies'
-                  className='hover:text-blue-300 md:text-lg text-xl'>
+                  className='hover:text-blue-300 md:text-lg text-xl'
+                  onClick={() => setIsMobileMenuOpen(false)}>
                   Case Studies
                 </Link>
               </li>
               <li>
                 <Link
                   href='/login'
-                  className='text-white md:text-lg text-xl transition-opacity duration-300'>
+                  className='text-white md:text-lg text-xl transition-opacity duration-300'
+                  onClick={() => setIsMobileMenuOpen(false)}>
                   Login
                 </Link>
               </li>
               <li>
                 <Link
                   href='/signup'
-                  className='text-pink-400 hover:text-green-400 md:text-lg text-xl transition-opacity duration-300'>
+                  className='text-pink-400 hover:text-green-400 md:text-lg text-xl transition-opacity duration-300'
+                  onClick={() => setIsMobileMenuOpen(false)}>
                   Sign Up
                 </Link>
               </li>

@@ -14,8 +14,6 @@ const HomePage = () => {
       <Links />
       <Stats />
       <Services />
-      <FeaturedTemplates />
-      <CaseStudies />
     </div>
   );
 };
