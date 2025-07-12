@@ -3,6 +3,7 @@ import ComponentWrapper from '@/components/component-wrapper';
 import Title from '@/components/title';
 import { notFound } from 'next/navigation';
 import { wordpress } from '@/lib/wordpress';
+import Link from 'next/link';
 
 export async function generateStaticParams() {
   const { posts } = await wordpress.getPosts();
@@ -86,12 +87,12 @@ const Blogs = async () => {
                 </div>
               </div>
 
-              <a
+              <Link
                 href={`/blog/${featuredPost.slug}`}
                 className='group inline-flex items-center gap-2 text-purple-400 hover:text-blue-300 transition-colors'>
                 Read Full Article
                 <ArrowRight className='w-4 h-4 transition-transform group-hover:translate-x-1' />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
