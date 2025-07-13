@@ -49,7 +49,7 @@ const Stats = () => {
         {STATS.map((stat, index) => (
           <li
             key={index}
-            className='group relative flex flex-col gap-2 bg-slate-900 p-2.5 sm:p-3.5 border border-slate-800 hover:border-slate-600 rounded-lg font-regular text-md text-slate-400 hover:text-slate-100'>
+            className='group relative flex flex-col gap-2 bg-slate-800/50 p-2.5 sm:p-3.5 border border-slate-800 hover:border-blue-500 rounded-lg font-regular text-md text-slate-400 hover:text-slate-100'>
             {/* Content */}
             <div className='z-10 relative flex justify-between items-center'>
               <div className='flex items-center gap-2'>

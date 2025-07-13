@@ -9,7 +9,7 @@ import Stats from '@/components/stats';
 
 const HomePage = () => {
   return (
-    <div className='mb-20'>
+    <div>
       <Hero />
       <Links />
       <Stats />

@@ -42,7 +42,7 @@ const AboutMe = () => {
   ];
 
   return (
-    <div className='bg-slate-900 min-h-screen text-white'>
+    <div className='text-white'>
       <ComponentWrapper>
         <div className='py-16'>
           {/* Hero Section */}
