@@ -1,3 +1,5 @@
+export const dynamic = 'force-static';
+
 import CaseStudies from '@/components/case-studies';
 import ComponentWrapper from '@/components/component-wrapper';
 import FeaturedTemplates from '@/components/featured-templates';
