@@ -11,7 +11,6 @@ const STATS = [
     gradientFrom: 'blue-400',
     gradientTo: 'purple-400',
     hoverColor: 'blue-500',
-    mobile: true,
   },
   {
     id: 'clients-served',
@@ -21,7 +20,6 @@ const STATS = [
     gradientFrom: 'green-400',
     gradientTo: 'blue-400',
     hoverColor: 'green-500',
-    mobile: true,
   },
   {
     id: 'global-reach',
@@ -41,7 +39,6 @@ const STATS = [
     gradientFrom: 'yellow-400',
     gradientTo: 'orange-400',
     hoverColor: 'yellow-500',
-    mobile: true,
   },
   {
     id: 'dsa-problems-solved',
@@ -60,28 +57,26 @@ const STATS = [
     gradientFrom: 'orange-400',
     gradientTo: 'yellow-400',
     hoverColor: 'orange-500',
-    mobile: true,
   },
 ];
 
 const Stats = () => {
   return (
     <ComponentWrapper>
-      <ul className='gap-6 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3'>
+      <div className='hidden from-orange-400 from-pink-400 to-red-400 to-yellow-400 hover:shadow-orange-500/20 hover:shadow-pink-500/20 hover:border-orange-500 hover:border-pink-500 text-orange-400 text-pink-400'></div>
+      <ul className='gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
         {STATS.map((stat, index) => (
           <li
             key={index}
             className={`group bg-slate-800/50 hover:shadow-${
               stat.hoverColor
-            }/20 hover:shadow-lg backdrop-blur-sm p-4 md:p-6 border border-slate-700 hover:border-${
+            }/20 hover:shadow-lg backdrop-blur-sm p-6 border border-slate-700 hover:border-${
               stat.hoverColor
             } rounded-xl transition-all duration-300 ${
               stat.featured ? 'md:col-span-2 lg:col-span-1' : ''
-            } ${!stat.mobile && 'hidden md:block'}`}>
+            }`}>
             <div className='flex items-center gap-4'>
-              <stat.icon
-                className={`h-10 hidden md:block w-10 text-${stat.gradientFrom}`}
-              />
+              <stat.icon className={`h-10 w-10 text-${stat.gradientFrom}`} />
               <div className='flex flex-col'>
                 <div
                   className={`bg-clip-text bg-gradient-to-r from-${stat.gradientFrom} to-${stat.gradientTo} mb-1 font-bold text-transparent text-2xl`}>

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 import {
   Menu,
   X,
@@ -325,20 +326,38 @@ const Header = () => {
 
           {/* Right side - Newsletter/Sign Up */}
           <ul className='hidden sm:flex justify-end items-center gap-5 w-[172px] h-8'>
-            <li className='transition-opacity duration-300'>
-              <Link
-                href='/newsletter'
-                className='text-gray-400 hover:text-white'>
-                Newsletter
-              </Link>
-            </li>
-            <li className='flex items-center gap-2'>
-              <Link
-                className='flex justify-center items-center bg-gradient-to-b from-purple-50 to-purple-100 px-4 py-2 rounded-full w-28 h-8 font-medium text-slate-900 text-sm transition-all duration-300 cursor-pointer'
-                href='/signup'>
-                <span>Login</span>
-              </Link>
-            </li>
+            <SignedOut>
+              <li className='transition-opacity duration-300'>
+                <Link
+                  href='/newsletter'
+                  className='text-gray-400 hover:text-white'>
+                  Newsletter
+                </Link>
+              </li>
+            </SignedOut>
+            <SignedOut>
+              <li className='flex items-center gap-2'>
+                <SignInButton mode='modal' forceRedirectUrl='/'>
+                  <button className='flex justify-center items-center bg-gradient-to-b from-purple-50 to-purple-100 px-4 py-2 rounded-full w-28 h-8 font-medium text-slate-900 text-sm transition-all duration-300 cursor-pointer'>
+                    Login
+                  </button>
+                </SignInButton>
+              </li>
+            </SignedOut>
+            <SignedIn>
+              <li className='flex items-center gap-2'>
+                <UserButton />
+              </li>
+            </SignedIn>
+            <SignedIn>
+              <li className='flex items-center gap-2'>
+                <Link
+                  href='/chat'
+                  className='flex justify-center items-center bg-gradient-to-b from-purple-50 to-purple-100 px-4 py-2 rounded-full w-28 h-8 font-medium text-slate-900 text-sm transition-all duration-300 cursor-pointer'>
+                  Chat
+                </Link>
+              </li>
+            </SignedIn>
           </ul>
 
           {/* Mobile Navigation Button */}

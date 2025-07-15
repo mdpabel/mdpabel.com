@@ -28,6 +28,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import SearchForm from '@/components/search';
+import MiniServices from './fix-errors-services';
 
 // ... same metadata ...
 
@@ -218,97 +219,7 @@ const page = () => {
         </div>
       </div>
 
-      <SearchForm />
-
-      {/* Services List */}
-      <div className='mb-16'>
-        <h2 className='mb-8 font-bold text-white text-3xl text-center'>
-          Common Website Issues We Fix
-        </h2>
-        <div className='space-y-4'>
-          {troubleshootingServices.map((service, index) => (
-            <div
-              key={service.id}
-              className='group bg-slate-800/50 hover:bg-slate-800/80 p-6 border border-slate-700 rounded-lg transition-all duration-300'>
-              <div className='flex md:flex-row flex-col justify-between md:items-center gap-4'>
-                <div className='flex flex-1 items-start gap-4'>
-                  <div className='bg-slate-700 p-3 rounded-lg'>
-                    <service.icon className='w-6 h-6 text-blue-400' />
-                  </div>
-                  <div className='flex-1'>
-                    <h3 className='mb-2 font-semibold text-white text-lg'>
-                      {service.title}
-                    </h3>
-                    <p className='mb-3 text-slate-300 text-sm'>
-                      {service.description}
-                    </p>
-                    <div className='flex flex-wrap gap-3'>
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs ${getUrgencyColor(
-                          service.urgency,
-                        )}`}>
-                        {service.urgency} Priority
-                      </span>
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs ${getDifficultyColor(
-                          service.difficulty,
-                        )} bg-slate-700`}>
-                        {service.difficulty}
-                      </span>
-                      <span className='bg-slate-700 px-2 py-1 rounded-full text-slate-300 text-xs'>
-                        <Clock className='inline mr-1 w-3 h-3' />
-                        {service.duration}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className='flex items-center gap-4'>
-                  <div className='text-right'>
-                    <div className='flex items-center gap-1 text-slate-400 text-sm'>
-                      <DollarSign className='w-4 h-4' />
-                      <span>Starting at</span>
-                    </div>
-                    <div className='font-bold text-white text-2xl'>
-                      ${service.price}
-                    </div>
-                  </div>
-                  <Link
-                    href={`/services/fix-website-errors/${service.id}`}
-                    className='flex items-center gap-2 bg-blue-600 hover:bg-blue-700 group-hover:bg-blue-700 px-6 py-3 rounded-lg font-medium text-white transition-colors'>
-                    Fix Now
-                    <ArrowRight className='w-4 h-4' />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Contact Section */}
-      <div className='bg-slate-800/50 p-8 border border-slate-700 rounded-lg text-center'>
-        <h2 className='mb-4 font-bold text-white text-2xl'>
-          Need Help With Something Else?
-        </h2>
-        <p className='mb-6 text-slate-300'>
-          Can't find your specific issue? Our team handles all types of website
-          problems. Get a free consultation to discuss your needs.
-        </p>
-        <div className='flex sm:flex-row flex-col justify-center gap-4'>
-          <Link
-            href='/contact'
-            className='inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-medium text-white transition-colors'>
-            Get Free Consultation
-            <ChevronRight className='w-4 h-4' />
-          </Link>
-          <Link
-            href='/services'
-            className='bg-slate-700 hover:bg-slate-600 px-6 py-3 border border-slate-600 rounded-lg font-medium text-white transition-colors'>
-            View All Services
-          </Link>
-        </div>
-      </div>
+      <MiniServices />
     </ComponentWrapper>
   );
 };
