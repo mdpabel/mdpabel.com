@@ -1,6 +1,6 @@
 import { ShieldCheck, Star, Download, ArrowRight } from 'lucide-react';
 import ComponentWrapper from './component-wrapper';
-import Title from './title';
+import Title from './ui';
 import Image from 'next/image';
 
 // Expanded templates with categories

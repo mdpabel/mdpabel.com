@@ -9,7 +9,7 @@ import {
   Globe,
 } from 'lucide-react';
 import ComponentWrapper from './component-wrapper';
-import Title from './title';
+import Title from './ui';
 import Image from 'next/image';
 
 const CASE_STUDIES = [

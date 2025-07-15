@@ -7,7 +7,7 @@ import {
   TrendingUp,
 } from 'lucide-react';
 import ComponentWrapper from '@/components/component-wrapper';
-import { Heading } from '@/components/title';
+import { Heading } from '@/components/ui';
 
 export default function BlacklistRemovalClean1() {
   return (

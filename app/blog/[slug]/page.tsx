@@ -3,7 +3,7 @@ import React from 'react';
 import { wordpress } from '@/lib/wordpress';
 import { notFound } from 'next/navigation';
 import ComponentWrapper from '@/components/component-wrapper';
-import { Heading } from '@/components/title';
+import { Heading } from '@/components/ui';
 import Link from 'next/link';
 
 interface SingleBlogProps {

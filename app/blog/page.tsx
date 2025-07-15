@@ -1,6 +1,6 @@
 import { Calendar, Clock, ArrowRight } from 'lucide-react';
 import ComponentWrapper from '@/components/component-wrapper';
-import Title from '@/components/title';
+import Title from '@/components/ui';
 import { notFound } from 'next/navigation';
 import { wordpress } from '@/lib/wordpress';
 import Link from 'next/link';

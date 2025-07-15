@@ -1,6 +1,6 @@
 import React from 'react';
 import ComponentWrapper from './component-wrapper';
-import { Heading } from './title';
+import { Heading } from './ui';
 import { Construction } from 'lucide-react';
 
 const UnderDevelopment = () => {

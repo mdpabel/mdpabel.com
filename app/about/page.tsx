@@ -11,7 +11,7 @@ import {
   CheckCircle,
   Star,
 } from 'lucide-react';
-import { Heading } from '@/components/title';
+import { Heading } from '@/components/ui';
 
 const AboutMe = () => {
   const skillCategories = [
