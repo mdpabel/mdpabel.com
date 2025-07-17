@@ -317,9 +317,9 @@ const Header = () => {
               </Link>
 
               <Link
-                href='/case-studies'
+                href='/malware-log'
                 className='group hidden xl:block relative text-gray-400 hover:text-white'>
-                Case Studies
+                Malware Log
               </Link>
             </div>
           </div>
@@ -407,10 +407,10 @@ const Header = () => {
               </li>
               <li>
                 <Link
-                  href='/case-studies'
+                  href='/malware-log'
                   className='font-semibold text-white hover:text-purple-300 text-2xl'
                   onClick={() => setIsMobileMenuOpen(false)}>
-                  Case Studies
+                  Malware Log
                 </Link>
               </li>
               <li className='my-4 border-slate-700 border-t w-full'></li>{' '}
