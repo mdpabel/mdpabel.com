@@ -150,8 +150,6 @@ class WordPressAPI {
 
   // Process post
   private processPost(post: any): WordPressPost {
-    console.log(post.acf);
-
     return {
       id: post.id,
       title: post.title?.rendered || '',
