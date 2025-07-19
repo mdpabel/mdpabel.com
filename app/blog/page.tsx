@@ -6,7 +6,9 @@ import { wordpress } from '@/lib/wordpress';
 import Link from 'next/link';
 
 export async function generateStaticParams() {
-  const { posts } = await wordpress.getPosts();
+  const { posts } = await wordpress.getPosts({
+    status: 'publish',
+  });
 
   if (!posts || posts.length === 0) {
     return [];

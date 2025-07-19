@@ -1,4 +1,3 @@
-// app/blog/[slug]/page.tsx
 import React from 'react';
 import { wordpress } from '@/lib/wordpress';
 import { notFound } from 'next/navigation';
