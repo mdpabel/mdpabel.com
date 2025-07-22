@@ -80,7 +80,7 @@ const HireMePage = () => {
       </div>
 
       {/* Signup and Chat Section */}
-      <div className='bg-green-900/20 mb-8 p-8 border border-green-700 rounded-lg'>
+      {/* <div className='bg-green-900/20 mb-8 p-8 border border-green-700 rounded-lg'>
         <div className='flex items-center gap-3 mb-4'>
           <MessageCircle className='w-6 h-6 text-green-400' />
           <h2 className='font-semibold text-green-400 text-xl'>
@@ -105,7 +105,7 @@ const HireMePage = () => {
             Already have an account? Login
           </Link>
         </div>
-      </div>
+      </div> */}
 
       {/* Hire Form Section */}
       <div className='bg-slate-800/50 mb-16 p-8 border border-slate-700 rounded-lg'>

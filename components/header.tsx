@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 import {
   Menu,
   X,
@@ -129,6 +128,46 @@ const Header = () => {
     },
   ];
 
+  // Mobile menu items (excluding less important pages like policies and terms)
+  const mobileMenuItems: DropdownItem[] = [
+    {
+      icon: <Shield className='inline-block !w-5 !h-5' />,
+      title: 'Services',
+      description: 'Explore our professional services',
+      href: '/services',
+    },
+    {
+      icon: <Code className='inline-block !w-5 !h-5' />,
+      title: 'Templates',
+      description: 'Browse our website templates',
+      href: '/templates',
+    },
+    {
+      icon: <Bug className='inline-block !w-5 !h-5' />,
+      title: 'Malware Log',
+      description: 'View our malware removal logs',
+      href: '/malware-log',
+    },
+    {
+      icon: <User className='inline-block !w-5 !h-5' />,
+      title: 'About',
+      description: 'Learn more about us',
+      href: '/about',
+    },
+    {
+      icon: <FileText className='inline-block !w-5 !h-5' />,
+      title: 'Contact',
+      description: 'Get in touch with us',
+      href: '/contact',
+    },
+    {
+      icon: <BookOpen className='inline-block !w-5 !h-5' />,
+      title: 'Blogs',
+      description: 'Latest insights and tutorials',
+      href: '/blog',
+    },
+  ];
+
   const toggleDropdown = (dropdown: string) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
@@ -187,21 +226,19 @@ const Header = () => {
     onClose: () => void;
   }) => {
     return (
-      // The submenu itself, absolutely positioned relative to its parent div
       <div
         className={`absolute left-0 top-full z-50 mt-4 rounded-xl shadow-2xl transition-all duration-300 transform-gpu
           ${
             isOpen
-              ? 'pointer-events-auto visible opacity-100 translate-y-0 scale-100' // Scale up animation
-              : 'pointer-events-none invisible opacity-0 -translate-y-1 scale-95' // Scale down/out animation
+              ? 'pointer-events-auto visible opacity-100 translate-y-0 scale-100'
+              : 'pointer-events-none invisible opacity-0 -translate-y-1 scale-95'
           }
           bg-slate-800
-          w-[calc(100vw-2rem)] md:w-[400px] // Single column means narrower width
-          max-w-[400px] // Ensure it respects this width
+          w-[calc(100vw-2rem)] md:w-[400px]
+          max-w-[400px]
           p-5
           `}
         role='menu'>
-        {/* Changed from grid to a simple flex column */}
         <div className='flex flex-col gap-3'>
           {items.map((item, index) => (
             <Link
@@ -210,12 +247,7 @@ const Header = () => {
               className='group flex items-center gap-4 hover:bg-slate-700 p-3 rounded-lg transition-colors duration-200'
               role='menuitem'
               onClick={onClose}>
-              {/* Ensure the icon container is a perfect circle by setting equal width and height */}
               <span className='flex flex-shrink-0 justify-center items-center bg-slate-700 group-hover:bg-purple-600 rounded-full !w-10 !h-10 overflow-hidden text-slate-400 group-hover:text-white transition-colors duration-200'>
-                {/* The `lucide-react` icons themselves should fit within this container.
-                    If they appear clipped, we might need to adjust their sizing or the container.
-                    The `!w-10 !h-10` on the span is crucial for making it a square,
-                    and `rounded-full` makes that square a circle. */}
                 {item.icon}
               </span>
               <span className='flex flex-col'>
@@ -229,8 +261,6 @@ const Header = () => {
             </Link>
           ))}
         </div>
-
-        {/* Optional: Footer CTA */}
         <div className='flex justify-center mt-5 pt-4 border-slate-700 border-t'>
           <Link
             href='/services'
@@ -284,12 +314,7 @@ const Header = () => {
                 />
               </div>
 
-              <Link href='/hire-me' className='text-gray-400 hover:text-white'>
-                Hire Me
-              </Link>
-
               {/* Services Submenu Trigger and Menu */}
-              {/* This parent div is relative, allowing the absolute submenu to position relative to it. */}
               <div
                 className='relative flex items-center'
                 ref={servicesDropdownTriggerRef}>
@@ -302,7 +327,7 @@ const Header = () => {
                     Services <ChevronDown className='inline-block w-3 h-3' />
                   </span>
                 </button>
-                <DropdownMenu // Re-using DropdownMenu for services, as it's now a single-column submenu
+                <DropdownMenu
                   items={servicesItems}
                   isOpen={activeDropdown === 'services'}
                   onClose={closeDropdown}
@@ -326,38 +351,20 @@ const Header = () => {
 
           {/* Right side - Newsletter/Sign Up */}
           <ul className='hidden sm:flex justify-end items-center gap-5 w-[172px] h-8'>
-            <SignedOut>
-              <li className='transition-opacity duration-300'>
-                <Link
-                  href='/newsletter'
-                  className='text-gray-400 hover:text-white'>
-                  Newsletter
-                </Link>
-              </li>
-            </SignedOut>
-            <SignedOut>
-              <li className='flex items-center gap-2'>
-                <SignInButton mode='modal' forceRedirectUrl='/'>
-                  <button className='flex justify-center items-center bg-gradient-to-b from-purple-50 to-purple-100 px-4 py-2 rounded-full w-28 h-8 font-medium text-slate-900 text-sm transition-all duration-300 cursor-pointer'>
-                    Login
-                  </button>
-                </SignInButton>
-              </li>
-            </SignedOut>
-            <SignedIn>
-              <li className='flex items-center gap-2'>
-                <UserButton />
-              </li>
-            </SignedIn>
-            <SignedIn>
-              <li className='flex items-center gap-2'>
-                <Link
-                  href='/chat'
-                  className='flex justify-center items-center bg-gradient-to-b from-purple-50 to-purple-100 px-4 py-2 rounded-full w-28 h-8 font-medium text-slate-900 text-sm transition-all duration-300 cursor-pointer'>
-                  Chat
-                </Link>
-              </li>
-            </SignedIn>
+            <li className='transition-opacity duration-300'>
+              <Link
+                href='/newsletter'
+                className='text-gray-400 hover:text-white'>
+                Newsletter
+              </Link>
+            </li>
+            <li className='flex items-center gap-2'>
+              <Link
+                href='/hire-me'
+                className='flex justify-center items-center bg-gradient-to-b from-purple-50 to-purple-100 px-6 py-2 rounded-full w-32 h-8 font-medium text-slate-900 text-sm transition-all duration-300 cursor-pointer'>
+                Hire Me
+              </Link>
+            </li>
           </ul>
 
           {/* Mobile Navigation Button */}
@@ -381,76 +388,47 @@ const Header = () => {
             </button>
 
             <ul className='flex flex-col items-center gap-4 w-full'>
-              <li>
-                <Link
-                  href='/services'
-                  className='font-semibold text-white hover:text-purple-300 text-2xl'
-                  onClick={() => setIsMobileMenuOpen(false)}>
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/hire-me'
-                  className='font-semibold text-white hover:text-purple-300 text-2xl'
-                  onClick={() => setIsMobileMenuOpen(false)}>
-                  Hire Me
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/templates'
-                  className='font-semibold text-white hover:text-purple-300 text-2xl'
-                  onClick={() => setIsMobileMenuOpen(false)}>
-                  Templates
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/malware-log'
-                  className='font-semibold text-white hover:text-purple-300 text-2xl'
-                  onClick={() => setIsMobileMenuOpen(false)}>
-                  Malware Log
-                </Link>
-              </li>
-              <li className='my-4 border-slate-700 border-t w-full'></li>{' '}
-              {/* Separator */}
-              {mainDropdownItems.map((item, index) => (
-                <li key={`mobile-main-${index}`}>
+              <div className='flex flex-col gap-2'>
+                {mobileMenuItems.map((item, index) => (
+                  <li key={`mobile-main-${index}`}>
+                    <Link
+                      href={item.href}
+                      className='group flex items-center gap-4 hover:bg-slate-700 p-3 rounded-lg transition-colors duration-200'
+                      onClick={() => setIsMobileMenuOpen(false)}>
+                      <span className='flex flex-shrink-0 justify-center items-center bg-slate-700 group-hover:bg-purple-600 rounded-full !w-10 !h-10 overflow-hidden text-slate-400 group-hover:text-white transition-colors duration-200'>
+                        {item.icon}
+                      </span>
+                      <span className='flex flex-col'>
+                        <span className='font-medium text-slate-200 group-hover:text-white text-lg transition-colors duration-200'>
+                          {item.title}
+                        </span>
+                        <span className='text-gray-400 group-hover:text-gray-300 text-sm'>
+                          {item.description}
+                        </span>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </div>
+              <li className='my-4 border-slate-700 border-t w-full'></li>
+              <div className='flex items-center gap-4'>
+                <li>
                   <Link
-                    href={item.href}
-                    className='text-gray-300 hover:text-purple-200 text-xl'
+                    href='/newsletter'
+                    className='bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-semibold text-white text-xl transition-colors duration-200'
                     onClick={() => setIsMobileMenuOpen(false)}>
-                    {item.title}
+                    Newsletter
                   </Link>
                 </li>
-              ))}
-              <li className='my-4 border-slate-700 border-t w-full'></li>{' '}
-              {/* Separator */}
-              <li>
-                <Link
-                  href='/newsletter'
-                  className='text-gray-300 hover:text-purple-200 text-xl'
-                  onClick={() => setIsMobileMenuOpen(false)}>
-                  Newsletter
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/login'
-                  className='text-gray-300 hover:text-purple-200 text-xl'
-                  onClick={() => setIsMobileMenuOpen(false)}>
-                  Login
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/signup'
-                  className='bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-semibold text-white text-xl transition-colors duration-200'
-                  onClick={() => setIsMobileMenuOpen(false)}>
-                  Sign Up
-                </Link>
-              </li>
+                <li>
+                  <Link
+                    href='/hire-me'
+                    className='bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-semibold text-white text-xl transition-colors duration-200'
+                    onClick={() => setIsMobileMenuOpen(false)}>
+                    Hire Me
+                  </Link>
+                </li>
+              </div>
             </ul>
           </div>
         </nav>

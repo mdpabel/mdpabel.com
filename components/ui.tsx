@@ -34,7 +34,7 @@ export const Heading: React.FC<HeadingProps> = ({
   const Tag = as;
   const baseClasses =
     'bg-clip-text bg-linear-to-b from-amber-50 to-purple-500 mb-2 ' +
-    'sm:mb-4 font-bold text-transparent text-2xl sm:text-5xl ' +
+    'sm:mb-4 font-bold text-transparent text-3xl sm:text-6xl ' +
     'sm:leading-tight';
 
   return (
