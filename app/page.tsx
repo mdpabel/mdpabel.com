@@ -1,20 +1,17 @@
 export const dynamic = 'force-static';
 
-import CaseStudies from '@/components/case-studies';
-import ComponentWrapper from '@/components/component-wrapper';
-import FeaturedTemplates from '@/components/featured-templates';
 import Hero from '@/components/hero';
 import Links from '@/components/links';
-import Reviews from '@/components/reviews';
 import Services from '@/components/services';
 import Stats from '@/components/stats';
 
 import type { Metadata } from 'next';
 import { siteData } from '@/data/site-data';
+import { jsonLd } from '@/data/json-ld';
 
 export const metadata: Metadata = {
   title: `${siteData.personal.name} - Full Stack Developer, Malware Removal & Security Specialist`,
-  description: `Expert in WordPress malware removal, fixing hacked websites, website security hardening, and full stack development. Over ${siteData.stats.experience} years experience serving ${siteData.stats.clientsSatisfied} clients worldwide in malware cleanup, web development, and performance optimization.`,
+  description: `WordPress malware removal & site security by expert MD Pabel. Fix hacked sites, boost performance, & build scalable web apps. 7+ years, 1600+ clients.`,
   keywords: [
     'WordPress Malware Removal',
     'Fix Hacked WordPress',
@@ -79,6 +76,9 @@ export const metadata: Metadata = {
     },
   },
   metadataBase: new URL('https://www.mdpabel.com'),
+  alternates: {
+    canonical: 'https://www.mdpabel.com', // Add this for the homepage
+  },
 };
 
 const HomePage = () => {
@@ -88,6 +88,13 @@ const HomePage = () => {
       <Links />
       <Stats />
       <Services />
+
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+        }}
+      />
     </div>
   );
 };
