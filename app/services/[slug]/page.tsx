@@ -56,6 +56,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       title: data.title,
       description: data.description,
       images: [data.ogImage || `/services/${slug}.png`],
+      site: '@mdpabe11', // Replace with your Twitter handle
     },
     robots: {
       index: true,

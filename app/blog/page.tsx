@@ -5,6 +5,58 @@ import { notFound } from 'next/navigation';
 import { wordpress } from '@/lib/wordpress';
 import Link from 'next/link';
 
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title:
+    'WordPress Blog & Insights: Security, Malware Removal, Error Fixing & Blacklist Removal',
+  description:
+    'Explore expert guides on WordPress security best practices, malware detection and removal, fixing common errors, Google blacklist removal, and development tips to keep your site secure and optimized.',
+  keywords:
+    'WordPress security, WordPress malware removal, SEO spam WordPress, WordPress error fixing, Google blacklist removal WordPress, WordPress development tips, WordPress plugins security, malware scanner WordPress, WordPress hacked site recovery, detect SEO spam in WordPress',
+  alternates: {
+    canonical: 'https://www.mdpabel.com/blog', // Replace with your actual domain and path
+  },
+  openGraph: {
+    title:
+      'WordPress Blog & Insights: Security, Malware Removal, Error Fixing & Blacklist Removal',
+    description:
+      'Discover in-depth articles on WordPress malware removal, security tips, error fixes, blacklist removal, and development insights for a safer website.',
+    url: 'https://www.mdpabel.com/blog',
+    siteName: 'MD Pabel', // Replace with your site name
+    images: [
+      {
+        url: '/images/blog-opengraph-image.png', // Add a default OG image (e.g., 1200x630px)
+        width: 1200,
+        height: 630,
+        alt: 'WordPress Security and Malware Removal Blog',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title:
+      'WordPress Blog & Insights: Security, Malware Removal, Error Fixing & Blacklist Removal',
+    description:
+      'Expert advice on WordPress security, malware removal, error fixing, blacklist removal, and more.',
+    images: ['/images/blog-opengraph-image.png'], // Same as OG image
+    site: '@mdpabe11', // Replace with your Twitter handle
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+};
+
 export async function generateStaticParams() {
   const { posts } = await wordpress.getPosts({
     status: 'publish',
@@ -207,6 +259,13 @@ const Blogs = async () => {
           </div>
         </div>
       </ComponentWrapper>
+
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(blogsJsonLd(posts)).replace(/</g, '\\u003c'),
+        }}
+      />
     </div>
   );
 };
