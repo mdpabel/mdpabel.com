@@ -61,33 +61,6 @@ const Header = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [activeDropdown]); // Re-run effect if activeDropdown changes
 
-  const servicesItems: DropdownItem[] = [
-    {
-      icon: <Shield className='inline-block !w-5 !h-5' />,
-      title: 'Malware Removal',
-      description: 'Complete malware cleanup & security hardening',
-      href: '/services/malware-removal',
-    },
-    {
-      icon: <Bug className='inline-block !w-5 !h-5' />,
-      title: 'Fix Website Errors',
-      description: 'Troubleshoot and resolve common website issues',
-      href: '/services/fix-website-errors',
-    },
-    {
-      icon: <Wrench className='inline-block !w-5 h-5' />,
-      title: 'Website Maintenance',
-      description: 'Ongoing support & performance optimization',
-      href: '/services/website-maintenance',
-    },
-    {
-      icon: <Code className='inline-block w-5 h-5' />,
-      title: 'Website Development',
-      description: 'Custom web applications & solutions',
-      href: '/services/website-development',
-    },
-  ];
-
   // Main dropdown: About, Contact, Blogs, Terms, Refund, Privacy
   const mainDropdownItems: DropdownItem[] = [
     {
@@ -215,63 +188,6 @@ const Header = () => {
     </div>
   );
 
-  // Single-Column Services Submenu with fixed-size circular icons
-  const ServicesSubMenu = ({
-    items,
-    isOpen,
-    onClose,
-  }: {
-    items: DropdownItem[];
-    isOpen: boolean;
-    onClose: () => void;
-  }) => {
-    return (
-      <div
-        className={`absolute left-0 top-full z-50 mt-4 rounded-xl shadow-2xl transition-all duration-300 transform-gpu
-          ${
-            isOpen
-              ? 'pointer-events-auto visible opacity-100 translate-y-0 scale-100'
-              : 'pointer-events-none invisible opacity-0 -translate-y-1 scale-95'
-          }
-          bg-slate-800
-          w-[calc(100vw-2rem)] md:w-[400px]
-          max-w-[400px]
-          p-5
-          `}
-        role='menu'>
-        <div className='flex flex-col gap-3'>
-          {items.map((item, index) => (
-            <Link
-              key={index}
-              href={item.href}
-              className='group flex items-center gap-4 hover:bg-slate-700 p-3 rounded-lg transition-colors duration-200'
-              role='menuitem'
-              onClick={onClose}>
-              <span className='flex flex-shrink-0 justify-center items-center bg-slate-700 group-hover:bg-purple-600 rounded-full !w-10 !h-10 overflow-hidden text-slate-400 group-hover:text-white transition-colors duration-200'>
-                {item.icon}
-              </span>
-              <span className='flex flex-col'>
-                <span className='font-medium text-slate-200 group-hover:text-white text-lg transition-colors duration-200'>
-                  {item.title}
-                </span>
-                <span className='text-gray-400 group-hover:text-gray-300 text-sm'>
-                  {item.description}
-                </span>
-              </span>
-            </Link>
-          ))}
-        </div>
-        <div className='flex justify-center mt-5 pt-4 border-slate-700 border-t'>
-          <Link
-            href='/services'
-            className='font-semibold text-purple-400 hover:text-purple-300 transition-colors duration-200'>
-            View All Services
-          </Link>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <div className='z-50 relative bg-slate-900 py-5 sm:py-8 text-white'>
       <ComponentWrapper>
@@ -318,20 +234,13 @@ const Header = () => {
               <div
                 className='relative flex items-center'
                 ref={servicesDropdownTriggerRef}>
-                <button
+                <Link
+                  href='/services'
                   className='text-gray-400 hover:text-white cursor-pointer'
                   aria-label='Open Services SubMenu'
-                  type='button'
                   onClick={() => toggleDropdown('services')}>
-                  <span>
-                    Services <ChevronDown className='inline-block w-3 h-3' />
-                  </span>
-                </button>
-                <DropdownMenu
-                  items={servicesItems}
-                  isOpen={activeDropdown === 'services'}
-                  onClose={closeDropdown}
-                />
+                  Services
+                </Link>
               </div>
 
               {/* Templates (no submenu) */}

@@ -10,7 +10,7 @@ import { Heading, Description } from '@/components/ui';
 import { AlertCircle, AlertTriangle, CheckCircle } from 'lucide-react';
 
 interface Params {
-  params: Promise<{ slug: string }>; // Type as Promise for async resolution
+  params: Promise<{ slug: string }>;
 }
 
 // Force static generation
