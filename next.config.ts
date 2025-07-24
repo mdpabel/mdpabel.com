@@ -8,6 +8,14 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
 
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'websiteblacklistremoval.com',
+      },
+    ],
+  },
   async headers() {
     return [
       {
