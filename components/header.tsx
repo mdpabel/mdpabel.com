@@ -15,6 +15,7 @@ import {
   User,
   Rocket,
   Bug,
+  Code2,
 } from 'lucide-react';
 import ComponentWrapper from './component-wrapper'; // Assuming ComponentWrapper correctly sets max-width and centers content
 import Link from 'next/link';
@@ -82,22 +83,10 @@ const Header = () => {
       href: '/blog',
     },
     {
-      icon: <FileText className='inline-block !w-5 !h-5' />,
-      title: 'Terms and Conditions',
-      description: 'Legal terms and agreements',
-      href: '/terms',
-    },
-    {
-      icon: <RotateCcw className='inline-block !w-5 !h-5' />,
-      title: 'Refund Policy',
-      description: 'Our refund and cancellation policy',
-      href: '/refund-policy',
-    },
-    {
-      icon: <Scale className='inline-block !w-5 !h-5' />,
-      title: 'Privacy Policy',
-      description: 'How we handle your data',
-      href: '/privacy',
+      icon: <Code2 className='inline-block !w-5 !h-5' />,
+      title: 'Snippets',
+      description: 'Code snippets and examples',
+      href: '/snippets',
     },
   ];
 
