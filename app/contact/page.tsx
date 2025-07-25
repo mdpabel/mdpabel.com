@@ -1,8 +1,12 @@
-import UnderDevelopment from '@/components/under-development';
-import React from 'react';
+import ComponentWrapper from '@/components/component-wrapper';
+import ContactForm from '@/components/contact-form';
 
 const page = () => {
-  return <UnderDevelopment />;
+  return (
+    <ComponentWrapper>
+      <ContactForm />
+    </ComponentWrapper>
+  );
 };
 
 export default page;

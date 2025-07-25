@@ -41,13 +41,14 @@ export const siteData = {
 
   navigation: {
     main: [
-      { title: 'Home', href: '/' },
       { title: 'Services', href: '/services' },
       { title: 'About', href: '/about' },
       { title: 'Contact', href: '/contact' },
       { title: 'Hire Me', href: '/hire-me' },
       { title: 'Templates', href: '/templates' },
-      { title: 'Case Studies', href: '/case-studies' },
+      { title: 'Malware Logs', href: '/malware-logs' },
+      { title: 'Blog', href: '/blog' },
+      { title: 'Snippets', href: '/snippets' },
     ],
 
     services: [
