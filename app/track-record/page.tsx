@@ -33,7 +33,8 @@ const Projects = () => {
                       Fiverr Profile
                     </div>
                     <div className='text-gray-300 text-sm'>
-                      Level 2 Seller • 800+ Orders
+                      Level 2 Seller •{' '}
+                      {siteData.companies.freelance[0].projects} Orders
                     </div>
                   </div>
                 </div>
@@ -73,7 +74,8 @@ const Projects = () => {
                       Upwork Profile
                     </div>
                     <div className='text-gray-300 text-sm'>
-                      Top Rated • 600+ Jobs
+                      Top Rated • {siteData.companies.freelance[1].projects}{' '}
+                      Jobs
                     </div>
                   </div>
                 </div>
