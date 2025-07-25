@@ -9,19 +9,19 @@ const LINKS = [
     id: 'leetcode',
     icon: SiLeetcode,
     label: 'LeetCode',
-    url: 'https://leetcode.com/',
+    url: 'https://leetcode.com/u/mdpabel/',
   },
   {
     id: 'github',
     icon: FaGithub,
     label: 'GitHub',
-    url: 'https://github.com/',
+    url: 'https://github.com/mdpabel',
   },
   {
     id: 'linkedin',
     icon: FiLinkedin,
     label: 'LinkedIn',
-    url: 'https://linkedin.com/',
+    url: 'https://www.linkedin.com/in/mdpabe1',
   },
   {
     id: 'fiverr',
@@ -39,7 +39,7 @@ const LINKS = [
     id: 'hackerrank',
     icon: TbBrandHackerrank,
     label: 'HackerRank',
-    url: 'https://hackerrank.com/',
+    url: 'https://www.hackerrank.com/profile/mdpabel385',
   },
 ];
 

@@ -114,7 +114,7 @@ const Projects = () => {
                 value: siteData.stats.completedProjects,
                 color: 'red',
               },
-              { label: 'Avg Response', value: '< 2hrs', color: 'green' },
+              { label: 'Avg Response', value: '< 1hr', color: 'green' },
               { label: 'Success Rate', value: '99.8%', color: 'yellow' },
               { label: 'Years Active', value: '7+', color: 'purple' },
             ].map((stat, i) => (
