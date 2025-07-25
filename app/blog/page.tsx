@@ -79,9 +79,13 @@ const Blogs = async () => {
     return notFound();
   }
 
-  const featuredPost = posts[0];
-  const recentPosts = posts.slice(1, 4);
-  const otherPosts = posts.slice(4);
+  const featuredPosts = posts.filter((post) =>
+    post.categories?.some((cat) => cat.name === 'Featured'),
+  );
+
+  const featuredPost = featuredPosts[0];
+  const recentPosts = featuredPosts.slice(1, 4);
+  const otherPosts = featuredPosts.slice(4);
 
   const reading_time = 10;
 
@@ -153,9 +157,7 @@ const Blogs = async () => {
 
         {/* Recent Posts */}
         <div className='mb-12'>
-          <h3 className='mb-6 font-semibold text-white text-xl'>
-            Recent Posts
-          </h3>
+          <h3 className='mb-6 font-semibold text-white text-xl'>More Posts</h3>
           <div className='gap-6 grid grid-cols-1 md:grid-cols-3'>
             {recentPosts.map((post) => (
               <article key={post.id} className='group'>
@@ -202,9 +204,6 @@ const Blogs = async () => {
 
         {/* Other Posts */}
         <div>
-          <h3 className='mb-6 font-semibold text-white text-xl'>
-            More Articles
-          </h3>
           <div className='space-y-6'>
             {otherPosts.map((post) => (
               <article
