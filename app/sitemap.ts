@@ -25,26 +25,10 @@ const staticRoutes: {
     changeFrequency: 'monthly',
     priority: 0.7,
   },
-  {
-    path: '/services/fix-website-errors',
-    changeFrequency: 'monthly',
-    priority: 0.7,
-  },
-  {
-    path: '/services/website-maintenance',
-    changeFrequency: 'monthly',
-    priority: 0.7,
-  },
-  {
-    path: '/services/website-development',
-    changeFrequency: 'monthly',
-    priority: 0.7,
-  },
   { path: '/about', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/contact', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/hire-me', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/templates', changeFrequency: 'monthly', priority: 0.7 },
-  { path: '/case-studies', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/blog', changeFrequency: 'weekly', priority: 0.6 },
   { path: '/terms', changeFrequency: 'yearly', priority: 0.5 },
   { path: '/refund-policy', changeFrequency: 'yearly', priority: 0.5 },
@@ -71,10 +55,49 @@ const blogSitemap = async (): Promise<Route[]> => {
   }));
 };
 
+const malwareLogSitemap = async (): Promise<Route[]> => {
+  const { posts, total } = await wordpress.getPosts({
+    postType: 'malware-log',
+    status: 'publish',
+  });
+  if (!posts || posts.length === 0) {
+    return [];
+  }
+  return posts.map((log) => ({
+    path: `/malware-log/${log.slug}`,
+    lastModified: log.modified ? new Date(log.modified) : currentDate,
+    changeFrequency: 'weekly',
+    priority: 0.6,
+  }));
+};
+
+const snippetsSitemap = async (): Promise<Route[]> => {
+  const { posts } = await wordpress.getPosts({
+    postType: 'snippet',
+    status: 'publish',
+  });
+  if (!posts || posts.length === 0) {
+    return [];
+  }
+  return posts.map((snippet: any) => ({
+    path: `/snippets/${snippet.slug}`,
+    lastModified: snippet.modified ? new Date(snippet.modified) : currentDate,
+    changeFrequency: 'weekly',
+    priority: 0.6,
+  }));
+};
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const blogRoutes = await blogSitemap();
+  const malwareLogRoutes = await malwareLogSitemap();
+  const snippetsRoutes = await snippetsSitemap();
 
-  const allRoutes: Route[] = [...staticRoutes, ...blogRoutes];
+  const allRoutes: Route[] = [
+    ...staticRoutes,
+    ...blogRoutes,
+    ...malwareLogRoutes,
+    ...snippetsRoutes,
+  ];
 
   return allRoutes.map((route) => ({
     url: `${baseUrl}${route.path}`,
