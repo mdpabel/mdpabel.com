@@ -153,10 +153,10 @@ export const siteData = {
   },
 
   stats: {
-    hackedWebsites: '4200+',
+    hackedWebsites: '4500+',
     recoveredDomains: '300+',
-    completedProjects: '1600+',
-    clientsSatisfied: '1600+',
+    completedProjects: '2000+',
+    clientsSatisfied: '1700+',
     dsaProblems: '800+',
     soccerMatches: '3500+',
     winRate: '50%',
@@ -197,6 +197,7 @@ export const siteData = {
       {
         platform: 'Fiverr',
         clients: '1600+',
+        projects: '1900+',
         rating: '5.0',
         specialties: [
           'WordPress Security',
@@ -206,8 +207,9 @@ export const siteData = {
       },
       {
         platform: 'Upwork',
-        clients: '1600+',
+        clients: '100+',
         rating: '100%',
+        projects: '100+',
         specialties: [
           'Full Stack Development',
           'Security Solutions',

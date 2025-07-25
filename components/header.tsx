@@ -240,6 +240,12 @@ const Header = () => {
               </Link>
 
               <Link
+                href='/track-record'
+                className='group hidden xl:block relative text-gray-400 hover:text-white'>
+                Track Record
+              </Link>
+
+              <Link
                 href='/malware-log'
                 className='group hidden xl:block relative text-gray-400 hover:text-white'>
                 Malware Log
