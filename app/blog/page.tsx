@@ -79,13 +79,19 @@ const Blogs = async () => {
     return notFound();
   }
 
-  const featuredPosts = posts.filter((post) =>
-    post.categories?.some((cat) => cat.name === 'Featured'),
-  );
+  const sortedPosts = posts.sort((a, b) => {
+    const aIsFeatured = a.categories?.some((cat) => cat.name === 'Featured')
+      ? 1
+      : 0;
+    const bIsFeatured = b.categories?.some((cat) => cat.name === 'Featured')
+      ? 1
+      : 0;
+    return bIsFeatured - aIsFeatured; // featured = 1 comes first
+  });
 
-  const featuredPost = featuredPosts[0];
-  const recentPosts = featuredPosts.slice(1, 4);
-  const otherPosts = featuredPosts.slice(4);
+  const featuredPost = sortedPosts[0];
+  const recentPosts = sortedPosts.slice(1, 4);
+  const otherPosts = sortedPosts.slice(4);
 
   const reading_time = 10;
 

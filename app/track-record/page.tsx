@@ -111,7 +111,7 @@ const Projects = () => {
             {[
               {
                 label: 'Sites Recovered',
-                value: siteData.stats.completedProjects,
+                value: siteData.stats.hackedWebsites,
                 color: 'red',
               },
               { label: 'Avg Response', value: '< 1hr', color: 'green' },
