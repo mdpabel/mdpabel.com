@@ -24,18 +24,6 @@ const LINKS = [
     url: 'https://www.linkedin.com/in/mdpabe1',
   },
   {
-    id: 'fiverr',
-    icon: TbBrandFiverr,
-    label: 'Fiverr',
-    url: 'https://fiverr.com/',
-  },
-  {
-    id: 'upwork',
-    icon: SiUpwork,
-    label: 'Upwork',
-    url: 'https://upwork.com/',
-  },
-  {
     id: 'hackerrank',
     icon: TbBrandHackerrank,
     label: 'HackerRank',
