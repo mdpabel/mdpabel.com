@@ -5,6 +5,8 @@ import ComponentWrapper from '@/components/component-wrapper';
 import { Heading } from '@/components/ui';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import he from 'he'; // Import he for decoding
+import Image from 'next/image';
 
 interface SingleBlogProps {
   params: Promise<{
@@ -20,6 +22,8 @@ export async function generateMetadata({
   const post = await wordpress.getPostBySlug(slug);
   if (!post) return { title: 'Post Not Found' };
 
+  const decodedTitle = he.decode(post.title); // Decode with he
+
   const strippedExcerpt = post.excerpt.replace(/<[^>]*>/g, '').slice(0, 160);
   const keywords = [
     ...post.categories.map((cat) => cat.name),
@@ -32,14 +36,14 @@ export async function generateMetadata({
   ].join(', ');
 
   return {
-    title: `${post.title} | MD Pabel Blog`,
+    title: `${decodedTitle} | MD Pabel Blog`, // Use decoded title
     description: strippedExcerpt,
     keywords,
     alternates: {
       canonical: `https://www.mdpabel.com/blog/${slug}`,
     },
     openGraph: {
-      title: post.title,
+      title: decodedTitle, // Use decoded title
       description: strippedExcerpt,
       url: `https://www.mdpabel.com/blog/${slug}`,
       siteName: 'MD Pabel',
@@ -49,7 +53,7 @@ export async function generateMetadata({
               url: post.featuredImage.url,
               width: 1200,
               height: 630,
-              alt: post.featuredImage.alt || post.title,
+              alt: post.featuredImage.alt || decodedTitle, // Update alt if needed
             },
           ]
         : [
@@ -67,7 +71,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title: post.title,
+      title: decodedTitle, // Use decoded title
       description: strippedExcerpt,
       images: post.featuredImage
         ? [post.featuredImage.url]
@@ -95,6 +99,8 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
 
   if (!post) return notFound();
 
+  const decodedTitle = he.decode(post.title); // Decode with he
+
   const relatedPosts = await wordpress.getRelatedPosts(post.id, 3);
 
   const strippedExcerpt = post.excerpt.replace(/<[^>]*>/g, '');
@@ -106,7 +112,8 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
         <div className='px-5 sm:px-0 py-10 sm:py-16 container'>
           {/* Blog Header */}
           <header className='mb-12 text-left sm:text-center'>
-            <Heading>{post.title}</Heading>
+            <Heading className='!text-4xl text-center'>{decodedTitle}</Heading>{' '}
+            {/* Use decoded title */}
             <div className='mt-4 text-gray-400 text-sm'>
               <span>
                 {new Date(post.date).toLocaleDateString('en-US', {
@@ -123,10 +130,13 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
           {/* Featured Image */}
           {post.featuredImage && (
             <div className='relative mb-12 w-full h-[450px]'>
-              <img
+              <Image
                 src={post.featuredImage.url}
-                alt={post.featuredImage.alt || post.title}
+                alt={post.featuredImage.alt || decodedTitle}
                 className='shadow-lg rounded-lg w-full h-full object-cover'
+                layout='fill'
+                objectFit='cover'
+                priority
               />
             </div>
           )}
@@ -199,7 +209,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'BlogPosting',
-            headline: post.title,
+            headline: decodedTitle, // Use decoded title
             datePublished: post.date,
             dateModified: post.modified || post.date,
             author: {
@@ -241,7 +251,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
                 {
                   '@type': 'ListItem',
                   position: 3,
-                  name: post.title,
+                  name: decodedTitle, // Use decoded title
                   item: `https://www.mdpabel.com/blog/${slug}`,
                 },
               ],
