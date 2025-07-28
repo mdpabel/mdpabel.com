@@ -2,6 +2,7 @@
 import RSS from 'rss';
 import { NextResponse } from 'next/server';
 import { wordpress } from '@/lib/wordpress';
+import he from 'he'; // Import he for decoding
 
 export const dynamic = 'force-dynamic';
 
@@ -38,7 +39,7 @@ export async function GET() {
   blogPosts.forEach((post) => {
     const postUrl = `${siteUrl}/blog/${post.slug}`;
     feed.item({
-      title: post.title,
+      title: he.decode(post.title),
       url: postUrl,
       guid: postUrl,
       description: post.excerpt,
