@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { siteData } from '@/data/site-data';
 import ComponentWrapper from './component-wrapper';
+import Links from './links';
 
 const Footer2 = () => {
   const currentYear = new Date().getFullYear();
@@ -36,19 +37,7 @@ const Footer2 = () => {
             </div>
 
             {/* Social Links */}
-            <div className='flex justify-center items-center gap-4 pt-4'>
-              {siteData.social.links.map((social, index) => (
-                <a
-                  key={index}
-                  href={social.href}
-                  className='bg-slate-800 hover:bg-slate-700 p-2 rounded-full text-gray-400 hover:text-purple-300 transition-colors'
-                  aria-label={social.name}
-                  target='_blank'
-                  rel='noopener noreferrer'>
-                  {social.icon}
-                </a>
-              ))}
-            </div>
+            <Links />
           </div>
 
           {/* Bottom Section */}

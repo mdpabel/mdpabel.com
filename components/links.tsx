@@ -1,5 +1,5 @@
 import { SiLeetcode, SiUpwork } from 'react-icons/si';
-import { FaGithub } from 'react-icons/fa';
+import { FaGithub, FaMediumM } from 'react-icons/fa';
 import { FiLinkedin } from 'react-icons/fi';
 import { TbBrandFiverr, TbBrandHackerrank } from 'react-icons/tb';
 import ComponentWrapper from './component-wrapper';
@@ -29,12 +29,18 @@ const LINKS = [
     label: 'HackerRank',
     url: 'https://www.hackerrank.com/profile/mdpabel385',
   },
+  {
+    id: 'medium',
+    icon: FaMediumM,
+    label: 'Medium',
+    url: 'https://mdpabeldev.medium.com/',
+  },
 ];
 
 const Links = () => {
   return (
     <ComponentWrapper>
-      <div className='flex justify-center gap-8 mb-10 py-4'>
+      <div className='flex justify-center gap-6 mb-10 py-4'>
         {LINKS.map((link) => (
           <a
             key={link.id}
