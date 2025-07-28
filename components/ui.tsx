@@ -33,8 +33,9 @@ export const Heading: React.FC<HeadingProps> = ({
 }) => {
   const Tag = as;
   const baseClasses =
-    'bg-clip-text from-amber-50 to-purple-500 mb-2 sm:mb-4 font-bold text-transparent text-3xl sm:text-6xl ' +
-    'leading-tight sm:leading-tight bg-[repeating-linear-gradient(to_bottom,var(--tw-gradient-from)_0,var(--tw-gradient-to)_1.25em)]';
+    'bg-clip-text bg-linear-to-b from-amber-50 to-purple-500 mb-2 ' +
+    'sm:mb-4 font-bold text-transparent text-3xl sm:text-6xl ' +
+    'sm:leading-tight';
 
   return (
     <Tag className={cn(baseClasses, className)} {...props}>

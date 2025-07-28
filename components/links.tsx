@@ -3,6 +3,7 @@ import { FaGithub, FaMediumM } from 'react-icons/fa';
 import { FiLinkedin } from 'react-icons/fi';
 import { TbBrandFiverr, TbBrandHackerrank } from 'react-icons/tb';
 import ComponentWrapper from './component-wrapper';
+import { PiDevToLogo } from 'react-icons/pi';
 
 const LINKS = [
   {
@@ -34,6 +35,12 @@ const LINKS = [
     icon: FaMediumM,
     label: 'Medium',
     url: 'https://mdpabeldev.medium.com/',
+  },
+  {
+    id: 'dev.to',
+    icon: PiDevToLogo,
+    label: 'Dev.to',
+    url: 'https://dev.to/md_pabel_fe07e07449db7326',
   },
 ];
 
