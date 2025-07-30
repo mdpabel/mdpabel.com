@@ -8,6 +8,7 @@ import Stats from '@/components/stats';
 import type { Metadata } from 'next';
 import { siteData } from '@/data/site-data';
 import { jsonLd } from '@/data/json-ld';
+import Experience from '@/components/experiences';
 
 export const metadata: Metadata = {
   title: `${siteData.personal.name} - Full Stack Developer, Malware Removal & Security Specialist`,
@@ -88,6 +89,7 @@ const HomePage = () => {
       <Links />
       <Stats />
       <Services />
+      <Experience />
 
       <script
         type='application/ld+json'
