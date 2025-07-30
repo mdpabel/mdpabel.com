@@ -112,9 +112,9 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
         <div className='px-5 sm:px-0 py-10 sm:py-16 container'>
           {/* Blog Header */}
           <header className='mb-12 text-left sm:text-center'>
-            <Heading className='!text-4xl text-center'>{decodedTitle}</Heading>{' '}
+            <Heading className='!text-3xl text-center'>{decodedTitle}</Heading>{' '}
             {/* Use decoded title */}
-            <div className='mt-4 text-gray-400 text-sm'>
+            <div className='flex justify-center mt-4 text-gray-400 text-sm'>
               <span>
                 {new Date(post.date).toLocaleDateString('en-US', {
                   year: 'numeric',

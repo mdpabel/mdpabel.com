@@ -248,7 +248,7 @@ const Header = () => {
               <Link
                 href='/blog'
                 className='group hidden xl:block relative text-gray-400 hover:text-white'>
-                Blogs
+                Blog
               </Link>
             </div>
           </div>

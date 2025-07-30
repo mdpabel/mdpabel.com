@@ -134,3 +134,9 @@
   @apply bg-zinc-900;
 }
 /* WORDPRESS END  */
+
+.prose pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
