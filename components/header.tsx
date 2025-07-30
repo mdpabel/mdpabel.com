@@ -78,9 +78,9 @@ const Header = () => {
     },
     {
       icon: <BookOpen className='inline-block !w-5 !h-5' />,
-      title: 'Blogs',
+      title: 'Track Record',
       description: 'Latest insights and tutorials',
-      href: '/blog',
+      href: '/track-record',
     },
     {
       icon: <Code2 className='inline-block !w-5 !h-5' />,
@@ -240,15 +240,15 @@ const Header = () => {
               </Link>
 
               <Link
-                href='/track-record'
-                className='group hidden xl:block relative text-gray-400 hover:text-white'>
-                Track Record
-              </Link>
-
-              <Link
                 href='/malware-log'
                 className='group hidden xl:block relative text-gray-400 hover:text-white'>
                 Malware Log
+              </Link>
+
+              <Link
+                href='/blog'
+                className='group hidden xl:block relative text-gray-400 hover:text-white'>
+                Blogs
               </Link>
             </div>
           </div>
