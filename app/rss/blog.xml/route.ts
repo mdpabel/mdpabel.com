@@ -10,18 +10,15 @@ export async function GET() {
   const siteUrl = 'https://www.mdpabel.com';
 
   // Fetch all published posts
-  const { posts } = await wordpress.getPosts({
+  const { posts, total } = await wordpress.getPosts({
     status: 'publish',
   });
+
+  console.log(`Total published posts: ${total}`);
 
   if (!posts || posts.length === 0) {
     return new Response('No posts found', { status: 404 });
   }
-
-  // Filter for blog posts (exclude those with 'Website Security' category)
-  const blogPosts = posts.filter(
-    (post) => !post.categories?.some((cat) => cat.name === 'Website Security'),
-  );
 
   // Create RSS feed for blog
   const feed = new RSS({
@@ -36,7 +33,7 @@ export async function GET() {
   });
 
   // Add each blog post to the feed
-  blogPosts.forEach((post) => {
+  posts.forEach((post) => {
     const postUrl = `${siteUrl}/blog/${post.slug}`;
     feed.item({
       title: he.decode(post.title),
