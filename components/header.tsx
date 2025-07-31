@@ -234,9 +234,9 @@ const Header = () => {
 
               {/* Templates (no submenu) */}
               <Link
-                href='/templates'
+                href='/case-studies'
                 className='text-gray-400 hover:text-white'>
-                Templates
+                Case Studies
               </Link>
 
               <Link
