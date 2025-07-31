@@ -19,6 +19,8 @@ import {
 } from 'lucide-react';
 import ComponentWrapper from './component-wrapper'; // Assuming ComponentWrapper correctly sets max-width and centers content
 import Link from 'next/link';
+import SearchModalV1 from './command-menu';
+import SearchForm from './search';
 
 interface DropdownItem {
   icon: React.ReactNode;
@@ -255,6 +257,7 @@ const Header = () => {
 
           {/* Right side - Newsletter/Sign Up */}
           <ul className='hidden sm:flex justify-end items-center gap-5 w-[172px] h-8'>
+            <SearchForm />
             <li className='transition-opacity duration-300'>
               <Link
                 href='/newsletter'
