@@ -243,13 +243,11 @@ const Header = () => {
 
               <Link
                 href='/malware-log'
-                className='group hidden xl:block relative text-gray-400 hover:text-white'>
+                className='text-gray-400 hover:text-white'>
                 Malware Log
               </Link>
 
-              <Link
-                href='/blog'
-                className='group hidden xl:block relative text-gray-400 hover:text-white'>
+              <Link href='/blog' className='text-gray-400 hover:text-white'>
                 Blog
               </Link>
             </div>
@@ -275,12 +273,15 @@ const Header = () => {
           </ul>
 
           {/* Mobile Navigation Button */}
-          <button
-            className='sm:hidden block text-gray-400 hover:text-gray-50 cursor-pointer'
-            aria-label='Menu'
-            onClick={() => setIsMobileMenuOpen(true)}>
-            <Menu className='w-5 h-5' />
-          </button>
+          <div className='flex items-center gap-4'>
+            <SearchForm />
+            <button
+              className='sm:hidden block text-gray-400 hover:text-gray-50 cursor-pointer'
+              aria-label='Menu'
+              onClick={() => setIsMobileMenuOpen(true)}>
+              <Menu className='w-5 h-5' />
+            </button>
+          </div>
 
           {/* Mobile Navigation Items (Full Screen Overlay) */}
           <div
