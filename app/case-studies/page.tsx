@@ -7,7 +7,7 @@ import {
   Zap,
 } from 'lucide-react';
 import ComponentWrapper from '@/components/component-wrapper';
-import Title from '@/components/ui';
+import Title, { Heading } from '@/components/ui';
 import { notFound } from 'next/navigation';
 import { wordpress } from '@/lib/wordpress';
 import Link from 'next/link';
@@ -83,7 +83,9 @@ const CaseStudies = async () => {
     <div className='bg-slate-900 py-8 sm:py-12 lg:py-16 text-white'>
       <ComponentWrapper>
         <div className='mb-8 sm:mb-12'>
-          <Title>Case Studies</Title>
+          <Heading as='h1' className='!text-center'>
+            Case Studies
+          </Heading>
           <p className='mt-4 text-slate-400 text-lg text-center'>
             Real-world success stories from our WordPress security and
             development projects

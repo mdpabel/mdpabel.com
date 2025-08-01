@@ -3,7 +3,7 @@ import ComponentWrapper from './component-wrapper';
 
 const Experience = () => {
   return (
-    <ComponentWrapper>
+    <ComponentWrapper className='mb-10'>
       <div className='mb-8'>
         <h2 className='mb-4 font-bold text-white text-2xl'>
           Career Highlights
