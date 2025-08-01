@@ -231,7 +231,12 @@ class WordPressAPI {
       );
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch ${postType}: ${response.status}`);
+        return {
+          posts: [],
+          total: 0,
+          totalPages: 0,
+          hasMore: false,
+        };
       }
 
       const posts = await response.json();
