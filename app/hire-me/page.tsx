@@ -11,9 +11,33 @@ import ContactForm from '@/components/contact-form';
 
 // Metadata (similar to other pages)
 export const metadata: Metadata = {
-  title: 'Hire Me - MD Pabel | 3Zero Digital',
+  title:
+    'Hire Me: Expert WordPress Security & Development Services by MD Pabel',
   description:
-    'Hire experienced full-stack developer and security specialist for your web projects. Custom development, security solutions, and maintenance services.',
+    'Hire MD Pabel for professional WordPress security, malware removal, and custom development services. Get expert help to secure and enhance your website.',
+  keywords:
+    'hire WordPress expert, MD Pabel hire, WordPress security services, malware removal hire, custom WordPress development, freelance WordPress consultant',
+  alternates: {
+    canonical: 'https://www.mdpabel.com/hire-me',
+  },
+  openGraph: {
+    title:
+      'Hire Me: Expert WordPress Security & Development Services by MD Pabel',
+    description:
+      'Hire MD Pabel for reliable WordPress security and development solutions tailored to your needs.',
+    url: 'https://www.mdpabel.com/hire-me',
+    siteName: 'MD Pabel',
+    images: [
+      {
+        url: '/screenshot.png',
+        width: 1200,
+        height: 630,
+        alt: 'Hire MD Pabel',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
 };
 
 const HireMePage = () => {

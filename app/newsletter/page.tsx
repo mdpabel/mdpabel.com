@@ -2,6 +2,37 @@ import { Lightbulb, Lock, Rocket } from 'lucide-react';
 import { Heading, Description } from '@/components/ui'; // Assuming these are located in '@/components/ui'
 import ComponentWrapper from '@/components/component-wrapper';
 import { NewsletterForm } from './newsletter-form';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title:
+    'Newsletter: Subscribe for WordPress Security Tips & Updates by MD Pabel',
+  description:
+    "Subscribe to MD Pabel's newsletter for the latest insights on WordPress security, malware removal techniques, development tips, and industry updates.",
+  keywords:
+    'WordPress newsletter, security tips subscription, malware removal updates, WordPress development news, MD Pabel newsletter, subscribe for website security',
+  alternates: {
+    canonical: 'https://www.mdpabel.com/newsletter',
+  },
+  openGraph: {
+    title:
+      'Newsletter: Subscribe for WordPress Security Tips & Updates by MD Pabel',
+    description:
+      "Stay informed with MD Pabel's newsletter on WordPress security and development best practices.",
+    url: 'https://www.mdpabel.com/newsletter',
+    siteName: 'MD Pabel',
+    images: [
+      {
+        url: '/images/newsletter-opengraph-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'MD Pabel Newsletter',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+};
 
 export const FeatureCards = () => {
   return (

@@ -93,7 +93,7 @@ const CaseStudies = async () => {
         </div>
 
         {/* Featured Case Study */}
-        <div className='bg-gradient-to-r from-purple-900/20 to-blue-900/20 mb-12 border border-purple-500/30 rounded-xl overflow-hidden'>
+        <div className='bg-slate-800 mb-12 rounded-xl overflow-hidden'>
           <div className='grid grid-cols-1 lg:grid-cols-2'>
             <div className='relative aspect-video lg:aspect-auto'>
               <img

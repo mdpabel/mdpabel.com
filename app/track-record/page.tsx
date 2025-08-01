@@ -7,6 +7,37 @@ import upworkScreenshot from '@/public/upwork-screenshot.png';
 import Image from 'next/image';
 import { SiFiverr } from 'react-icons/si';
 import { FaUpwork } from 'react-icons/fa6';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title:
+    'Track Record: Proven Success in WordPress Security & Development by MD Pabel',
+  description:
+    "Discover MD Pabel's track record of successful WordPress security implementations, malware removals, and custom development projects that have delivered results for clients.",
+  keywords:
+    'WordPress track record, security success history, malware removal achievements, custom development portfolio, MD Pabel accomplishments, client testimonials',
+  alternates: {
+    canonical: 'https://www.mdpabel.com/track-record',
+  },
+  openGraph: {
+    title:
+      'Track Record: Proven Success in WordPress Security & Development by MD Pabel',
+    description:
+      "Explore MD Pabel's proven track record in WordPress security and development services.",
+    url: 'https://www.mdpabel.com/track-record',
+    siteName: 'MD Pabel',
+    images: [
+      {
+        url: '/screenshot.png',
+        width: 1200,
+        height: 630,
+        alt: 'MD Pabel Track Record',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+};
 
 const Projects = () => {
   return (
