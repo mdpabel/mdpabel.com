@@ -273,7 +273,7 @@ const Header = () => {
           </ul>
 
           {/* Mobile Navigation Button */}
-          <div className='flex items-center gap-4'>
+          <div className='sm:hidden flex items-center gap-4'>
             <SearchForm />
             <button
               className='sm:hidden block text-gray-400 hover:text-gray-50 cursor-pointer'
