@@ -227,6 +227,7 @@ class WordPressAPI {
             tags: ['wordpress', postType],
             revalidate: 3600, // 1 hour
           },
+          cache: 'force-cache',
         },
       );
 
@@ -272,6 +273,7 @@ class WordPressAPI {
             tags: ['wordpress', postType],
             revalidate: 3600,
           },
+          cache: 'force-cache',
         },
       );
 
@@ -300,6 +302,7 @@ class WordPressAPI {
             tags: ['wordpress', postType],
             revalidate: 3600,
           },
+          cache: 'force-cache',
         },
       );
 
@@ -326,6 +329,7 @@ class WordPressAPI {
             tags: ['wordpress', 'categories'],
             revalidate: 3600,
           },
+          cache: 'force-cache',
         },
       );
 
@@ -349,6 +353,7 @@ class WordPressAPI {
             tags: ['wordpress', 'tags'],
             revalidate: 3600,
           },
+          cache: 'force-cache',
         },
       );
 
@@ -374,6 +379,7 @@ class WordPressAPI {
             tags: ['wordpress', 'categories'],
             revalidate: 3600,
           },
+          cache: 'force-cache',
         },
       );
 
@@ -399,6 +405,7 @@ class WordPressAPI {
             tags: ['wordpress', 'tags'],
             revalidate: 3600,
           },
+          cache: 'force-cache',
         },
       );
 
@@ -431,6 +438,7 @@ class WordPressAPI {
         )}&exclude=${postId}&per_page=${limit}&_embed=true`,
         {
           next: { tags: ['wordpress', postType] },
+          cache: 'force-cache',
         },
       );
 
@@ -500,6 +508,7 @@ class WordPressAPI {
         `${this.baseUrl}/wp-json/wp/v2/${postType}?per_page=${limit}&orderby=comment_count&order=desc&_embed=true`,
         {
           next: { tags: ['wordpress', postType] },
+          cache: 'force-cache',
         },
       );
 

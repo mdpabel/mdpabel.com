@@ -94,7 +94,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalV1Props) => {
           description: post.excerpt || 'Malware log',
           type: 'malware-log' as const,
           slug: post.slug,
-          url: `/malware-logs/${post.slug}`,
+          url: `/malware-log/${post.slug}`,
         })) || [];
 
       setResults([

@@ -46,7 +46,7 @@ export const siteData = {
       { title: 'Contact', href: '/contact' },
       { title: 'Hire Me', href: '/hire-me' },
       { title: 'Templates', href: '/templates' },
-      { title: 'Malware Logs', href: '/malware-logs' },
+      { title: 'Malware Logs', href: '/malware-log' },
       { title: 'Blog', href: '/blog' },
       { title: 'Snippets', href: '/snippets' },
     ],
