@@ -1,4 +1,5 @@
-// app/snippets/page.tsx
+export const dynamic = 'force-static';
+
 import { Calendar, Clock, ArrowRight } from 'lucide-react';
 import ComponentWrapper from '@/components/component-wrapper';
 import Title from '@/components/ui';

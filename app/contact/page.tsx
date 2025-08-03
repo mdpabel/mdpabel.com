@@ -1,3 +1,5 @@
+export const dynamic = 'force-static';
+
 import ComponentWrapper from '@/components/component-wrapper';
 import ContactForm from '@/components/contact-form';
 import { Metadata } from 'next';

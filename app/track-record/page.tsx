@@ -1,3 +1,5 @@
+export const dynamic = 'force-static';
+
 import { Shield, Code, ExternalLink } from 'lucide-react';
 import ComponentWrapper from '@/components/component-wrapper';
 import { Heading } from '@/components/ui';

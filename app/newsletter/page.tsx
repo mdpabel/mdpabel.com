@@ -1,3 +1,5 @@
+export const dynamic = 'force-static';
+
 import { Lightbulb, Lock, Rocket } from 'lucide-react';
 import { Heading, Description } from '@/components/ui'; // Assuming these are located in '@/components/ui'
 import ComponentWrapper from '@/components/component-wrapper';

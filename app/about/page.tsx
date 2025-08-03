@@ -1,3 +1,5 @@
+export const dynamic = 'force-static';
+
 import React from 'react';
 import ComponentWrapper from '@/components/component-wrapper';
 import { siteData } from '@/data/site-data';

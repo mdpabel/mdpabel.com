@@ -1,3 +1,5 @@
+export const dynamic = 'force-static';
+
 import { Calendar, Clock } from 'lucide-react';
 import ComponentWrapper from '@/components/component-wrapper';
 import { notFound } from 'next/navigation';
