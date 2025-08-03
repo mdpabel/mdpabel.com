@@ -1,3 +1,5 @@
+export const dynamic = 'force-static';
+
 import React from 'react';
 import { wordpress } from '@/lib/wordpress';
 import { notFound } from 'next/navigation';
