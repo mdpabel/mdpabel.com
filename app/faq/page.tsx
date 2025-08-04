@@ -5,6 +5,7 @@ import Title, { Heading } from '@/components/ui';
 import { wordpress } from '@/lib/wordpress';
 import Link from 'next/link';
 import Pagination from '@/components/pagination';
+import he from 'he';
 
 export const metadata: Metadata = {
   title: 'FAQ Accordion - WordPress Support & Services',
@@ -149,6 +150,24 @@ const FAQ = async ({ searchParams }: FAQType) => {
           </div>
         </div>
       </ComponentWrapper>
+
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: posts.map((faq) => ({
+              '@type': 'Question',
+              name: he.decode(faq.title),
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: he.decode(faq.content), // sanitized or plain text
+              },
+            })),
+          }),
+        }}
+      />
     </div>
   );
 };
