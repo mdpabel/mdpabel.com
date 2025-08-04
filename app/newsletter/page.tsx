@@ -71,7 +71,7 @@ export const FeatureCards = () => {
 const NewsletterPage = () => {
   return (
     <>
-      <ComponentWrapper className='relative py-20 text-center'>
+      <ComponentWrapper className='relative pt-10 pb-20 text-center'>
         <Heading className='mb-6'>
           Join Our Newsletter{' '}
           <Rocket className='inline-block ml-2 w-8 h-8 text-purple-400' />

@@ -112,7 +112,7 @@ const Blogs = async ({ searchParams }: BlogType) => {
     const otherPosts = sortedPosts.slice(4);
 
     return (
-      <div className='bg-slate-900 py-8 sm:py-12 lg:py-16 text-white'>
+      <div className='pt-10 pb-20'>
         <ComponentWrapper>
           <div className='mb-8 sm:mb-12'>
             <Title>Blog & Insights</Title>

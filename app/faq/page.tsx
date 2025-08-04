@@ -85,7 +85,7 @@ const FAQ = async ({ searchParams }: FAQType) => {
   }
 
   return (
-    <div className='bg-slate-900 py-16 text-white'>
+    <div className='bg-slate-900 pt-10 pb-20 text-white'>
       <ComponentWrapper>
         <div className='mb-12 text-center'>
           <Heading as='h1'>Frequently Asked Questions</Heading>

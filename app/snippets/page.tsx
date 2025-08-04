@@ -88,7 +88,7 @@ const Snippets = async () => {
   const reading_time = 5; // Adjust based on typical snippet length
 
   return (
-    <div className='bg-slate-900 py-16 text-white'>
+    <div className='pt-10 pb-20'>
       <ComponentWrapper>
         <div className='mb-12'>
           <Title>Code Snippets</Title>

@@ -194,7 +194,7 @@ const page = () => {
 
   return (
     <ComponentWrapper>
-      <div className='relative py-20 text-center'>
+      <div className='relative pt-10 pb-20 text-center'>
         <Heading className='mb-6'>Advanced Blacklist Removal</Heading>
 
         <Description>

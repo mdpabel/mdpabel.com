@@ -43,7 +43,7 @@ export const metadata: Metadata = {
 
 const Projects = () => {
   return (
-    <div className='bg-slate-900 py-16 text-white'>
+    <div className='bg-slate-900 pt-10 pb-20 text-white'>
       <ComponentWrapper>
         <div className='mb-12 text-center'>
           <Heading>Proven Track Record</Heading>
@@ -144,7 +144,7 @@ const Projects = () => {
             {[
               {
                 label: 'Sites Recovered',
-                value: siteData.stats.hackedWebsites,
+                value: siteData.stats.fixHackedWebsites,
                 color: 'red',
               },
               { label: 'Avg Response', value: '< 1hr', color: 'green' },

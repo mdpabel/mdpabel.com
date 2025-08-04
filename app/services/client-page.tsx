@@ -3,6 +3,8 @@ import React, { useState, useMemo, useEffect } from 'react';
 import ComponentWrapper from '@/components/component-wrapper';
 import {
   Description,
+  H1,
+  H2,
   Heading,
   StatsCards,
   TrustIndicator,
@@ -180,13 +182,11 @@ const ServicesList = () => {
   return (
     <ComponentWrapper>
       <div className='relative py-10 text-center'>
-        <Heading className='mb-6'>
-          Trusted Website Services for Every Stage
-        </Heading>
-        <Description className='mx-auto max-w-2xl'>
+        <H1 className='mb-6'>Trusted Website Services</H1>
+        <H2 className='mb-10'>
           From Troubleshooting and Security to Custom Development — We've Got
           You Covered
-        </Description>
+        </H2>
         <StatsCards />
         <TrustIndicator />
       </div>

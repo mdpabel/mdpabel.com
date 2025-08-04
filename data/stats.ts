@@ -15,7 +15,7 @@ export const STATS = [
     label: 'Countries Reached',
   },
   {
-    key: 'hackedWebsitesResolved',
+    key: 'fixHackedWebsitesResolved',
     value: '4500+',
     label: 'Hacked Websites Resolved',
   },

@@ -43,7 +43,7 @@ export const metadata: Metadata = {
 const HireMePage = () => {
   return (
     <ComponentWrapper>
-      <div className='relative py-20 text-center'>
+      <div className='relative pt-10 pb-20 text-center'>
         <Heading className='mb-6'>Hire Me for Your Next Project</Heading>
         <Description>
           {siteData.personal.description} Let's build secure and scalable web

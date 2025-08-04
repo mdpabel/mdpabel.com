@@ -1,7 +1,7 @@
 import { siteData } from '@/data/site-data';
 import { cn } from '@/lib/utils';
 import { Award, Globe, Star } from 'lucide-react';
-import { ButtonHTMLAttributes, HTMLAttributes } from 'react';
+import { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {}
 
@@ -128,6 +128,34 @@ export const Button = ({ className, children, ...props }: ButtonProps) => {
       )}>
       {children}
     </button>
+  );
+};
+
+type HeadingType = HTMLAttributes<HTMLHeadElement> & {};
+
+export const H1 = ({ children, className, ...props }: HeadingType) => {
+  return (
+    <h1
+      {...props}
+      className={cn(
+        'mb-4 font-semibold text-slate-300 dark:text-zinc-100 text-4xl sm:text-5xl leading-[1.1em] tracking-tight',
+        className,
+      )}>
+      {children}
+    </h1>
+  );
+};
+
+export const H2 = ({ children, className, ...props }: HeadingType) => {
+  return (
+    <h1
+      {...props}
+      className={cn(
+        'font-semibold text-slate-300 text-2xl sm:text-3xl leading-[1.1em] tracking-tight',
+        className,
+      )}>
+      {children}
+    </h1>
   );
 };
 

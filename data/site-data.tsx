@@ -153,7 +153,7 @@ export const siteData = {
   },
 
   stats: {
-    hackedWebsites: '4500+',
+    fixfixHackedWebsites: '4500+',
     recoveredDomains: '300+',
     completedProjects: '2000+',
     clientsSatisfied: '1700+',
@@ -161,6 +161,8 @@ export const siteData = {
     soccerMatches: '3500+',
     winRate: '50%',
     experience: `${new Date().getFullYear() - 2018}+ Years`,
+    globalImpacts: '56%',
+    websiteLaunched: '50+',
   },
 
   companies: {

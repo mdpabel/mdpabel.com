@@ -82,7 +82,7 @@ const CaseStudies = async () => {
   };
 
   return (
-    <div className='bg-slate-900 py-8 sm:py-12 lg:py-16 text-white'>
+    <div className='pt-10 pb-20'>
       <ComponentWrapper>
         <div className='mb-8 sm:mb-12'>
           <Heading as='h1' className='!text-center'>
@@ -90,7 +90,10 @@ const CaseStudies = async () => {
           </Heading>
           <p className='mt-4 text-slate-400 text-lg text-center'>
             Real-world success stories from our WordPress security and
-            development projects
+            development projects. Learn how we’ve helped businesses recover
+            hacked sites, improve performance, and scale securely — using proven
+            strategies backed by 4,500+ successful cleanups and 2000+ completed
+            projects.
           </p>
         </div>
 
