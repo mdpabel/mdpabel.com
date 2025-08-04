@@ -21,6 +21,7 @@ import ComponentWrapper from './component-wrapper'; // Assuming ComponentWrapper
 import Link from 'next/link';
 import SearchModalV1 from './command-menu';
 import SearchForm from './search';
+import { FaQ } from 'react-icons/fa6';
 
 interface DropdownItem {
   icon: React.ReactNode;
@@ -89,6 +90,12 @@ const Header = () => {
       title: 'Snippets',
       description: 'Code snippets and examples',
       href: '/snippets',
+    },
+    {
+      icon: <FaQ className='inline-block !w-5 !h-5' />,
+      title: 'FAQs',
+      description: 'Common questions with expert answers',
+      href: '/faq',
     },
   ];
 
