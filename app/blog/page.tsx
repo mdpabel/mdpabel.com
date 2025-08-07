@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 import { Metadata } from 'next';
 import Pagination from '@/components/pagination';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title:
@@ -122,10 +123,12 @@ const Blogs = async ({ searchParams }: BlogType) => {
           <div className='bg-slate-800 mb-8 sm:mb-12 border border-slate-700 rounded-lg overflow-hidden'>
             <div className='grid grid-cols-1 lg:grid-cols-2'>
               <div className='aspect-video lg:aspect-auto'>
-                <img
-                  src={featuredPost.featuredImage?.url}
+                <Image
+                  src={featuredPost.featuredImage?.url || ''}
                   alt={featuredPost.title}
                   className='w-full h-full object-cover'
+                  width={featuredPost.featuredImage?.width || 500}
+                  height={featuredPost.featuredImage?.height || 500}
                 />
               </div>
               <div className='p-4 sm:p-6 lg:p-8'>
@@ -282,10 +285,12 @@ const Blogs = async ({ searchParams }: BlogType) => {
                   {/* Desktop Layout - Side by Side */}
                   <div className='hidden sm:flex gap-4'>
                     <div className='flex-shrink-0 rounded-lg w-32 sm:w-40 lg:w-48 aspect-video overflow-hidden'>
-                      <img
-                        src={post.featuredImage?.url}
+                      <Image
+                        src={post.featuredImage?.url || ''}
                         alt={post.title}
                         className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-300'
+                        width={featuredPost.featuredImage?.width || 500}
+                        height={featuredPost.featuredImage?.height || 500}
                       />
                     </div>
 
