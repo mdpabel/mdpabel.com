@@ -133,13 +133,13 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
 
           {/* Featured Image */}
           {post.featuredImage && (
-            <div className='relative mb-12 w-full h-[450px]'>
+            <div className='relative mb-12 w-full'>
               <Image
                 src={post.featuredImage.url}
                 alt={post.featuredImage.alt || decodedTitle}
                 className='shadow-lg rounded-lg w-full h-full object-cover'
-                layout='fill'
-                objectFit='cover'
+                width={post.featuredImage.width || 500}
+                height={post.featuredImage.height || 500}
                 priority
               />
             </div>
