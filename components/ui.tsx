@@ -148,14 +148,14 @@ export const H1 = ({ children, className, ...props }: HeadingType) => {
 
 export const H2 = ({ children, className, ...props }: HeadingType) => {
   return (
-    <h1
+    <h2
       {...props}
       className={cn(
-        'font-semibold text-slate-300 text-2xl sm:text-3xl leading-[1.1em] tracking-tight',
+        'mb-4 font-semibold text-slate-300 dark:text-zinc-100 text-3xl leading-tight tracking-tight',
         className,
       )}>
       {children}
-    </h1>
+    </h2>
   );
 };
 

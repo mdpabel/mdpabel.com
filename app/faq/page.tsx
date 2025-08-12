@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { Plus, Minus } from 'lucide-react';
 import ComponentWrapper from '@/components/component-wrapper';
-import Title, { Heading } from '@/components/ui';
+import { Heading } from '@/components/ui';
 import { wordpress } from '@/lib/wordpress';
 import Link from 'next/link';
 import Pagination from '@/components/pagination';
@@ -17,48 +17,6 @@ export const metadata: Metadata = {
   },
 };
 
-const posts = [
-  {
-    question: 'What types of malware do you remove?',
-    answer:
-      'We remove all types of malware including backdoors, trojans, ransomware, spam injections, SEO spam, malicious redirects, cryptocurrency miners, and database injections.',
-  },
-  {
-    question: 'How do you detect hidden malware?',
-    answer:
-      'We use advanced scanning tools, manual code review, database analysis, and signature-based detection to find even the most sophisticated hidden malware.',
-  },
-  {
-    question: 'Will my site be down during cleanup?',
-    answer:
-      'We work on a staging copy first whenever possible. For live sites, downtime is minimal and typically only occurs during final file replacements.',
-  },
-  {
-    question: 'Do you provide website backups?',
-    answer:
-      'Yes, we create full backups before any work begins and can set up automated daily backups as part of our maintenance packages.',
-  },
-  {
-    question: 'Can you help with Google penalty removal?',
-    answer:
-      'Absolutely! We clean the malware, submit reconsideration requests, and guide you through the Google penalty removal process.',
-  },
-  {
-    question: 'What WordPress versions do you support?',
-    answer:
-      'We support all current WordPress versions and can help upgrade older installations to the latest secure version.',
-  },
-  {
-    question: 'Do you offer emergency weekend support?',
-    answer:
-      'Yes, we provide emergency support for critical issues including weekends and holidays at premium rates.',
-  },
-  {
-    question: 'How do you ensure my data stays private?',
-    answer:
-      'We sign NDAs, use secure connections, delete temporary files after cleanup, and follow strict data protection protocols.',
-  },
-];
 type FAQType = {
   searchParams: Promise<{
     page: string;
