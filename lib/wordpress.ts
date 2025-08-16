@@ -282,6 +282,7 @@ class WordPressAPI {
       }
 
       const posts = await response.json();
+
       return posts.length > 0 ? this.processPost(posts[0]) : null;
     } catch (error) {
       console.error(`Error fetching post by slug ${slug}:`, error);
@@ -312,6 +313,9 @@ class WordPressAPI {
       }
 
       const post = await response.json();
+
+      console.log({ post });
+
       return this.processPost(post);
     } catch (error) {
       console.error(`Error fetching post by ID ${id}:`, error);

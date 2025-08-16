@@ -104,6 +104,8 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
 
   const decodedTitle = he.decode(post.title); // Decode with he
 
+  const postById = await wordpress.getPostById(post.id);
+
   const relatedPosts = await wordpress.getRelatedPosts(post.id, 3);
 
   const strippedExcerpt = post.excerpt.replace(/<[^>]*>/g, '');
