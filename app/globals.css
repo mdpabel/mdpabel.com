@@ -200,3 +200,7 @@ td {
     border-bottom: 0;
   }
 }
+
+li::marker {
+  color: gray;
+}

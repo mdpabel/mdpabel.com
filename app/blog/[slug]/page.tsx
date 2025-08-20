@@ -111,10 +111,34 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
   const strippedExcerpt = post.excerpt.replace(/<[^>]*>/g, '');
   const strippedContent = post.content.replace(/<[^>]*>/g, '');
 
+  // Server-side parsed content for TOC
+  function generateTOC(content: string) {
+    const headings = content.match(/<h[2-6][^>]*>.*?<\/h[2-6]>/g) || [];
+    return headings.map((h, i) => {
+      const level = parseInt(h.match(/<h(\d)/)?.[1] || '2');
+      const text = h.replace(/<[^>]*>/g, '').trim();
+      const id = `heading-${i}`;
+      return { id, text, level };
+    });
+  }
+
+  const toc = generateTOC(post.content);
+
+  // Replace headings with anchored versions
+  let index = 0;
+  let anchoredContent = post.content.replace(
+    /<h([2-6])([^>]*)>(.*?)<\/h\1>/g,
+    (match, level, attrs, content) => {
+      const id = `heading-${index++}`;
+      const newAttrs = attrs.trim() ? `${attrs} id="${id}"` : `id="${id}"`;
+      return `<h${level} ${newAttrs}>${content}</h${level}>`;
+    },
+  );
+
   return (
     <>
       <ComponentWrapper>
-        <div className='px-5 sm:px-0 py-10 sm:py-16 container'>
+        <div className='px-4 sm:px-0 py-10 sm:py-16 container'>
           {/* Blog Header */}
           <header className='mb-12 text-left sm:text-center'>
             <Heading className='!text-3xl md:!text-4xl text-center'>
@@ -148,9 +172,29 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
             </div>
           )}
 
+          {/* Table of Contents */}
+          {toc.length > 0 && (
+            <div className='mb-12'>
+              <h2 className='mb-4 font-bold text-gray-200 text-xl'>
+                Table of Contents
+              </h2>
+              <ul className='pl-6 list-disc'>
+                {toc.map((item) => (
+                  <li key={item.id} className={`ml-${(item.level - 2) * 4}`}>
+                    <Link
+                      href={`#${item.id}`}
+                      className='text-blue-400 hover:underline'>
+                      {item.text}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {/* Blog Content */}
           <article className='prose-invert max-w-none text-gray-300 prose prose-lg'>
-            <div dangerouslySetInnerHTML={{ __html: post.content }} />
+            <div dangerouslySetInnerHTML={{ __html: anchoredContent }} />
           </article>
 
           {/* Author Section */}
