@@ -167,6 +167,7 @@ const Header = () => {
       role='menu'>
       {items.map((item, index) => (
         <Link
+          prefetch={true}
           key={index}
           href={item.href}
           className='group flex items-center gap-3 hover:bg-slate-700 px-4 py-2.5 text-gray-400 transition-colors'
@@ -193,6 +194,7 @@ const Header = () => {
           <div className='flex items-center gap-5'>
             {/* Logo */}
             <Link
+              prefetch={true}
               className='flex items-center font-medium text-white text-lg'
               href='/'
               aria-label='Home'>
@@ -203,6 +205,7 @@ const Header = () => {
 
             {/* Mobile Services - Keep as a direct link for mobile */}
             <Link
+              prefetch={true}
               href='/services'
               className='group sm:hidden inline relative text-gray-400 hover:text-white cursor-pointer'>
               Services
@@ -233,6 +236,7 @@ const Header = () => {
                 className='relative flex items-center'
                 ref={servicesDropdownTriggerRef}>
                 <Link
+                  prefetch={true}
                   href='/services'
                   className='text-gray-400 hover:text-white cursor-pointer'
                   aria-label='Open Services SubMenu'
@@ -243,18 +247,23 @@ const Header = () => {
 
               {/* Templates (no submenu) */}
               <Link
+                prefetch={true}
                 href='/case-studies'
                 className='text-gray-400 hover:text-white'>
                 Case Studies
               </Link>
 
               <Link
+                prefetch={true}
                 href='/malware-log'
                 className='text-gray-400 hover:text-white'>
                 Malware Log
               </Link>
 
-              <Link href='/blog' className='text-gray-400 hover:text-white'>
+              <Link
+                prefetch={true}
+                href='/blog'
+                className='text-gray-400 hover:text-white'>
                 Blog
               </Link>
             </div>
@@ -265,6 +274,7 @@ const Header = () => {
             <SearchForm />
             <li className='transition-opacity duration-300'>
               <Link
+                prefetch={true}
                 href='/newsletter'
                 className='text-gray-400 hover:text-white'>
                 Newsletter
@@ -272,6 +282,7 @@ const Header = () => {
             </li>
             <li className='flex items-center gap-2'>
               <Link
+                prefetch={true}
                 href='/hire-me'
                 className='flex justify-center items-center bg-gradient-to-b from-purple-50 to-purple-100 px-6 py-2 rounded-full w-32 h-8 font-medium text-slate-900 text-sm transition-all duration-300 cursor-pointer'>
                 Hire Me
@@ -307,6 +318,7 @@ const Header = () => {
                 {mobileMenuItems.map((item, index) => (
                   <li key={`mobile-main-${index}`}>
                     <Link
+                      prefetch={true}
                       href={item.href}
                       className='group flex items-center gap-4 hover:bg-slate-700 p-3 rounded-lg transition-colors duration-200'
                       onClick={() => setIsMobileMenuOpen(false)}>
@@ -329,6 +341,7 @@ const Header = () => {
               <div className='flex items-center gap-4'>
                 <li>
                   <Link
+                    prefetch={true}
                     href='/newsletter'
                     className='bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-semibold text-white text-xl transition-colors duration-200'
                     onClick={() => setIsMobileMenuOpen(false)}>
@@ -337,6 +350,7 @@ const Header = () => {
                 </li>
                 <li>
                   <Link
+                    prefetch={true}
                     href='/hire-me'
                     className='bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-semibold text-white text-xl transition-colors duration-200'
                     onClick={() => setIsMobileMenuOpen(false)}>
