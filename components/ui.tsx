@@ -10,11 +10,11 @@ const Title = ({ children, className, ...props }: Props) => {
     <div
       className={cn('flex justify-center items-center', className)}
       {...props}>
-      <div className='bg-slate-700 w-full h-[1px]' />
+      <div className='bg-slate-700/50 w-full h-[1px]' />
       <h2 className='bg-slate-800/80 px-10 py-1.5 rounded-md text-slate-300 text-center'>
         {children}
       </h2>
-      <div className='bg-slate-700 w-full h-[1px]' />
+      <div className='bg-slate-700/50 w-full h-[1px]' />
     </div>
   );
 };

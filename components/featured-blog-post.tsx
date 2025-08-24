@@ -5,15 +5,16 @@ import Link from 'next/link';
 
 const FeaturedBlogPost = async () => {
   const { posts } = await wordpress.getPosts({
-    perPage: 10,
+    perPage: 7,
     page: 1,
+    categories: ['featured'],
   });
 
   return (
     <ComponentWrapper className='mt-10'>
       {posts.map((post) => (
         <Link
-          className='group flex justify-between items-center py-3 border-b text-md text-slate-300/80 no-underline'
+          className='group flex justify-between items-center py-3 border-b border-b-slate-700/50 text-md text-slate-300/80 no-underline'
           href={`/blog/${post.slug}`}>
           <div
             className='w-[calc(100%-80px)] transition-transform group-hover:translate-x-2'

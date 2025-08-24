@@ -98,10 +98,6 @@ const Blogs = async ({ searchParams }: BlogType) => {
   return (
     <div className='pt-10 pb-20'>
       <ComponentWrapper>
-        <div className='mb-8 sm:mb-12'>
-          <Title>Blog & Insights {page > 1 && `- Page ${page}`}</Title>
-        </div>
-
         <div className='gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'>
           {posts.map((post) => (
             <BlogCard
