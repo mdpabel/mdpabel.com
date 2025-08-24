@@ -1,13 +1,13 @@
 import { Calendar, Users, Globe, Shield, Code, Layers } from 'lucide-react';
-import Links from '@/components/links';
 import ComponentWrapper from './component-wrapper';
+import { siteData } from '@/data/site-data';
 
 const STATS = [
   {
     id: 'years-of-experience',
     icon: Calendar,
     label: 'Years of Experience',
-    value: '7+',
+    value: siteData.stats.experienceInNumber,
     gradientFrom: 'blue-400',
     gradientTo: 'purple-400',
     hoverColor: 'blue-500',
@@ -17,7 +17,7 @@ const STATS = [
     id: 'clients-served',
     icon: Users,
     label: 'Clients Served',
-    value: '1600+',
+    value: siteData.stats.clientsSatisfied,
     gradientFrom: 'green-400',
     gradientTo: 'blue-400',
     hoverColor: 'green-500',
@@ -27,7 +27,7 @@ const STATS = [
     id: 'global-reach',
     icon: Globe,
     label: 'Global Reach',
-    value: '56%',
+    value: siteData.stats.globalImpacts,
     gradientFrom: 'purple-400',
     gradientTo: 'pink-400',
     hoverColor: 'purple-500',
@@ -37,7 +37,7 @@ const STATS = [
     id: 'websites-resolved',
     icon: Shield,
     label: 'Malware Removal & Fix Hacked',
-    value: '4500+',
+    value: siteData.stats.fixfixHackedWebsites,
     featured: true,
     gradientFrom: 'yellow-400',
     gradientTo: 'orange-400',
@@ -48,7 +48,7 @@ const STATS = [
     id: 'dsa-problems-solved',
     icon: Code,
     label: 'DS&A Problems Solved',
-    value: '800+',
+    value: siteData.stats.dsaProblems,
     gradientFrom: 'pink-400',
     gradientTo: 'red-400',
     hoverColor: 'pink-500',
@@ -58,7 +58,7 @@ const STATS = [
     id: 'projects-completed',
     icon: Layers,
     label: 'Projects Completed',
-    value: '1600+',
+    value: siteData.stats.completedProjects,
     gradientFrom: 'orange-400',
     gradientTo: 'yellow-400',
     hoverColor: 'orange-500',

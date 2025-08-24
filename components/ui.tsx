@@ -7,14 +7,15 @@ interface Props extends HTMLAttributes<HTMLDivElement> {}
 
 const Title = ({ children, className, ...props }: Props) => {
   return (
-    <h2
-      {...props}
-      className={cn(
-        '-top-[17px] sm:left-1/2 absolute flex bg-slate-900 px-3 py-1 border border-[#1e293c] rounded-lg font-regular text-md text-slate-400 sm:-translate-x-1/2',
-        className,
-      )}>
-      {children}
-    </h2>
+    <div
+      className={cn('flex justify-center items-center', className)}
+      {...props}>
+      <div className='bg-slate-700 w-full h-[1px]' />
+      <h2 className='bg-slate-800/80 px-10 py-1.5 rounded-md text-slate-300 text-center'>
+        {children}
+      </h2>
+      <div className='bg-slate-700 w-full h-[1px]' />
+    </div>
   );
 };
 

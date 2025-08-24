@@ -3,7 +3,7 @@ import ComponentWrapper from './component-wrapper';
 
 const Services = () => {
   return (
-    <ComponentWrapper className='mt-20'>
+    <ComponentWrapper className='mt-10'>
       <div className='gap-6 grid grid-cols-1 md:grid-cols-2 mb-16'>
         {/* Malware Removal - Full width on md */}
         <div className='md:col-span-2 bg-red-900/20 p-8 border border-red-700 rounded-lg'>

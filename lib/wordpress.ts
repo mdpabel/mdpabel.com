@@ -1,4 +1,5 @@
-// lib/wordpress-api.ts
+import { YoastSEO } from '@/types/wp';
+
 // Enhanced types for enriched data
 interface WordPressImage {
   id: number;
@@ -41,7 +42,7 @@ interface WordPressTag {
   count: number;
 }
 
-interface WordPressPost {
+interface WordPressPost<TACF = any> {
   id: number;
   title: string;
   content: string;
@@ -58,7 +59,8 @@ interface WordPressPost {
   commentStatus: string;
   format: string;
   sticky: boolean;
-  acf: any; // ACF fields, typed as any for flexibility; can be refined based on specific fields
+  acf: TACF; // ACF fields, now generic for strong typing
+  yoastSEO: YoastSEO;
 }
 
 interface PostsQueryOptions {
@@ -76,8 +78,8 @@ interface PostsQueryOptions {
   excludeSticky?: boolean;
 }
 
-interface PostsResponse {
-  posts: WordPressPost[];
+interface PostsResponse<TACF = any> {
+  posts: WordPressPost<TACF>[];
   total: number;
   totalPages: number;
   hasMore: boolean;
@@ -148,8 +150,8 @@ class WordPressAPI {
     };
   }
 
-  // Process post
-  private processPost(post: any): WordPressPost {
+  // Process post (now generic over TACF)
+  private processPost<TACF = any>(post: any): WordPressPost<TACF> {
     return {
       id: post.id,
       title: post.title?.rendered || '',
@@ -177,12 +179,15 @@ class WordPressAPI {
       commentStatus: post.comment_status || 'closed',
       format: post.format || 'standard',
       sticky: post.sticky || false,
-      acf: post.acf || {}, // ACF fields
+      acf: (post.acf as TACF) || ({} as TACF), // Cast to TACF for type safety
+      yoastSEO: post.yoast_head_json,
     };
   }
 
-  // Get posts with all related data
-  async getPosts(options: PostsQueryOptions = {}): Promise<PostsResponse> {
+  // Get posts with all related data (now generic over TACF)
+  async getPosts<TACF = any>(
+    options: PostsQueryOptions = {},
+  ): Promise<PostsResponse<TACF>> {
     try {
       const postType = options.postType || 'posts';
       const params = new URLSearchParams();
@@ -227,7 +232,6 @@ class WordPressAPI {
             tags: ['wordpress', postType],
             revalidate: 3600, // 1 hour
           },
-          cache: 'force-cache',
         },
       );
 
@@ -249,7 +253,7 @@ class WordPressAPI {
       const currentPage = options.page || 1;
 
       return {
-        posts: posts.map((post: any) => this.processPost(post)),
+        posts: posts.map((post: any) => this.processPost<TACF>(post)),
         total,
         totalPages,
         hasMore: currentPage < totalPages,
@@ -260,11 +264,11 @@ class WordPressAPI {
     }
   }
 
-  // Get single post by slug
-  async getPostBySlug(
+  // Get single post by slug (now generic over TACF)
+  async getPostBySlug<TACF = any>(
     slug: string,
     postType: string = 'posts',
-  ): Promise<WordPressPost | null> {
+  ): Promise<WordPressPost<TACF> | null> {
     try {
       const response = await fetch(
         `${this.baseUrl}/wp-json/wp/v2/${postType}?slug=${slug}&_embed=true`,
@@ -273,7 +277,6 @@ class WordPressAPI {
             tags: ['wordpress', postType],
             revalidate: 3600,
           },
-          cache: 'force-cache',
         },
       );
 
@@ -282,19 +285,18 @@ class WordPressAPI {
       }
 
       const posts = await response.json();
-
-      return posts.length > 0 ? this.processPost(posts[0]) : null;
+      return posts.length > 0 ? this.processPost<TACF>(posts[0]) : null;
     } catch (error) {
       console.error(`Error fetching post by slug ${slug}:`, error);
       return null;
     }
   }
 
-  // Get single post by ID
-  async getPostById(
+  // Get single post by ID (now generic over TACF)
+  async getPostById<TACF = any>(
     id: number,
     postType: string = 'posts',
-  ): Promise<WordPressPost | null> {
+  ): Promise<WordPressPost<TACF> | null> {
     try {
       const response = await fetch(
         `${this.baseUrl}/wp-json/wp/v2/${postType}/${id}?_embed=true`,
@@ -303,7 +305,6 @@ class WordPressAPI {
             tags: ['wordpress', postType],
             revalidate: 3600,
           },
-          cache: 'force-cache',
         },
       );
 
@@ -313,10 +314,7 @@ class WordPressAPI {
       }
 
       const post = await response.json();
-
-      console.log({ post });
-
-      return this.processPost(post);
+      return this.processPost<TACF>(post);
     } catch (error) {
       console.error(`Error fetching post by ID ${id}:`, error);
       return null;
@@ -333,7 +331,6 @@ class WordPressAPI {
             tags: ['wordpress', 'categories'],
             revalidate: 3600,
           },
-          cache: 'force-cache',
         },
       );
 
@@ -357,7 +354,6 @@ class WordPressAPI {
             tags: ['wordpress', 'tags'],
             revalidate: 3600,
           },
-          cache: 'force-cache',
         },
       );
 
@@ -383,7 +379,6 @@ class WordPressAPI {
             tags: ['wordpress', 'categories'],
             revalidate: 3600,
           },
-          cache: 'force-cache',
         },
       );
 
@@ -409,7 +404,6 @@ class WordPressAPI {
             tags: ['wordpress', 'tags'],
             revalidate: 3600,
           },
-          cache: 'force-cache',
         },
       );
 
@@ -423,14 +417,14 @@ class WordPressAPI {
     }
   }
 
-  // Get related posts
-  async getRelatedPosts(
+  // Get related posts (now generic over TACF)
+  async getRelatedPosts<TACF = any>(
     postId: number,
     limit: number = 5,
     postType: string = 'posts',
-  ): Promise<WordPressPost[]> {
+  ): Promise<WordPressPost<TACF>[]> {
     try {
-      const post = await this.getPostById(postId, postType);
+      const post = await this.getPostById<TACF>(postId, postType);
       if (!post || post.categories.length === 0) return [];
 
       const categoryIds = post.categories.map((cat) => cat.id);
@@ -442,58 +436,57 @@ class WordPressAPI {
         )}&exclude=${postId}&per_page=${limit}&_embed=true`,
         {
           next: { tags: ['wordpress', postType] },
-          cache: 'force-cache',
         },
       );
 
       if (!response.ok) return [];
 
       const posts = await response.json();
-      return posts.map((post: any) => this.processPost(post));
+      return posts.map((post: any) => this.processPost<TACF>(post));
     } catch (error) {
       console.error('Error fetching related posts:', error);
       return [];
     }
   }
 
-  // Search posts
-  async searchPosts(
+  // Search posts (now generic over TACF)
+  async searchPosts<TACF = any>(
     query: string,
     options: Omit<PostsQueryOptions, 'search'> = {},
-  ): Promise<PostsResponse> {
-    return this.getPosts({ ...options, search: query });
+  ): Promise<PostsResponse<TACF>> {
+    return this.getPosts<TACF>({ ...options, search: query });
   }
 
-  // Get posts by category
-  async getPostsByCategory(
+  // Get posts by category (now generic over TACF)
+  async getPostsByCategory<TACF = any>(
     categorySlug: string,
     options: Omit<PostsQueryOptions, 'categories'> = {},
-  ): Promise<PostsResponse> {
-    return this.getPosts({ ...options, categories: [categorySlug] });
+  ): Promise<PostsResponse<TACF>> {
+    return this.getPosts<TACF>({ ...options, categories: [categorySlug] });
   }
 
-  // Get posts by tag
-  async getPostsByTag(
+  // Get posts by tag (now generic over TACF)
+  async getPostsByTag<TACF = any>(
     tagSlug: string,
     options: Omit<PostsQueryOptions, 'tags'> = {},
-  ): Promise<PostsResponse> {
-    return this.getPosts({ ...options, tags: [tagSlug] });
+  ): Promise<PostsResponse<TACF>> {
+    return this.getPosts<TACF>({ ...options, tags: [tagSlug] });
   }
 
-  // Get posts by author
-  async getPostsByAuthor(
+  // Get posts by author (now generic over TACF)
+  async getPostsByAuthor<TACF = any>(
     authorId: number,
     options: Omit<PostsQueryOptions, 'author'> = {},
-  ): Promise<PostsResponse> {
-    return this.getPosts({ ...options, author: authorId });
+  ): Promise<PostsResponse<TACF>> {
+    return this.getPosts<TACF>({ ...options, author: authorId });
   }
 
-  // Get recent posts
-  async getRecentPosts(
+  // Get recent posts (now generic over TACF)
+  async getRecentPosts<TACF = any>(
     limit: number = 5,
     postType: string = 'posts',
-  ): Promise<WordPressPost[]> {
-    const { posts } = await this.getPosts({
+  ): Promise<WordPressPost<TACF>[]> {
+    const { posts } = await this.getPosts<TACF>({
       postType,
       perPage: limit,
       orderBy: 'date',
@@ -502,28 +495,50 @@ class WordPressAPI {
     return posts;
   }
 
-  // Get popular posts (by comment count)
-  async getPopularPosts(
+  // Get popular posts (by comment count) (now generic over TACF)
+  async getPopularPosts<TACF = any>(
     limit: number = 5,
     postType: string = 'posts',
-  ): Promise<WordPressPost[]> {
+  ): Promise<WordPressPost<TACF>[]> {
     try {
       const response = await fetch(
         `${this.baseUrl}/wp-json/wp/v2/${postType}?per_page=${limit}&orderby=comment_count&order=desc&_embed=true`,
         {
           next: { tags: ['wordpress', postType] },
-          cache: 'force-cache',
         },
       );
 
       if (!response.ok) return [];
 
       const posts = await response.json();
-      return posts.map((post: any) => this.processPost(post));
+      return posts.map((post: any) => this.processPost<TACF>(post));
     } catch (error) {
       console.error('Error fetching popular posts:', error);
       return [];
     }
+  }
+
+  async postViewCounter(postId: number) {
+    const response = await fetch(
+      `${this.baseUrl}/wp-json/custom/v1/post-views/${postId}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({}),
+      },
+    );
+
+    if (!response.ok)
+      return {
+        views: 0,
+      };
+
+    const data = await response.json();
+    return {
+      views: data.views || 0,
+    };
   }
 }
 

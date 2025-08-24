@@ -103,7 +103,7 @@ export default function BlogCard({
         />
 
         {/* Meta */}
-        <div className='flex flex-col gap-2 mb-4 text-slate-400 text-xs'>
+        {/* <div className='flex flex-col gap-2 mb-4 text-slate-400 text-xs'>
           <div className='flex items-center gap-1'>
             <Calendar className='w-3 h-3' />
             <span>{formattedDate}</span>
@@ -112,7 +112,7 @@ export default function BlogCard({
             <Clock className='w-3 h-3' />
             <span>{readingTime} min read</span>
           </div>
-        </div>
+        </div> */}
 
         {/* CTA */}
         <Link

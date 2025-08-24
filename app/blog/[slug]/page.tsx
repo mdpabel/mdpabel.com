@@ -1,36 +1,35 @@
 export const dynamic = 'force-static';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { wordpress } from '@/lib/wordpress';
 import { notFound } from 'next/navigation';
 import ComponentWrapper from '@/components/component-wrapper';
 import { Heading } from '@/components/ui';
 import Link from 'next/link';
 import { Metadata } from 'next';
-import he from 'he'; // Import he for decoding
+import he from 'he';
 import Image from 'next/image';
 import { siteData } from '@/data/site-data';
+import lazy from 'next/dynamic';
+
+import ViewCounter, { ViewCounterSkeleton } from '@/components/view-counter';
 
 interface SingleBlogProps {
-  params: Promise<{
-    slug: string;
-  }>;
+  params: Promise<{ slug: string }>; // as per your original typing
 }
 
 export async function generateMetadata({
   params,
 }: SingleBlogProps): Promise<Metadata> {
   const { slug } = await params;
-
   const post = await wordpress.getPostBySlug(slug);
   if (!post) return { title: 'Post Not Found' };
 
-  const decodedTitle = he.decode(post.title); // Decode with he
-
+  const decodedTitle = he.decode(post.title);
   const strippedExcerpt = post.excerpt.replace(/<[^>]*>/g, '').slice(0, 160);
   const keywords = [
-    ...post.categories.map((cat) => cat.name),
-    ...post.tags.map((tag) => tag.name),
+    ...post.categories.map((cat: any) => cat.name),
+    ...post.tags.map((tag: any) => tag.name),
     'WordPress security',
     'WordPress malware removal',
     'WordPress error fixing',
@@ -39,14 +38,12 @@ export async function generateMetadata({
   ].join(', ');
 
   return {
-    title: `${decodedTitle} | MD Pabel Blog`, // Use decoded title
+    title: `${decodedTitle} | MD Pabel Blog`,
     description: strippedExcerpt,
     keywords,
-    alternates: {
-      canonical: `https://www.mdpabel.com/blog/${slug}`,
-    },
+    alternates: { canonical: `https://www.mdpabel.com/blog/${slug}` },
     openGraph: {
-      title: decodedTitle, // Use decoded title
+      title: decodedTitle,
       description: strippedExcerpt,
       url: `https://www.mdpabel.com/blog/${slug}`,
       siteName: 'MD Pabel',
@@ -56,7 +53,7 @@ export async function generateMetadata({
               url: post.featuredImage.url,
               width: 1200,
               height: 630,
-              alt: post.featuredImage.alt || decodedTitle, // Update alt if needed
+              alt: post.featuredImage.alt || decodedTitle,
             },
           ]
         : [
@@ -74,7 +71,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title: decodedTitle, // Use decoded title
+      title: decodedTitle,
       description: strippedExcerpt,
       images: post.featuredImage
         ? [post.featuredImage.url]
@@ -97,21 +94,16 @@ export async function generateMetadata({
 
 export default async function SingleBlog({ params }: SingleBlogProps) {
   const { slug } = await params;
-
   const post = await wordpress.getPostBySlug(slug);
-
   if (!post) return notFound();
 
-  const decodedTitle = he.decode(post.title); // Decode with he
-
+  const decodedTitle = he.decode(post.title);
   const postById = await wordpress.getPostById(post.id);
-
   const relatedPosts = await wordpress.getRelatedPosts(post.id, 3);
 
   const strippedExcerpt = post.excerpt.replace(/<[^>]*>/g, '');
   const strippedContent = post.content.replace(/<[^>]*>/g, '');
 
-  // Server-side parsed content for TOC
   function generateTOC(content: string) {
     const headings = content.match(/<h[2-6][^>]*>.*?<\/h[2-6]>/g) || [];
     return headings.map((h, i) => {
@@ -121,10 +113,8 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
       return { id, text, level };
     });
   }
-
   const toc = generateTOC(post.content);
 
-  // Replace headings with anchored versions
   let index = 0;
   let anchoredContent = post.content.replace(
     /<h([2-6])([^>]*)>(.*?)<\/h\1>/g,
@@ -142,9 +132,9 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
         <header className='mb-12 text-left sm:text-center'>
           <Heading className='!text-3xl md:!text-4xl text-center'>
             {decodedTitle}
-          </Heading>{' '}
-          {/* Use decoded title */}
-          <div className='flex justify-center mt-4 text-gray-400 text-sm'>
+          </Heading>
+
+          <div className='flex flex-wrap justify-center items-center gap-2 mt-4 text-gray-400 text-sm'>
             <span>
               {new Date(post.date).toLocaleDateString('en-US', {
                 year: 'numeric',
@@ -152,8 +142,13 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
                 day: 'numeric',
               })}
             </span>
-            <span className='mx-2'>|</span>
+            <span className='hidden sm:inline mx-2'>|</span>
             <span>{post.author.name}</span>
+            {/* Views with Suspense */}
+            <span className='hidden sm:inline mx-2'>•</span>
+            <Suspense fallback={<ViewCounterSkeleton />}>
+              <ViewCounter postId={post.id} />
+            </Suspense>
           </div>
         </header>
 
@@ -164,8 +159,8 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
               src={post.featuredImage.url}
               alt={post.featuredImage.alt || decodedTitle}
               className='shadow-lg rounded-lg w-full h-full object-cover'
-              width={post.featuredImage.width || 500}
-              height={post.featuredImage.height || 500}
+              width={post.featuredImage.width || 1200}
+              height={post.featuredImage.height || 630}
               priority
             />
           </div>
@@ -193,9 +188,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
 
         {/* Blog Content */}
         <article
-          style={{
-            wordBreak: 'break-word',
-          }}
+          style={{ wordBreak: 'break-word' }}
           className='prose-invert max-w-none text-gray-300 break-words prose prose-lg'>
           <div dangerouslySetInnerHTML={{ __html: anchoredContent }} />
         </article>
@@ -220,15 +213,12 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
                 agency specializing in custom web development, WordPress
                 security, and malware removal. With over{' '}
                 {siteData.stats.experience} years of experience, he has
-                completed more than {siteData.stats.completedProjects} projects,
-                served over {siteData.stats.clientsSatisfied} clients, and
-                resolved {siteData.stats.fixfixHackedWebsites} cases of malware
-                and hacked websites. His expertise spans full-stack development,
-                secure coding practices, and building scalable web solutions
-                using modern technologies like Next.js, Node.js, and headless
-                WordPress, making him a trusted authority in the field.
+                completed more than
+                {siteData.stats.completedProjects} projects, served over{' '}
+                {siteData.stats.clientsSatisfied} clients, and resolved
+                {siteData.stats.fixfixHackedWebsites} cases of malware and
+                hacked websites.
               </p>
-
               <div className='flex flex-wrap gap-4 mt-4'>
                 <Link
                   href='https://3zerodigital.com'
@@ -280,7 +270,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
           <div className='mt-12'>
             <h3 className='mb-4 font-semibold text-gray-200 text-lg'>Tags</h3>
             <div className='flex flex-wrap gap-2'>
-              {post.tags.map((tag) => (
+              {post.tags.map((tag: any) => (
                 <Link
                   key={tag.id}
                   href={`/blog/tag/${tag.slug}`}
@@ -299,7 +289,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
               Related Posts
             </h2>
             <div className='gap-6 grid sm:grid-cols-2 lg:grid-cols-3'>
-              {relatedPosts.map((related) => (
+              {relatedPosts.map((related: any) => (
                 <Link
                   href={`/blog/${related.slug}`}
                   key={related.id}
@@ -331,19 +321,18 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
           </div>
         )}
       </ComponentWrapper>
+
+      {/* JSON-LD Schema, unchanged except variable names */}
       <script
         type='application/ld+json'
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'BlogPosting',
-            headline: decodedTitle, // Use decoded title
+            headline: decodedTitle,
             datePublished: post.date,
             dateModified: post.modified || post.date,
-            author: {
-              '@type': 'Person',
-              name: post.author.name,
-            },
+            author: { '@type': 'Person', name: post.author.name },
             publisher: {
               '@type': 'Organization',
               name: 'MD Pabel',
@@ -379,7 +368,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
                 {
                   '@type': 'ListItem',
                   position: 3,
-                  name: decodedTitle, // Use decoded title
+                  name: decodedTitle,
                   item: `https://www.mdpabel.com/blog/${slug}`,
                 },
               ],

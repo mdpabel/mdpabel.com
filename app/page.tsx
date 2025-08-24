@@ -9,6 +9,9 @@ import type { Metadata } from 'next';
 import { siteData } from '@/data/site-data';
 import { jsonLd } from '@/data/json-ld';
 import Experience from '@/components/experiences';
+import PlatFormScreenshots from '@/components/platform-screenshots';
+import FeaturedBlogPost from '@/components/featured-blog-post';
+import Title from '@/components/ui';
 
 export const metadata: Metadata = {
   title: `${siteData.personal.name} - Full Stack Developer, Malware Removal & Security Specialist`,
@@ -88,8 +91,12 @@ const HomePage = () => {
       <Hero />
       <Links />
       <Stats />
+      <Title className='mt-10'>Services</Title>
       <Services />
-      <Experience />
+      <Title className='mt-10'>Blog</Title>
+      <FeaturedBlogPost />
+      <Title className='my-10'>Freelance</Title>
+      <PlatFormScreenshots />
 
       <script
         type='application/ld+json'
