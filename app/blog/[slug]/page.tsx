@@ -138,199 +138,198 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
   return (
     <>
       <ComponentWrapper>
-        <div className='px-4 sm:px-0 py-10 sm:py-16 container'>
-          {/* Blog Header */}
-          <header className='mb-12 text-left sm:text-center'>
-            <Heading className='!text-3xl md:!text-4xl text-center'>
-              {decodedTitle}
-            </Heading>{' '}
-            {/* Use decoded title */}
-            <div className='flex justify-center mt-4 text-gray-400 text-sm'>
-              <span>
-                {new Date(post.date).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </span>
-              <span className='mx-2'>|</span>
-              <span>{post.author.name}</span>
-            </div>
-          </header>
+        {/* Blog Header */}
+        <header className='mb-12 text-left sm:text-center'>
+          <Heading className='!text-3xl md:!text-4xl text-center'>
+            {decodedTitle}
+          </Heading>{' '}
+          {/* Use decoded title */}
+          <div className='flex justify-center mt-4 text-gray-400 text-sm'>
+            <span>
+              {new Date(post.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </span>
+            <span className='mx-2'>|</span>
+            <span>{post.author.name}</span>
+          </div>
+        </header>
 
-          {/* Featured Image */}
-          {post.featuredImage && (
-            <div className='relative mb-12 w-full'>
-              <Image
-                src={post.featuredImage.url}
-                alt={post.featuredImage.alt || decodedTitle}
-                className='shadow-lg rounded-lg w-full h-full object-cover'
-                width={post.featuredImage.width || 500}
-                height={post.featuredImage.height || 500}
-                priority
-              />
-            </div>
-          )}
+        {/* Featured Image */}
+        {post.featuredImage && (
+          <div className='relative mb-12 w-full'>
+            <Image
+              src={post.featuredImage.url}
+              alt={post.featuredImage.alt || decodedTitle}
+              className='shadow-lg rounded-lg w-full h-full object-cover'
+              width={post.featuredImage.width || 500}
+              height={post.featuredImage.height || 500}
+              priority
+            />
+          </div>
+        )}
 
-          {/* Table of Contents */}
-          {toc.length > 0 && (
-            <div className='mb-12'>
-              <h2 className='mb-4 font-bold text-gray-200 text-xl'>
-                Table of Contents
-              </h2>
-              <ul className='pl-6 list-disc'>
-                {toc.map((item) => (
-                  <li key={item.id} className={`ml-${(item.level - 2) * 4}`}>
-                    <Link
-                      href={`#${item.id}`}
-                      className='text-blue-400 hover:underline'>
-                      {item.text}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+        {/* Table of Contents */}
+        {toc.length > 0 && (
+          <div className='mb-12'>
+            <h2 className='mb-4 font-bold text-gray-200 text-xl'>
+              Table of Contents
+            </h2>
+            <ul className='pl-6 list-disc'>
+              {toc.map((item) => (
+                <li key={item.id} className={`ml-${(item.level - 2) * 4}`}>
+                  <Link
+                    href={`#${item.id}`}
+                    className='text-blue-400 hover:underline'>
+                    {item.text}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
-          {/* Blog Content */}
-          <article className='prose-invert max-w-none text-gray-300 prose prose-lg'>
-            <div dangerouslySetInnerHTML={{ __html: anchoredContent }} />
-          </article>
+        {/* Blog Content */}
+        <article
+          style={{
+            wordBreak: 'break-word',
+          }}
+          className='prose-invert max-w-none text-gray-300 break-words prose prose-lg'>
+          <div dangerouslySetInnerHTML={{ __html: anchoredContent }} />
+        </article>
 
-          {/* Author Section */}
-          <div className='mt-12 pt-8 border-t'>
-            <h3 className='mb-4 font-semibold text-gray-200 text-lg'>
-              About the Author
-            </h3>
-            <div className='flex sm:flex-row flex-col items-start gap-4'>
-              <Image
-                src='https://pbs.twimg.com/profile_images/1872535618959613953/6snM38Cr.jpg'
-                alt='MD Pabel'
-                width={100}
-                height={100}
-                className='rounded-full'
-              />
-              <div>
-                <h4 className='font-semibold text-gray-200 text-xl'>
-                  MD Pabel
-                </h4>
-                <p className='mt-2 text-gray-300'>
-                  MD Pabel is the Founder and CEO of 3Zero Digital, a leading
-                  agency specializing in custom web development, WordPress
-                  security, and malware removal. With over{' '}
-                  {siteData.stats.experience} years of experience, he has
-                  completed more than {siteData.stats.completedProjects}{' '}
-                  projects, served over {siteData.stats.clientsSatisfied}{' '}
-                  clients, and resolved {siteData.stats.fixfixHackedWebsites}{' '}
-                  cases of malware and hacked websites. His expertise spans
-                  full-stack development, secure coding practices, and building
-                  scalable web solutions using modern technologies like Next.js,
-                  Node.js, and headless WordPress, making him a trusted
-                  authority in the field.
-                </p>
+        {/* Author Section */}
+        <div className='mt-12 pt-8 border-t'>
+          <h3 className='mb-4 font-semibold text-gray-200 text-lg'>
+            About the Author
+          </h3>
+          <div className='flex sm:flex-row flex-col items-start gap-4'>
+            <Image
+              src='https://pbs.twimg.com/profile_images/1872535618959613953/6snM38Cr.jpg'
+              alt='MD Pabel'
+              width={100}
+              height={100}
+              className='rounded-full'
+            />
+            <div>
+              <h4 className='font-semibold text-gray-200 text-xl'>MD Pabel</h4>
+              <p className='mt-2 text-gray-300'>
+                MD Pabel is the Founder and CEO of 3Zero Digital, a leading
+                agency specializing in custom web development, WordPress
+                security, and malware removal. With over{' '}
+                {siteData.stats.experience} years of experience, he has
+                completed more than {siteData.stats.completedProjects} projects,
+                served over {siteData.stats.clientsSatisfied} clients, and
+                resolved {siteData.stats.fixfixHackedWebsites} cases of malware
+                and hacked websites. His expertise spans full-stack development,
+                secure coding practices, and building scalable web solutions
+                using modern technologies like Next.js, Node.js, and headless
+                WordPress, making him a trusted authority in the field.
+              </p>
 
-                <div className='flex flex-wrap gap-4 mt-4'>
-                  <Link
-                    href='https://3zerodigital.com'
-                    className='text-blue-400 hover:underline'>
-                    3Zero Digital
-                  </Link>
-                  <Link
-                    href='https://www.linkedin.com/in/mdpabe1'
-                    className='text-blue-400 hover:underline'>
-                    LinkedIn
-                  </Link>
-                  <Link
-                    href='https://github.com/mdpabel'
-                    className='text-blue-400 hover:underline'>
-                    GitHub
-                  </Link>
-                  <Link
-                    href='https://leetcode.com/u/mdpabel/'
-                    className='text-blue-400 hover:underline'>
-                    LeetCode
-                  </Link>
-                  <Link
-                    href='https://www.hackerrank.com/profile/mdpabel385'
-                    className='text-blue-400 hover:underline'>
-                    HackerRank
-                  </Link>
-                  <Link
-                    href='https://mdpabeldev.medium.com/'
-                    className='text-blue-400 hover:underline'>
-                    Medium
-                  </Link>
-                  <Link
-                    href='https://dev.to/md_pabel_fe07e07449db7326'
-                    className='text-blue-400 hover:underline'>
-                    Dev.to
-                  </Link>
-                  <Link
-                    href='https://x.com/mdpabe11'
-                    className='text-blue-400 hover:underline'>
-                    X (Twitter)
-                  </Link>
-                </div>
+              <div className='flex flex-wrap gap-4 mt-4'>
+                <Link
+                  href='https://3zerodigital.com'
+                  className='text-blue-400 hover:underline'>
+                  3Zero Digital
+                </Link>
+                <Link
+                  href='https://www.linkedin.com/in/mdpabe1'
+                  className='text-blue-400 hover:underline'>
+                  LinkedIn
+                </Link>
+                <Link
+                  href='https://github.com/mdpabel'
+                  className='text-blue-400 hover:underline'>
+                  GitHub
+                </Link>
+                <Link
+                  href='https://leetcode.com/u/mdpabel/'
+                  className='text-blue-400 hover:underline'>
+                  LeetCode
+                </Link>
+                <Link
+                  href='https://www.hackerrank.com/profile/mdpabel385'
+                  className='text-blue-400 hover:underline'>
+                  HackerRank
+                </Link>
+                <Link
+                  href='https://mdpabeldev.medium.com/'
+                  className='text-blue-400 hover:underline'>
+                  Medium
+                </Link>
+                <Link
+                  href='https://dev.to/md_pabel_fe07e07449db7326'
+                  className='text-blue-400 hover:underline'>
+                  Dev.to
+                </Link>
+                <Link
+                  href='https://x.com/mdpabe11'
+                  className='text-blue-400 hover:underline'>
+                  X (Twitter)
+                </Link>
               </div>
             </div>
           </div>
-
-          {/* Tags */}
-          {post.tags.length > 0 && (
-            <div className='mt-12'>
-              <h3 className='mb-4 font-semibold text-gray-200 text-lg'>Tags</h3>
-              <div className='flex flex-wrap gap-2'>
-                {post.tags.map((tag) => (
-                  <Link
-                    key={tag.id}
-                    href={`/blog/tag/${tag.slug}`}
-                    className='bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-full text-gray-400 text-sm transition-colors'>
-                    {tag.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Related Posts */}
-          {relatedPosts.length > 0 && (
-            <div className='mt-16'>
-              <h2 className='mb-6 font-bold text-gray-200 text-2xl'>
-                Related Posts
-              </h2>
-              <div className='gap-6 grid sm:grid-cols-2 lg:grid-cols-3'>
-                {relatedPosts.map((related) => (
-                  <Link
-                    href={`/blog/${related.slug}`}
-                    key={related.id}
-                    className='block bg-gray-800 shadow-md hover:shadow-lg rounded-lg transition-shadow'>
-                    {related.featuredImage && (
-                      <div className='relative rounded-t-lg w-full h-40 overflow-hidden'>
-                        <img
-                          src={related.featuredImage.url}
-                          alt={related.title}
-                          className='w-full h-full object-cover'
-                        />
-                      </div>
-                    )}
-                    <div className='p-4'>
-                      <h3 className='mb-2 font-semibold text-gray-200 text-lg'>
-                        {related.title}
-                      </h3>
-                      <p className='text-gray-400 text-sm'>
-                        {new Date(related.date).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                        })}
-                      </p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
+
+        {/* Tags */}
+        {post.tags.length > 0 && (
+          <div className='mt-12'>
+            <h3 className='mb-4 font-semibold text-gray-200 text-lg'>Tags</h3>
+            <div className='flex flex-wrap gap-2'>
+              {post.tags.map((tag) => (
+                <Link
+                  key={tag.id}
+                  href={`/blog/tag/${tag.slug}`}
+                  className='bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-full text-gray-400 text-sm transition-colors'>
+                  {tag.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Related Posts */}
+        {relatedPosts.length > 0 && (
+          <div className='mt-16'>
+            <h2 className='mb-6 font-bold text-gray-200 text-2xl'>
+              Related Posts
+            </h2>
+            <div className='gap-6 grid sm:grid-cols-2 lg:grid-cols-3'>
+              {relatedPosts.map((related) => (
+                <Link
+                  href={`/blog/${related.slug}`}
+                  key={related.id}
+                  className='block bg-gray-800 shadow-md hover:shadow-lg rounded-lg transition-shadow'>
+                  {related.featuredImage && (
+                    <div className='relative rounded-t-lg w-full h-40 overflow-hidden'>
+                      <img
+                        src={related.featuredImage.url}
+                        alt={related.title}
+                        className='w-full h-full object-cover'
+                      />
+                    </div>
+                  )}
+                  <div className='p-4'>
+                    <h3 className='mb-2 font-semibold text-gray-200 text-lg'>
+                      {related.title}
+                    </h3>
+                    <p className='text-gray-400 text-sm'>
+                      {new Date(related.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </ComponentWrapper>
       <script
         type='application/ld+json'
