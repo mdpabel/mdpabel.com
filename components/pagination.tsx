@@ -1,8 +1,9 @@
 'use client';
 
-import Link from 'next/link';
+import Link, { useLinkStatus } from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface PaginationProps {
   totalPages: number;
@@ -10,14 +11,68 @@ interface PaginationProps {
   perPage?: number;
 }
 
+/** Animated dot-dot-dot shown while any Link navigation is pending */
+function PendingDots({
+  className = 'ml-3 text-slate-400',
+}: {
+  className?: string;
+}) {
+  const { pending } = useLinkStatus();
+  const [visible, setVisible] = useState(false);
+
+  // Small delay to avoid flicker on fast navigations
+  useEffect(() => {
+    let t: ReturnType<typeof setTimeout> | null = null;
+    if (pending) t = setTimeout(() => setVisible(true), 120);
+    else setVisible(false);
+    return () => {
+      if (t) clearTimeout(t);
+    };
+  }, [pending]);
+
+  if (!pending || !visible) return null;
+
+  return (
+    <span
+      className={`inline-flex items-center ${className}`}
+      role='status'
+      aria-live='polite'>
+      <span className='sr-only'>Loading…</span>
+      <span aria-hidden='true' className='dots'>
+        ...
+      </span>
+      <style jsx>{`
+        .dots {
+          display: inline-block;
+          overflow: hidden;
+          width: 0ch;
+          vertical-align: baseline;
+          animation: dots-reveal 1s steps(3, end) infinite;
+        }
+        @keyframes dots-reveal {
+          from {
+            width: 0ch;
+          }
+          to {
+            width: 3ch;
+          }
+        }
+      `}</style>
+    </span>
+  );
+}
+
 export default function Pagination({
   totalPages,
   total,
   perPage = 10,
 }: PaginationProps) {
+  const { pending } = useLinkStatus();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
+
+  console.log({ pending });
 
   const maxVisiblePages = 5; // Maximum number of page buttons to show (excluding first, last, and ellipses)
 
@@ -52,6 +107,7 @@ export default function Pagination({
       <div className='flex items-center gap-2'>
         {/* Previous Button */}
         <Link
+          prefetch={true}
           href={createPageURL(currentPage - 1)}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
             isFirstPage
@@ -68,6 +124,7 @@ export default function Pagination({
         <div className='flex items-center gap-2'>
           {/* First Page */}
           <Link
+            prefetch={true}
             href={createPageURL(1)}
             className={`px-4 py-2 rounded-lg border transition-colors ${
               currentPage === 1
@@ -81,12 +138,13 @@ export default function Pagination({
 
           {/* Ellipsis before dynamic range */}
           {pageNumbers[0] > 2 && (
-            <span className='px-4 py-2 text-slate-500'>...</span>
+            <span className='px-4 py-2 text-slate-500'>…</span>
           )}
 
           {/* Dynamic Page Range */}
           {pageNumbers.map((page) => (
             <Link
+              prefetch={true}
               key={page}
               href={createPageURL(page)}
               className={`px-4 py-2 rounded-lg border transition-colors ${
@@ -102,12 +160,13 @@ export default function Pagination({
 
           {/* Ellipsis after dynamic range */}
           {pageNumbers[pageNumbers.length - 1] < totalPages - 1 && (
-            <span className='px-4 py-2 text-slate-500'>...</span>
+            <span className='px-4 py-2 text-slate-500'>…</span>
           )}
 
           {/* Last Page (if more than one page) */}
           {totalPages > 1 && (
             <Link
+              prefetch={true}
               href={createPageURL(totalPages)}
               className={`px-4 py-2 rounded-lg border transition-colors ${
                 currentPage === totalPages
@@ -123,6 +182,7 @@ export default function Pagination({
 
         {/* Next Button */}
         <Link
+          prefetch={true}
           href={createPageURL(currentPage + 1)}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
             isLastPage
@@ -134,6 +194,9 @@ export default function Pagination({
           <span className='hidden sm:inline'>Next</span>
           <ChevronRight className='w-4 h-4' />
         </Link>
+
+        {/* Animated dots at the END of the pagination row while navigating */}
+        <PendingDots />
       </div>
 
       {/* Summary Info */}
