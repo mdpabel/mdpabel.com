@@ -1,7 +1,6 @@
 export const dynamic = 'force-static';
 
 import {
-  Calendar,
   ArrowLeft,
   Code,
   Shield,
@@ -14,11 +13,30 @@ import { notFound } from 'next/navigation';
 import { wordpress } from '@/lib/wordpress';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import { generateSEOMetadata, SchemaOrg } from '@/lib/seo';
+import { SchemaOrgHarmonized } from '@/components/SchemaOrgHarmonized';
 
 interface CaseStudyDetailPageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+export async function generateMetadata({
+  params,
+}: CaseStudyDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await wordpress.getPostBySlug(slug, 'case-study');
+
+  if (!post) return { title: 'Post Not Found' };
+
+  return generateSEOMetadata({
+    yoastData: post.yoastSEO,
+    fallbackTitle: `${post.title} - Blog`,
+    fallbackDescription: post.excerpt.replace(/<[^>]+>/g, ''),
+    fallbackImage: post.featuredImage?.url,
+    canonical: `https://www.mdpabel.com/case-studies/${slug}`,
+  });
 }
 
 const CaseStudy = async ({ params }: CaseStudyDetailPageProps) => {
@@ -61,6 +79,10 @@ const CaseStudy = async ({ params }: CaseStudyDetailPageProps) => {
 
   return (
     <div className='bg-slate-900 min-h-screen text-white'>
+      <SchemaOrgHarmonized
+        canonical={`https://www.mdpabel.com/case-studies/${slug}`}
+        yoastData={post.yoastSEO}
+      />
       <ComponentWrapper>
         <div className='py-8'>
           <Link

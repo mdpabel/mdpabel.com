@@ -80,7 +80,7 @@ const Projects = () => {
                 />
                 <div className='gap-4 grid grid-cols-3 text-center'>
                   <div>
-                    <div className='font-bold text-green-400 text-2xl'>4.9</div>
+                    <div className='font-bold text-green-400 text-2xl'>5.0</div>
                     <div className='text-gray-400 text-xs'>Rating</div>
                   </div>
                   <div>

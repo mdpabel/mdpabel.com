@@ -9,10 +9,12 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import he from 'he';
 import Image from 'next/image';
-import { siteData } from '@/data/site-data';
-import lazy from 'next/dynamic';
 
 import ViewCounter, { ViewCounterSkeleton } from '@/components/view-counter';
+import { generateTOC } from '@/lib/utils';
+import AboutAuthor from '@/components/about-author';
+import { generateSEOMetadata, SchemaOrg } from '@/lib/seo';
+import { SchemaOrgHarmonized } from '@/components/SchemaOrgHarmonized';
 
 interface SingleBlogProps {
   params: Promise<{ slug: string }>; // as per your original typing
@@ -22,80 +24,25 @@ export async function generateMetadata({
   params,
 }: SingleBlogProps): Promise<Metadata> {
   const { slug } = await params;
+
   const post = await wordpress.getPostBySlug(slug);
   if (!post) return { title: 'Post Not Found' };
 
-  const decodedTitle = he.decode(post.title);
-  const strippedExcerpt = post.excerpt.replace(/<[^>]*>/g, '').slice(0, 160);
-  const keywords = [
-    ...post.categories.map((cat: any) => cat.name),
-    ...post.tags.map((tag: any) => tag.name),
-    'WordPress security',
-    'WordPress malware removal',
-    'WordPress error fixing',
-    'Google blacklist removal WordPress',
-    'WordPress development tips',
-  ].join(', ');
-
-  return {
-    title: `${decodedTitle} | MD Pabel Blog`,
-    description: strippedExcerpt,
-    keywords,
-    alternates: { canonical: `https://www.mdpabel.com/blog/${slug}` },
-    openGraph: {
-      title: decodedTitle,
-      description: strippedExcerpt,
-      url: `https://www.mdpabel.com/blog/${slug}`,
-      siteName: 'MD Pabel',
-      images: post.featuredImage
-        ? [
-            {
-              url: post.featuredImage.url,
-              width: 1200,
-              height: 630,
-              alt: post.featuredImage.alt || decodedTitle,
-            },
-          ]
-        : [
-            {
-              url: '/images/blog-opengraph-image.png',
-              width: 1200,
-              height: 630,
-              alt: 'WordPress Security and Malware Removal Blog',
-            },
-          ],
-      locale: 'en_US',
-      type: 'article',
-      publishedTime: post.date,
-      authors: [post.author.name],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: decodedTitle,
-      description: strippedExcerpt,
-      images: post.featuredImage
-        ? [post.featuredImage.url]
-        : ['/images/blog-opengraph-image.png'],
-      site: '@mdpabe11',
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-      },
-    },
-  };
+  return generateSEOMetadata({
+    yoastData: post.yoastSEO,
+    fallbackTitle: `${post.title} - Blog`,
+    fallbackDescription: post.excerpt.replace(/<[^>]+>/g, ''),
+    fallbackImage: post.featuredImage?.url,
+    canonical: `https://www.mdpabel.com/blog/${slug}`,
+  });
 }
 
 export default async function SingleBlog({ params }: SingleBlogProps) {
   const { slug } = await params;
   const post = await wordpress.getPostBySlug(slug);
   if (!post) return notFound();
+
+  console.log(post.yoastSEO);
 
   const decodedTitle = he.decode(post.title);
   const postById = await wordpress.getPostById(post.id);
@@ -104,15 +51,6 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
   const strippedExcerpt = post.excerpt.replace(/<[^>]*>/g, '');
   const strippedContent = post.content.replace(/<[^>]*>/g, '');
 
-  function generateTOC(content: string) {
-    const headings = content.match(/<h[2-6][^>]*>.*?<\/h[2-6]>/g) || [];
-    return headings.map((h, i) => {
-      const level = parseInt(h.match(/<h(\d)/)?.[1] || '2');
-      const text = h.replace(/<[^>]*>/g, '').trim();
-      const id = `heading-${i}`;
-      return { id, text, level };
-    });
-  }
   const toc = generateTOC(post.content);
 
   let index = 0;
@@ -128,6 +66,10 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
   return (
     <>
       <ComponentWrapper>
+        <SchemaOrgHarmonized
+          canonical={`https://www.mdpabel.com/blog/${slug}`}
+          yoastData={post.yoastSEO}
+        />
         {/* Blog Header */}
         <header className='mb-12 text-left sm:text-center'>
           <Heading className='!text-3xl md:!text-4xl text-center'>
@@ -194,76 +136,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
         </article>
 
         {/* Author Section */}
-        <div className='mt-12 pt-8 border-t'>
-          <h3 className='mb-4 font-semibold text-gray-200 text-lg'>
-            About the Author
-          </h3>
-          <div className='flex sm:flex-row flex-col items-start gap-4'>
-            <Image
-              src='https://pbs.twimg.com/profile_images/1872535618959613953/6snM38Cr.jpg'
-              alt='MD Pabel'
-              width={100}
-              height={100}
-              className='rounded-full'
-            />
-            <div>
-              <h4 className='font-semibold text-gray-200 text-xl'>MD Pabel</h4>
-              <p className='mt-2 text-gray-300'>
-                MD Pabel is the Founder and CEO of 3Zero Digital, a leading
-                agency specializing in custom web development, WordPress
-                security, and malware removal. With over{' '}
-                {siteData.stats.experience} years of experience, he has
-                completed more than
-                {siteData.stats.completedProjects} projects, served over{' '}
-                {siteData.stats.clientsSatisfied} clients, and resolved
-                {siteData.stats.fixfixHackedWebsites} cases of malware and
-                hacked websites.
-              </p>
-              <div className='flex flex-wrap gap-4 mt-4'>
-                <Link
-                  href='https://3zerodigital.com'
-                  className='text-blue-400 hover:underline'>
-                  3Zero Digital
-                </Link>
-                <Link
-                  href='https://www.linkedin.com/in/mdpabe1'
-                  className='text-blue-400 hover:underline'>
-                  LinkedIn
-                </Link>
-                <Link
-                  href='https://github.com/mdpabel'
-                  className='text-blue-400 hover:underline'>
-                  GitHub
-                </Link>
-                <Link
-                  href='https://leetcode.com/u/mdpabel/'
-                  className='text-blue-400 hover:underline'>
-                  LeetCode
-                </Link>
-                <Link
-                  href='https://www.hackerrank.com/profile/mdpabel385'
-                  className='text-blue-400 hover:underline'>
-                  HackerRank
-                </Link>
-                <Link
-                  href='https://mdpabeldev.medium.com/'
-                  className='text-blue-400 hover:underline'>
-                  Medium
-                </Link>
-                <Link
-                  href='https://dev.to/md_pabel_fe07e07449db7326'
-                  className='text-blue-400 hover:underline'>
-                  Dev.to
-                </Link>
-                <Link
-                  href='https://x.com/mdpabe11'
-                  className='text-blue-400 hover:underline'>
-                  X (Twitter)
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
+        <AboutAuthor />
 
         {/* Tags */}
         {post.tags.length > 0 && (

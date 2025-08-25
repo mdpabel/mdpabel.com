@@ -23,3 +23,13 @@ export function formatWpDate(
 
   return date.toLocaleDateString(locale, { ...defaultOptions, ...options });
 }
+
+export function generateTOC(content: string) {
+  const headings = content.match(/<h[2-6][^>]*>.*?<\/h[2-6]>/g) || [];
+  return headings.map((h, i) => {
+    const level = parseInt(h.match(/<h(\d)/)?.[1] || '2');
+    const text = h.replace(/<[^>]*>/g, '').trim();
+    const id = `heading-${i}`;
+    return { id, text, level };
+  });
+}

@@ -19,7 +19,7 @@ const TEMPLATES = [
       'Stripe & PayPal integration',
     ],
     category: 'ecommerce',
-    stars: 4.9,
+    stars: 5.0,
     downloads: 247,
   },
   {
