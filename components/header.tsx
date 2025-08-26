@@ -188,7 +188,7 @@ const Header = () => {
   );
 
   return (
-    <div className='z-50 relative bg-slate-900 py-5 sm:py-8 text-white'>
+    <div className='top-0 z-50 sticky inset-0 bg-slate-900/50 backdrop-blur-md py-5 border-b border-b-slate-800/50 text-white'>
       <ComponentWrapper>
         <nav className='flex justify-between items-center mx-auto container'>
           <div className='flex items-center gap-5'>

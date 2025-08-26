@@ -63,7 +63,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
 
   return (
     <>
-      <ComponentWrapper>
+      <ComponentWrapper className='mt-10'>
         <SchemaOrgHarmonized
           canonical={`https://www.mdpabel.com/blog/${slug}`}
           yoastData={post.yoastSEO}
