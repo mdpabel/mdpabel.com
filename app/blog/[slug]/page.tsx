@@ -42,8 +42,6 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
   const post = await wordpress.getPostBySlug(slug);
   if (!post) return notFound();
 
-  console.log(post.yoastSEO);
-
   const decodedTitle = he.decode(post.title);
   const postById = await wordpress.getPostById(post.id);
   const relatedPosts = await wordpress.getRelatedPosts(post.id, 3);

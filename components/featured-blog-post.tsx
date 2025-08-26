@@ -14,6 +14,7 @@ const FeaturedBlogPost = async () => {
     <ComponentWrapper className='mt-10'>
       {posts.map((post) => (
         <Link
+          key={post.id}
           className='group flex justify-between items-center py-3 border-b border-b-slate-700/50 text-md text-slate-300/80 no-underline'
           href={`/blog/${post.slug}`}>
           <div
