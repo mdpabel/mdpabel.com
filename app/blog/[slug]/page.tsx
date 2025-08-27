@@ -70,7 +70,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
         />
         {/* Blog Header */}
         <header className='mb-12 text-left sm:text-center'>
-          <Heading className='!text-3xl md:!text-4xl text-center'>
+          <Heading className='text-purple-400/70 !text-3xl md:!text-4xl text-center'>
             {decodedTitle}
           </Heading>
 
