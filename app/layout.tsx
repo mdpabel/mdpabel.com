@@ -2,6 +2,7 @@ import Header from '@/components/header';
 import './globals.css';
 import Footer from '@/components/footer';
 import { Analytics } from '@vercel/analytics/next';
+import TawkTo from '@/components/tawk-chat';
 
 export default function RootLayout({
   children,
@@ -16,6 +17,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
           <Analytics />
+          <TawkTo />
         </div>
       </body>
     </html>
