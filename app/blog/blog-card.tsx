@@ -70,7 +70,7 @@ export default function BlogCard({
       {/* Content */}
       <div className='p-4'>
         {/* Categories */}
-        {categories.length > 0 && (
+        {/* {categories.length > 0 && (
           <div className='flex flex-wrap gap-2 mb-3'>
             {displayedCategories.map((category, i) => (
               <span
@@ -85,7 +85,7 @@ export default function BlogCard({
               </span>
             )}
           </div>
-        )}
+        )} */}
 
         {/* Title */}
         <h2 className='mb-2 font-bold text-white text-lg leading-snug'>
