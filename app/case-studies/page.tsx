@@ -15,6 +15,7 @@ import { wordpress } from '@/lib/wordpress';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { siteData } from '@/data/site-data';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Case Studies: WordPress Security & Development Success Stories',
@@ -101,10 +102,14 @@ const CaseStudies = async () => {
         <div className='bg-slate-800 mb-12 rounded-xl overflow-hidden'>
           <div className='grid grid-cols-1 lg:grid-cols-2'>
             <div className='relative aspect-video lg:aspect-auto'>
-              <img
-                src={featuredCaseStudy.featuredImage?.url}
+              <Image
+                src={featuredCaseStudy.featuredImage?.url || ''}
                 alt={featuredCaseStudy.title}
                 className='w-full h-full object-cover'
+                width={featuredCaseStudy.featuredImage?.width ?? 800}
+                height={featuredCaseStudy.featuredImage?.height ?? 450}
+                sizes='100vw'
+                priority={true}
               />
               <div className='top-4 left-4 absolute'>
                 <span className='bg-purple-500 px-3 py-1 rounded-full font-medium text-white text-sm'>
@@ -186,10 +191,14 @@ const CaseStudies = async () => {
               key={caseStudy.id}
               className='group bg-slate-800 border border-slate-700 hover:border-slate-600 rounded-lg overflow-hidden hover:scale-105 transition-all duration-300 hover:transform'>
               <div className='relative aspect-video overflow-hidden'>
-                <img
-                  src={caseStudy.featuredImage?.url}
+                <Image
+                  src={caseStudy.featuredImage?.url || ''}
                   alt={caseStudy.title}
                   className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-300'
+                  width={caseStudy.featuredImage?.width ?? 800}
+                  height={caseStudy.featuredImage?.height ?? 450}
+                  sizes='100vw'
+                  priority={true}
                 />
               </div>
 

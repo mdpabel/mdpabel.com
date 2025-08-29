@@ -34,7 +34,7 @@ const About = () => {
             width={600}
             height={1000}
             alt='Me'
-            loading='eager'
+            priority={true}
           />
         </div>
         <div className='space-y-10 lg:order-first lg:row-span-2 py-10 lg:py-0'>
@@ -178,7 +178,6 @@ const About = () => {
         <div className='space-y-4'>
           <div className='flex justify-center pt-4'>
             <img
-              loading='lazy'
               width={500}
               height={300}
               alt='Leetcode MD Pabel'
