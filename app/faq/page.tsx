@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     'Interactive FAQ accordion with detailed answers about WordPress security, malware removal, and development services.',
   keywords: 'WordPress FAQ accordion, interactive help, service questions',
   alternates: {
-    canonical: 'https://www.mdpabel.com/faq-v5',
+    canonical: 'https://www.mdpabel.com/faq',
   },
 };
 
