@@ -7,7 +7,7 @@ const FeaturedBlogPost = async () => {
   const { posts } = await wordpress.getPosts({
     perPage: 7,
     page: 1,
-    categories: ['featured'],
+    orderBy: 'date',
   });
 
   return (

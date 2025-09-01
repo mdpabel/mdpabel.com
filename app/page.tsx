@@ -12,6 +12,7 @@ import Experience from '@/components/experiences';
 import PlatFormScreenshots from '@/components/platform-screenshots';
 import FeaturedBlogPost from '@/components/featured-blog-post';
 import Title from '@/components/ui';
+import CaseStudies from '@/components/case-studies';
 
 export const metadata: Metadata = {
   title: `${siteData.personal.name} - Full Stack Developer, Malware Removal & Security Specialist`,
@@ -95,6 +96,8 @@ const HomePage = () => {
       <Services />
       <Title className='mt-10'>Blog</Title>
       <FeaturedBlogPost />
+      <Title className='mt-10'>Case Studies</Title>
+      <CaseStudies />
       <Title className='my-10'>Freelance</Title>
       <PlatFormScreenshots />
 
