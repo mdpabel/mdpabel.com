@@ -16,6 +16,8 @@ import {
   Rocket,
   Bug,
   Code2,
+  NotebookText,
+  BarChart3,
 } from 'lucide-react';
 import ComponentWrapper from './component-wrapper'; // Assuming ComponentWrapper correctly sets max-width and centers content
 import Link from 'next/link';
@@ -80,10 +82,10 @@ const Header = () => {
       href: '/contact',
     },
     {
-      icon: <BookOpen className='inline-block !w-5 !h-5' />,
-      title: 'Track Record',
+      icon: <NotebookText className='inline-block !w-5 !h-5' />,
+      title: 'Guides',
       description: 'Latest insights and tutorials',
-      href: '/track-record',
+      href: '/guides',
     },
     {
       icon: <Code2 className='inline-block !w-5 !h-5' />,
@@ -102,16 +104,22 @@ const Header = () => {
   // Mobile menu items (excluding less important pages like policies and terms)
   const mobileMenuItems: DropdownItem[] = [
     {
+      icon: <User className='inline-block !w-5 !h-5' />,
+      title: 'About',
+      description: 'Learn more about us',
+      href: '/about',
+    },
+    {
       icon: <Shield className='inline-block !w-5 !h-5' />,
       title: 'Services',
       description: 'Explore our professional services',
       href: '/services',
     },
     {
-      icon: <Code className='inline-block !w-5 !h-5' />,
-      title: 'Templates',
-      description: 'Browse our website templates',
-      href: '/templates',
+      icon: <BarChart3 className='inline-block !w-5 !h-5' />,
+      title: 'Case Studies',
+      description: 'Browse our case studies',
+      href: '/case-studies',
     },
     {
       icon: <Bug className='inline-block !w-5 !h-5' />,
@@ -119,12 +127,7 @@ const Header = () => {
       description: 'View our malware removal logs',
       href: '/malware-log',
     },
-    {
-      icon: <User className='inline-block !w-5 !h-5' />,
-      title: 'About',
-      description: 'Learn more about us',
-      href: '/about',
-    },
+
     {
       icon: <FileText className='inline-block !w-5 !h-5' />,
       title: 'Contact',
