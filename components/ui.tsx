@@ -139,7 +139,7 @@ export const H1 = ({ children, className, ...props }: HeadingType) => {
     <h1
       {...props}
       className={cn(
-        'mb-4 font-semibold text-slate-300 dark:text-zinc-100 text-4xl sm:text-5xl leading-[1.1em] tracking-tight',
+        'mb-4 font-semibold text-slate-300 text-4xl sm:text-5xl leading-[1.1em] tracking-tight',
         className,
       )}>
       {children}
@@ -152,7 +152,7 @@ export const H2 = ({ children, className, ...props }: HeadingType) => {
     <h2
       {...props}
       className={cn(
-        'mb-4 font-semibold text-slate-300 dark:text-zinc-100 text-3xl leading-tight tracking-tight',
+        'mb-4 font-semibold text-slate-300 text-3xl leading-tight tracking-tight',
         className,
       )}>
       {children}

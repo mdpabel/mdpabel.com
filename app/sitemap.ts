@@ -21,12 +21,17 @@ const staticRoutes: {
   { path: '/', changeFrequency: 'yearly', priority: 1 },
   { path: '/services', changeFrequency: 'monthly', priority: 0.8 },
   {
-    path: '/services/wordpress-malware-removal',
+    path: '/services/wordpress-malware-removal-service',
     changeFrequency: 'monthly',
     priority: 0.7,
   },
   {
-    path: '/services/blacklist-removal',
+    path: '/services/blacklist-removal-service',
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  },
+  {
+    path: '/services/fix-website-errors',
     changeFrequency: 'monthly',
     priority: 0.7,
   },

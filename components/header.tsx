@@ -4,26 +4,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   Menu,
   X,
-  ChevronDown,
   Shield,
-  Wrench,
-  Code,
   FileText,
-  Scale,
-  RotateCcw,
-  BookOpen,
+  NotebookText,
+  Code2,
   User,
   Rocket,
   Bug,
-  Code2,
-  NotebookText,
   BarChart3,
 } from 'lucide-react';
-import ComponentWrapper from './component-wrapper'; // Assuming ComponentWrapper correctly sets max-width and centers content
+import ComponentWrapper from './component-wrapper';
 import Link from 'next/link';
-import SearchModalV1 from './command-menu';
 import SearchForm from './search';
 import { FaQ } from 'react-icons/fa6';
+import { createPortal } from 'react-dom';
 
 interface DropdownItem {
   icon: React.ReactNode;
@@ -35,39 +29,58 @@ interface DropdownItem {
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  // Ref for the Services button and its submenu
+  const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false); // for portal
+
   const servicesDropdownTriggerRef = useRef<HTMLDivElement>(null);
-  // Ref for the Main menu (hamburger) button and its dropdown
   const mainDropdownTriggerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => setMounted(true), []);
+
+  // Strengthen header bg when scrolling
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 4);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      // Check if click is outside the services dropdown trigger and its content
-      const isClickOutsideServicesArea =
+      const outServices =
         servicesDropdownTriggerRef.current &&
         !servicesDropdownTriggerRef.current.contains(event.target as Node);
-
-      // Check if click is outside the main dropdown trigger and its content
-      const isClickOutsideMainArea =
+      const outMain =
         mainDropdownTriggerRef.current &&
         !mainDropdownTriggerRef.current.contains(event.target as Node);
 
-      // If 'services' dropdown is open AND the click was outside its area
-      if (activeDropdown === 'services' && isClickOutsideServicesArea) {
-        setActiveDropdown(null);
-      }
-      // If 'main' dropdown is open AND the click was outside its area
-      if (activeDropdown === 'main' && isClickOutsideMainArea) {
-        setActiveDropdown(null);
-      }
+      if (activeDropdown === 'services' && outServices) setActiveDropdown(null);
+      if (activeDropdown === 'main' && outMain) setActiveDropdown(null);
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [activeDropdown]); // Re-run effect if activeDropdown changes
+  }, [activeDropdown]);
 
-  // Main dropdown: About, Contact, Blogs, Terms, Refund, Privacy
+  // 🔒 Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (!mounted) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : original || '';
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, [isMobileMenuOpen, mounted]);
+
+  // Close on Escape
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
   const mainDropdownItems: DropdownItem[] = [
     {
       icon: <User className='inline-block !w-5 !h-5' />,
@@ -101,7 +114,6 @@ const Header = () => {
     },
   ];
 
-  // Mobile menu items (excluding less important pages like policies and terms)
   const mobileMenuItems: DropdownItem[] = [
     {
       icon: <User className='inline-block !w-5 !h-5' />,
@@ -127,7 +139,6 @@ const Header = () => {
       description: 'View our malware removal logs',
       href: '/malware-log',
     },
-
     {
       icon: <FileText className='inline-block !w-5 !h-5' />,
       title: 'Contact',
@@ -135,22 +146,17 @@ const Header = () => {
       href: '/contact',
     },
     {
-      icon: <BookOpen className='inline-block !w-5 !h-5' />,
+      icon: <NotebookText className='inline-block !w-5 !h-5' />,
       title: 'Blogs',
       description: 'Latest insights and tutorials',
       href: '/blog',
     },
   ];
 
-  const toggleDropdown = (dropdown: string) => {
-    setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
-  };
+  const toggleDropdown = (d: string) =>
+    setActiveDropdown(activeDropdown === d ? null : d);
+  const closeDropdown = () => setActiveDropdown(null);
 
-  const closeDropdown = () => {
-    setActiveDropdown(null);
-  };
-
-  // Standard Dropdown Menu (for the hamburger/main menu)
   const DropdownMenu = ({
     items,
     isOpen,
@@ -161,22 +167,21 @@ const Header = () => {
     onClose: () => void;
   }) => (
     <div
-      className={`absolute left-0 top-full z-50 mt-2 min-w-[380px] rounded-lg bg-slate-800 py-2 shadow-xl transition-all duration-200
-        ${
-          isOpen
-            ? 'pointer-events-auto visible translate-y-0 opacity-100'
-            : 'pointer-events-none invisible -translate-y-1 opacity-0'
-        }`}
-      role='menu'>
-      {items.map((item, index) => (
+      role='menu'
+      className={`absolute left-0 top-full z-[70] mt-2 min-w-[380px] rounded-lg bg-slate-800 py-2 shadow-xl transition-all duration-200 ${
+        isOpen
+          ? 'pointer-events-auto visible translate-y-0 opacity-100'
+          : 'pointer-events-none invisible -translate-y-1 opacity-0'
+      }`}>
+      {items.map((item, i) => (
         <Link
-          prefetch={true}
-          key={index}
+          prefetch
+          key={i}
           href={item.href}
-          className='group flex items-center gap-3 hover:bg-slate-700 px-4 py-2.5 text-gray-400 transition-colors'
           role='menuitem'
-          onClick={onClose}>
-          <span className='flex justify-center items-center bg-slate-600 group-hover:bg-slate-500 rounded-full !w-10 !h-10 overflow-hidden group-hover:text-slate-100 transition-colors'>
+          onClick={onClose}
+          className='group flex items-center gap-3 hover:bg-slate-700 px-4 py-2.5 text-gray-400 transition-colors'>
+          <span className='flex justify-center items-center bg-slate-600 group-hover:bg-slate-500 rounded-full w-10 h-10 overflow-hidden text-slate-300 group-hover:text-slate-100 transition-colors'>
             {item.icon}
           </span>
           <span className='flex flex-col'>
@@ -190,129 +195,20 @@ const Header = () => {
     </div>
   );
 
-  return (
-    <div className='z-50 relative bg-slate-900 py-5 sm:py-8 text-white'>
-      <ComponentWrapper>
-        <nav className='flex justify-between items-center mx-auto container'>
-          <div className='flex items-center gap-5'>
-            {/* Logo */}
-            <Link
-              prefetch={true}
-              className='flex items-center font-medium text-white text-lg'
-              href='/'
-              aria-label='Home'>
-              <div className='flex justify-center items-center bg-gradient-to-b from-purple-50 to-purple-100 rounded w-8 h-8'>
-                <Rocket className='w-5 h-5 text-slate-900' />
-              </div>
-            </Link>
-
-            {/* Mobile Services - Keep as a direct link for mobile */}
-            <Link
-              prefetch={true}
-              href='/services'
-              className='group sm:hidden inline relative text-gray-400 hover:text-white cursor-pointer'>
-              Services
-            </Link>
-
-            {/* Desktop navigation items */}
-            <div className='hidden sm:flex sm:items-center gap-5'>
-              {/* Hamburger Menu Button (for general links) */}
-              <div
-                className='relative flex items-center'
-                ref={mainDropdownTriggerRef}>
-                <button
-                  className='text-gray-400 hover:text-white cursor-pointer'
-                  aria-label='Open Navigation Dropdown'
-                  type='button'
-                  onClick={() => toggleDropdown('main')}>
-                  <Menu className='w-5 h-5' />
-                </button>
-                <DropdownMenu
-                  items={mainDropdownItems}
-                  isOpen={activeDropdown === 'main'}
-                  onClose={closeDropdown}
-                />
-              </div>
-
-              {/* Services Submenu Trigger and Menu */}
-              <div
-                className='relative flex items-center'
-                ref={servicesDropdownTriggerRef}>
-                <Link
-                  prefetch={true}
-                  href='/services'
-                  className='text-gray-400 hover:text-white cursor-pointer'
-                  aria-label='Open Services SubMenu'
-                  onClick={() => toggleDropdown('services')}>
-                  Services
-                </Link>
-              </div>
-
-              {/* Templates (no submenu) */}
-              <Link
-                prefetch={true}
-                href='/case-studies'
-                className='text-gray-400 hover:text-white'>
-                Case Studies
-              </Link>
-
-              <Link
-                prefetch={true}
-                href='/malware-log'
-                className='text-gray-400 hover:text-white'>
-                Malware Log
-              </Link>
-
-              <Link
-                prefetch={true}
-                href='/blog'
-                className='text-gray-400 hover:text-white'>
-                Blog
-              </Link>
-            </div>
-          </div>
-
-          {/* Right side - Newsletter/Sign Up */}
-          <ul className='hidden sm:flex justify-end items-center gap-5 w-[172px] h-8'>
-            <SearchForm />
-            <li className='transition-opacity duration-300'>
-              <Link
-                prefetch={true}
-                href='/newsletter'
-                className='text-gray-400 hover:text-white'>
-                Newsletter
-              </Link>
-            </li>
-            <li className='flex items-center gap-2'>
-              <Link
-                prefetch={true}
-                href='/hire-me'
-                className='flex justify-center items-center bg-gradient-to-b from-purple-50 to-purple-100 px-6 py-2 rounded-full w-32 h-8 font-medium text-slate-900 text-sm transition-all duration-300 cursor-pointer'>
-                Hire Me
-              </Link>
-            </li>
-          </ul>
-
-          {/* Mobile Navigation Button */}
-          <div className='sm:hidden flex items-center gap-4'>
-            <SearchForm />
-            <button
-              className='sm:hidden block text-gray-400 hover:text-gray-50 cursor-pointer'
-              aria-label='Menu'
-              onClick={() => setIsMobileMenuOpen(true)}>
-              <Menu className='w-5 h-5' />
-            </button>
-          </div>
-
-          {/* Mobile Navigation Items (Full Screen Overlay) */}
+  // Mobile overlay via Portal (escapes sticky header stacking context)
+  const MobileOverlay = () =>
+    mounted
+      ? createPortal(
           <div
-            className={`fixed bottom-0 left-0 right-0 top-0 z-40 flex flex-col items-center justify-center bg-slate-900 p-6 transition-transform duration-300 ease-in-out ${
+            role='dialog'
+            aria-modal='true'
+            className={`fixed inset-0 z-[999] flex flex-col items-center justify-center bg-slate-900/90 backdrop-blur-sm p-6 transition-transform duration-300 ease-in-out ${
               isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
             }`}>
             <button
+              aria-label='Close Menu'
               onClick={() => setIsMobileMenuOpen(false)}
-              className='block top-6 right-6 absolute text-gray-400 hover:text-gray-50 cursor-pointer'
-              aria-label='Close Menu'>
+              className='top-6 right-6 absolute text-gray-300 hover:text-white cursor-pointer'>
               <X className='w-6 h-6' />
             </button>
 
@@ -321,11 +217,11 @@ const Header = () => {
                 {mobileMenuItems.map((item, index) => (
                   <li key={`mobile-main-${index}`}>
                     <Link
-                      prefetch={true}
+                      prefetch
                       href={item.href}
-                      className='group flex items-center gap-4 hover:bg-slate-700 p-3 rounded-lg transition-colors duration-200'
-                      onClick={() => setIsMobileMenuOpen(false)}>
-                      <span className='flex flex-shrink-0 justify-center items-center bg-slate-700 group-hover:bg-purple-600 rounded-full !w-10 !h-10 overflow-hidden text-slate-400 group-hover:text-white transition-colors duration-200'>
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className='group flex items-center gap-4 hover:bg-slate-800/70 p-3 rounded-lg transition-colors duration-200'>
+                      <span className='flex justify-center items-center bg-slate-700 group-hover:bg-purple-600 rounded-full w-10 h-10 overflow-hidden text-slate-300 group-hover:text-white transition-colors duration-200 shrink-0'>
                         {item.icon}
                       </span>
                       <span className='flex flex-col'>
@@ -340,32 +236,154 @@ const Header = () => {
                   </li>
                 ))}
               </div>
-              <li className='my-4 border-slate-700 border-t w-full'></li>
+
+              <li className='my-4 border-slate-700/60 border-t w-full'></li>
+
               <div className='flex items-center gap-4'>
                 <li>
                   <Link
-                    prefetch={true}
+                    prefetch
                     href='/newsletter'
-                    className='bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-semibold text-white text-xl transition-colors duration-200'
-                    onClick={() => setIsMobileMenuOpen(false)}>
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className='bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-semibold text-white text-xl transition-colors duration-200'>
                     Newsletter
                   </Link>
                 </li>
                 <li>
                   <Link
-                    prefetch={true}
+                    prefetch
                     href='/hire-me'
-                    className='bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-semibold text-white text-xl transition-colors duration-200'
-                    onClick={() => setIsMobileMenuOpen(false)}>
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className='bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-semibold text-white text-xl transition-colors duration-200'>
                     Hire Me
                   </Link>
                 </li>
               </div>
             </ul>
-          </div>
-        </nav>
-      </ComponentWrapper>
-    </div>
+          </div>,
+          document.body,
+        )
+      : null;
+
+  return (
+    <header
+      className={`sticky top-0 inset-x-0 z-[60] w-full backdrop-blur transition-colors ${
+        scrolled
+          ? 'bg-slate-900/80 border-b border-slate-700/30'
+          : 'bg-slate-900/60 border-b border-transparent'
+      }`}>
+      <div className='py-5 text-white'>
+        <ComponentWrapper>
+          <nav className='flex justify-between items-center mx-auto container'>
+            <div className='flex items-center gap-5'>
+              {/* Logo */}
+              <Link
+                prefetch
+                href='/'
+                aria-label='Home'
+                className='flex items-center font-medium text-white text-lg'>
+                <div className='flex justify-center items-center bg-gradient-to-b from-purple-50 to-purple-100 rounded w-8 h-8'>
+                  <Rocket className='w-5 h-5 text-slate-900' />
+                </div>
+              </Link>
+
+              {/* Mobile Services */}
+              <Link
+                prefetch
+                href='/services'
+                className='sm:hidden inline text-gray-400 hover:text-white cursor-pointer'>
+                Services
+              </Link>
+
+              {/* Desktop navigation */}
+              <div className='hidden sm:flex items-center gap-5'>
+                <div
+                  className='relative flex items-center'
+                  ref={mainDropdownTriggerRef}>
+                  <button
+                    type='button'
+                    aria-label='Open Navigation Dropdown'
+                    onClick={() => toggleDropdown('main')}
+                    className='text-gray-400 hover:text-white cursor-pointer'>
+                    <Menu className='w-5 h-5' />
+                  </button>
+                  <DropdownMenu
+                    items={mainDropdownItems}
+                    isOpen={activeDropdown === 'main'}
+                    onClose={closeDropdown}
+                  />
+                </div>
+
+                <div
+                  className='relative flex items-center'
+                  ref={servicesDropdownTriggerRef}>
+                  <Link
+                    prefetch
+                    href='/services'
+                    className='text-gray-400 hover:text-white cursor-pointer'>
+                    Services
+                  </Link>
+                </div>
+
+                <Link
+                  prefetch
+                  href='/case-studies'
+                  className='text-gray-400 hover:text-white'>
+                  Case Studies
+                </Link>
+                <Link
+                  prefetch
+                  href='/malware-log'
+                  className='text-gray-400 hover:text-white'>
+                  Malware Log
+                </Link>
+                <Link
+                  prefetch
+                  href='/blog'
+                  className='text-gray-400 hover:text-white'>
+                  Blog
+                </Link>
+              </div>
+            </div>
+
+            {/* Right side */}
+            <ul className='hidden sm:flex justify-end items-center gap-5 w-[172px] h-8'>
+              <SearchForm />
+              <li className='transition-opacity duration-300'>
+                <Link
+                  prefetch
+                  href='/newsletter'
+                  className='text-gray-400 hover:text-white'>
+                  Newsletter
+                </Link>
+              </li>
+              <li className='flex items-center gap-2'>
+                <Link
+                  prefetch
+                  href='/hire-me'
+                  className='flex justify-center items-center bg-gradient-to-b from-purple-50 to-purple-100 px-6 py-2 rounded-full w-32 h-8 font-medium text-slate-900 text-sm transition-all duration-300'>
+                  Hire Me
+                </Link>
+              </li>
+            </ul>
+
+            {/* Mobile controls */}
+            <div className='sm:hidden flex items-center gap-4'>
+              <SearchForm />
+              <button
+                aria-label='Menu'
+                onClick={() => setIsMobileMenuOpen(true)}
+                className='sm:hidden block text-gray-400 hover:text-gray-50 cursor-pointer'>
+                <Menu className='w-5 h-5' />
+              </button>
+            </div>
+          </nav>
+        </ComponentWrapper>
+      </div>
+
+      {/* Mobile overlay portal */}
+      <MobileOverlay />
+    </header>
   );
 };
 

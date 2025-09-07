@@ -9,7 +9,7 @@ const Services = () => {
         {/* Malware Removal - Full width on md */}
 
         <div className='md:col-span-2 bg-red-900/20 p-8 border border-red-700 rounded-lg'>
-          <Link href='/services/wordpress-malware-removal'>
+          <Link href='/services/wordpress-malware-removal-service'>
             <div className='flex items-center gap-3 mb-4'>
               <AlertTriangle className='w-6 h-6 text-red-400' />
               <h2 className='font-semibold text-red-400 text-xl'>

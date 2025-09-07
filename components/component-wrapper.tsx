@@ -9,9 +9,7 @@ const ComponentWrapper = ({
   ...props
 }: ComponentWrapperProps) => {
   return (
-    <div
-      {...props}
-      className={cn('mx-auto px-4 w-full max-w-[870px]', className)}>
+    <div {...props} className={cn('mx-auto px-4 w-full max-w-5xl', className)}>
       {children}
     </div>
   );

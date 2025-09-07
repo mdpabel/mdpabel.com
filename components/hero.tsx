@@ -3,7 +3,7 @@ import { Heading } from './ui';
 
 function Hero() {
   return (
-    <ComponentWrapper>
+    <ComponentWrapper className='max-w-4xl'>
       <div
         className='px-5 sm:px-0 py-6 sm:py-16 pb-14 text-left sm:text-center transition-opacity duration-300 container'
         id='hero-text'>
