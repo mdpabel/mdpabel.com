@@ -8,6 +8,8 @@ import { generateSEOMetadata } from '@/lib/seo';
 import { SchemaOrgHarmonized } from '@/components/SchemaOrgHarmonized';
 import Image from 'next/image';
 import * as cheerio from 'cheerio';
+import CommentsList from '@/components/comment-list';
+import CommentForm from '@/components/comment-form';
 
 interface CaseStudyDetailPageProps {
   params: Promise<{
@@ -151,6 +153,9 @@ const CaseStudy = async ({ params }: CaseStudyDetailPageProps) => {
               </div>
             )}
           </div>
+
+          <CommentsList postId={post.id} />
+          <CommentForm postId={post.id} />
         </main>
       </ComponentWrapper>
     </div>

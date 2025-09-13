@@ -14,6 +14,8 @@ import AboutAuthor from '@/components/about-author';
 import { generateSEOMetadata } from '@/lib/seo';
 import { SchemaOrgHarmonized } from '@/components/SchemaOrgHarmonized';
 import Link from 'next/link';
+import CommentsList from '@/components/comment-list';
+import CommentForm from '@/components/comment-form';
 
 interface SingleGuideProps {
   params: Promise<{ slug: string }>;
@@ -73,7 +75,6 @@ export default async function SingleGuide({ params }: SingleGuideProps) {
             <span className='px-2'>/</span>
             <span className='text-slate-300'>{he.decode(post.title)}</span>
           </nav>
-
           {/* Title & Meta */}
           <header className='mb-6'>
             <h1
@@ -98,7 +99,6 @@ export default async function SingleGuide({ params }: SingleGuideProps) {
               </Suspense>
             </div>
           </header>
-
           {/* Feature image */}
           {post.featuredImage && (
             <figure className='bg-slate-800/40 mb-8 border border-slate-700 rounded-xl overflow-hidden'>
@@ -112,13 +112,11 @@ export default async function SingleGuide({ params }: SingleGuideProps) {
               />
             </figure>
           )}
-
           {/* Content */}
           <article
             className='prose-invert prose-li:mb-2 prose-img:border prose-img:border-slate-600 prose-img:rounded-lg max-w-none prose-headings:font-semibold hover:prose-a:text-purple-300 prose-a:text-purple-400 prose-headings:text-white prose-p:text-slate-300 prose prose-lg'
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
-
           {/* Tags */}
           {Array.isArray(post.tags) && post.tags.length > 0 && (
             <div className='mt-10'>
@@ -137,6 +135,8 @@ export default async function SingleGuide({ params }: SingleGuideProps) {
               </div>
             </div>
           )}
+          <CommentsList postId={post.id} />
+          <CommentForm postId={post.id} />
 
           {/* Author moved to bottom for narrow max width */}
           <div className='bg-slate-800/50 mt-10 p-5 border border-slate-700 rounded-xl'>

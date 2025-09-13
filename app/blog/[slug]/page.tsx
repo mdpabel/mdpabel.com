@@ -16,6 +16,8 @@ import ViewCounter, { ViewCounterSkeleton } from '@/components/view-counter';
 import AboutAuthor from '@/components/about-author';
 import { generateSEOMetadata } from '@/lib/seo';
 import { SchemaOrgHarmonized } from '@/components/SchemaOrgHarmonized';
+import CommentsList from '@/components/comment-list';
+import CommentForm from '@/components/comment-form';
 
 interface SingleBlogProps {
   params: Promise<{ slug: string }>;
@@ -76,7 +78,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
         yoastData={post.yoastSEO}
       />
       <ComponentWrapper>
-        <main className='mx-auto py-12 max-w-4xl'>
+        <div className='mx-auto py-12 max-w-4xl'>
           <div className='space-y-12'>
             {/* Header Section */}
             <header className='space-y-6'>
@@ -172,6 +174,9 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
             {/* Author Section */}
             <AboutAuthor />
 
+            <CommentsList postId={post.id} />
+            <CommentForm postId={post.id} />
+
             {/* Related Posts */}
             {relatedPosts.length > 0 && (
               <div className='mt-8'>
@@ -214,7 +219,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
               </div>
             )}
           </div>
-        </main>
+        </div>
       </ComponentWrapper>
 
       {/* Corrected JSON-LD Schema */}

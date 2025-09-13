@@ -123,3 +123,52 @@ export interface ServiceAcf {
   orig_price: number;
   discounted_price: number;
 }
+
+// --- Comments ---
+
+export interface WordPressComment {
+  id: number;
+  postId: number;
+  parent: number;
+  authorId: number;
+  authorName: string;
+  authorUrl: string;
+  authorAvatar: string; // 96px (WordPress default)
+  date: string;
+  status: string; // 'approved' | 'hold' | 'spam' | 'trash' | etc.
+  content: string; // rendered HTML
+  link: string;
+  // Built client-side for nesting convenience:
+  children?: WordPressComment[];
+}
+
+export interface CommentsQueryOptions {
+  page?: number;
+  perPage?: number; // WP max is typically 100
+  order?: 'asc' | 'desc'; // default 'asc' for chronological
+  status?: 'approve' | 'hold' | 'spam' | 'trash'; // WP REST filter; unauth'd can usually only see 'approve'
+}
+
+export interface CommentsResponse {
+  comments: WordPressComment[]; // flat
+  tree: WordPressComment[]; // nested, for rendering threads
+  total: number;
+  totalPages: number;
+  hasMore: boolean;
+}
+
+export interface CreateCommentInput {
+  postId: number;
+  content: string; // raw user input (WP sanitizes and returns rendered)
+  authorName: string;
+  authorEmail: string; // required by WP unless you change discussion settings
+  parent?: number; // reply-to
+  authorUrl?: string;
+}
+
+export interface CreateCommentResult {
+  ok: boolean;
+  pending: boolean; // true if awaiting moderation
+  comment?: WordPressComment;
+  error?: string;
+}

@@ -1,4 +1,9 @@
-import { YoastSEO } from '@/types/wp';
+import {
+  CommentsQueryOptions,
+  CommentsResponse,
+  WordPressComment,
+  YoastSEO,
+} from '@/types/wp';
 
 // Enhanced types for enriched data
 interface WordPressImage {
@@ -539,6 +544,123 @@ class WordPressAPI {
     return {
       views: data.views || 0,
     };
+  }
+
+  // Build Basic auth header from server-side env (Application Password user)
+  private authHeader(): Record<string, string> {
+    const user = process.env.WP_APP_USER;
+    const pass = process.env.WP_APP_PASSWORD;
+    if (!user || !pass) return {};
+    // IMPORTANT: Only evaluated on the server. Do NOT expose these in client code.
+    const basic = Buffer.from(`${user}:${pass}`).toString('base64');
+    return { Authorization: `Basic ${basic}` };
+  }
+
+  // Process a comment object from WP REST into our typed shape
+  private processComment(raw: any): WordPressComment {
+    return {
+      id: raw.id,
+      postId: raw.post,
+      parent: raw.parent || 0,
+      authorId: raw.author || 0,
+      authorName: raw.author_name || '',
+      authorUrl: raw.author_url || '',
+      authorAvatar: raw.author_avatar_urls?.['96'] || '',
+      date: raw.date || '',
+      status: raw.status || '',
+      content: raw.content?.rendered || '',
+      link: raw.link || '',
+    };
+  }
+
+  // Build a nested tree from a flat list of comments
+  private buildCommentTree(list: WordPressComment[]): WordPressComment[] {
+    const byId = new Map<
+      number,
+      WordPressComment & { children: WordPressComment[] }
+    >();
+    list.forEach((c) => byId.set(c.id, { ...c, children: [] }));
+    const roots: (WordPressComment & { children: WordPressComment[] })[] = [];
+
+    list.forEach((c) => {
+      const node = byId.get(c.id)!;
+      if (c.parent && byId.has(c.parent)) {
+        byId.get(c.parent)!.children.push(node);
+      } else {
+        roots.push(node);
+      }
+    });
+
+    return roots;
+  }
+
+  // Get comments for a post
+  async getComments(
+    postId: number,
+    options: CommentsQueryOptions = {},
+  ): Promise<CommentsResponse> {
+    try {
+      const page = options.page ?? 1;
+      const perPage = options.perPage ?? 50;
+      const order = options.order ?? 'asc';
+      const status = options.status ?? 'approve'; // public-safe default
+
+      const params = new URLSearchParams();
+      params.set('post', String(postId));
+      params.set('per_page', String(perPage));
+      params.set('page', String(page));
+      params.set('orderby', 'date');
+      params.set('order', order);
+      if (status) params.set('status', status);
+
+      const url = `${this.baseUrl}/wp-json/wp/v2/comments?${params.toString()}`;
+
+      const res = await fetch(url, {
+        // If you need to fetch non-approved comments, make sure you call this server-side
+        // so the Authorization header is included.
+        headers: { ...this.authHeader() },
+        next: {
+          tags: ['wordpress', 'comments', `comments:${postId}`],
+          revalidate: 60, // refresh frequently
+        },
+      });
+
+      if (!res.ok) {
+        return {
+          comments: [],
+          tree: [],
+          total: 0,
+          totalPages: 0,
+          hasMore: false,
+        };
+      }
+
+      const raw = await res.json();
+      const total = parseInt(res.headers.get('X-WP-Total') || '0', 10);
+      const totalPages = parseInt(
+        res.headers.get('X-WP-TotalPages') || '0',
+        10,
+      );
+      const comments = (raw as any[]).map(this.processComment.bind(this));
+      const tree = this.buildCommentTree(comments);
+
+      return {
+        comments,
+        tree,
+        total,
+        totalPages,
+        hasMore: page < totalPages,
+      };
+    } catch (err) {
+      console.error('Error fetching comments:', err);
+      return {
+        comments: [],
+        tree: [],
+        total: 0,
+        totalPages: 0,
+        hasMore: false,
+      };
+    }
   }
 }
 
