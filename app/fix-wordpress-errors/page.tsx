@@ -6,7 +6,7 @@ export const metadata = {
   description:
     'Fix Website Errors — rapid diagnosis and repair for HTTP 500/403/404, SSL certificate issues, PHP fatal errors, and WordPress “There has been a critical error on your website”.',
   alternates: {
-    canonical: 'https://www.mdpabel.com/services/fix-website-errors',
+    canonical: 'https://www.mdpabel.com/fix-website-errors',
   },
   robots: { index: true, follow: true },
   openGraph: {
@@ -14,7 +14,7 @@ export const metadata = {
     title: 'Fix Website Errors',
     description:
       'Fast troubleshooting for HTTP errors, SSL problems, fatal errors, and critical site issues. Safe rollbacks, clear fixes, zero-downtime mindset.',
-    url: 'https://www.mdpabel.com/services/fix-website-errors',
+    url: 'https://www.mdpabel.com/fix-website-errors',
   },
 };
 
@@ -602,7 +602,7 @@ export default function Page() {
               'Rapid diagnosis and repair for HTTP errors, SSL issues, PHP fatals, and WordPress critical errors. Safe rollbacks and durable fixes.',
             provider: { '@type': 'Person', name: 'Md Pabel' },
             areaServed: 'Global',
-            url: 'https://www.mdpabel.com/services/fix-website-errors',
+            url: 'https://www.mdpabel.com/fix-website-errors',
             keywords: [
               'HTTP 500',
               'HTTP 403',

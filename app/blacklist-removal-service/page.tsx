@@ -5,7 +5,7 @@ export const metadata = {
   description:
     'Blacklist Removal Service — fast cleanup of spam/redirects and review submissions to vendors. Clear warnings like “Deceptive site ahead” and restore trust.',
   alternates: {
-    canonical: 'https://www.mdpabel.com/services/blacklist-removal',
+    canonical: 'https://www.mdpabel.com/blacklist-removal',
   },
   robots: { index: true, follow: true },
   openGraph: {
@@ -13,7 +13,7 @@ export const metadata = {
     title: 'Blacklist Removal Service',
     description:
       'We remove blacklist warnings, fix malicious redirects/SEO spam, and submit reviews to vendors to restore your site’s reputation.',
-    url: 'https://www.mdpabel.com/services/blacklist-removal',
+    url: 'https://www.mdpabel.com/blacklist-removal',
   },
 };
 

@@ -1,4 +1,3 @@
-// app/convert-wordpress-to-nextjs/page.tsx
 import ComponentWrapper from '@/components/component-wrapper';
 import { Heading } from '@/components/ui';
 import Script from 'next/script';
