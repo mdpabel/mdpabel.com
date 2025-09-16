@@ -28,7 +28,7 @@ type Service = {
 const services: Service[] = [
   {
     title: 'Malware Removal From Hacked Websites',
-    href: '/services/wordpress-malware-removal-service',
+    href: '/wordpress-malware-removal-service', // moved to root
     desc: 'Emergency cleanup, blacklist removal, hardening, and ongoing monitoring.',
     highlights: [
       'Google “hacked” warning & redirects',
@@ -42,7 +42,7 @@ const services: Service[] = [
   },
   {
     title: 'Fix Website Errors',
-    href: '/services/fix-website-errors',
+    href: '/fix-wordpress-errors', // moved to root
     desc: 'Rapid diagnosis and repair of common WordPress & hosting issues.',
     highlights: [
       '404 / WSOD / database errors',
@@ -55,7 +55,7 @@ const services: Service[] = [
   },
   {
     title: 'Website Development',
-    href: '/services/custom-website-development',
+    href: '/custom-website-development', // moved to root
     desc: 'Custom builds with clean code, security-first, and SEO foundations.',
     highlights: [
       'Responsive UI components',
@@ -68,7 +68,7 @@ const services: Service[] = [
   },
   {
     title: 'Headless WordPress Development (Next.js)',
-    href: '/headless-wordpress-development',
+    href: '/headless-wordpress-development', // already root
     desc: 'Next.js front-end with WordPress content — previews, GraphQL/REST, ISR.',
     highlights: [
       'ISR/SSG/SSR where it fits',
@@ -81,7 +81,7 @@ const services: Service[] = [
   },
   {
     title: 'Convert WordPress to Next.js (Headless Migration)',
-    href: '/convert-wordpress-to-nextjs',
+    href: '/convert-wordpress-to-nextjs', // already root
     desc: 'Zero-downtime plan with 301s, SEO parity, and safe, staged cutover.',
     highlights: [
       'URL mapping & 301 redirects',
