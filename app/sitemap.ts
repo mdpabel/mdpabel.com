@@ -35,6 +35,16 @@ const staticRoutes: {
     changeFrequency: 'monthly',
     priority: 0.7,
   },
+  {
+    path: '/headless-wordpress-development',
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  },
+  {
+    path: '/convert-wordpress-to-nextjs',
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  },
   { path: '/about', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/contact', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/hire-me', changeFrequency: 'monthly', priority: 0.8 },

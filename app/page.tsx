@@ -1,5 +1,3 @@
-export const dynamic = 'force-static';
-
 import Hero from '@/components/hero';
 import Links from '@/components/links';
 import Services from '@/components/services';
