@@ -42,7 +42,7 @@ const services: Service[] = [
   },
   {
     title: 'Fix Website Errors',
-    href: '/services/fix-wordpress-errors',
+    href: '/services/fix-website-errors',
     desc: 'Rapid diagnosis and repair of common WordPress & hosting issues.',
     highlights: [
       '404 / WSOD / database errors',
