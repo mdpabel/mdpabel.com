@@ -20,27 +20,71 @@ const Title = ({ children, className, ...props }: Props) => {
 };
 
 type HeadingProps = React.HTMLAttributes<HTMLHeadingElement> & {
-  /** Which HTML tag to render */
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';
-  /** The text or elements inside the heading */
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  multiLines?: string[];
+  /** 'auto' = gradient only on h1 (default), 'on' = force gradient, 'off' = force plain */
+  gradientMode?: 'auto' | 'on' | 'off';
 };
 
 export const Heading: React.FC<HeadingProps> = ({
   as = 'h1',
   children,
   className = '',
+  multiLines,
+  gradientMode = 'auto',
   ...props
 }) => {
-  const Tag = as;
-  const baseClasses =
-    'bg-clip-text bg-linear-to-b from-amber-50 to-purple-500 mb-2 ' +
-    'sm:mb-4 font-bold text-transparent text-3xl sm:text-6xl ' +
-    'sm:leading-tight';
+  const Tag = as as any;
 
+  // gradient only for h1 (unless overridden)
+  const useGradient =
+    gradientMode === 'on' || (gradientMode === 'auto' && as === 'h1');
+
+  const typeClasses =
+    'mb-2 sm:mb-4 font-bold text-3xl sm:text-6xl sm:leading-tight';
+
+  // keep your exact gradient colors
+  const gradientClasses =
+    'bg-clip-text bg-linear-to-b from-amber-50 to-purple-500 text-transparent';
+
+  const plainTextClasses = 'text-slate-200';
+
+  // Multi-line
+  if (multiLines && multiLines.length > 1) {
+    return (
+      <Tag
+        className={cn(
+          typeClasses,
+          useGradient ? '' : plainTextClasses,
+          className,
+        )}
+        {...props}>
+        {multiLines.map((line, i) =>
+          useGradient ? (
+            <span key={i} className={cn('block', gradientClasses)}>
+              {line}
+            </span>
+          ) : (
+            <span key={i} className='block'>
+              {line}
+            </span>
+          ),
+        )}
+      </Tag>
+    );
+  }
+
+  // Single-line
   return (
-    <Tag className={cn(baseClasses, className)} {...props}>
-      {children}
+    <Tag
+      className={cn(
+        typeClasses,
+        useGradient ? gradientClasses : plainTextClasses,
+        className,
+      )}
+      {...props}>
+      {children ?? multiLines?.[0]}
     </Tag>
   );
 };
