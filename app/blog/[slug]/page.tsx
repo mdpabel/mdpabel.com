@@ -76,6 +76,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
       <SchemaOrgHarmonized
         canonical={`https://www.mdpabel.com/blog/${slug}`}
         yoastData={post.yoastSEO}
+        customAcf={post.acf.custom_schema}
       />
       <ComponentWrapper>
         <div className='mx-auto py-12 max-w-4xl'>

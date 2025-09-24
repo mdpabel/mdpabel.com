@@ -18,10 +18,12 @@ export function SchemaOrgHarmonized({
   yoastData,
   canonical, // e.g. https://www.mdpabel.com/blog/my-post
   siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.mdpabel.com',
+  customAcf,
 }: {
   yoastData?: YoastSEO;
   canonical: string;
   siteUrl?: string;
+  customAcf?: string;
 }) {
   if (!yoastData?.schema?.['@graph']) return null;
 
@@ -190,7 +192,9 @@ export function SchemaOrgHarmonized({
   return (
     <script
       type='application/ld+json'
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(harmonized) }}
+      dangerouslySetInnerHTML={{
+        __html: customAcf || JSON.stringify(harmonized),
+      }}
     />
   );
 }
