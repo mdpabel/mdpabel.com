@@ -118,14 +118,36 @@ const caseStudies = async (): Promise<Route[]> => {
   }));
 };
 
+const guides = async (): Promise<Route[]> => {
+  const { posts } = await wordpress.getPosts({
+    postType: 'guide',
+    status: 'publish',
+  });
+
+  if (!posts?.length) return [];
+
+  return posts.map((cs: any) => ({
+    path: `/guides/${cs.slug}`,
+    lastModified: cs.modified ? new Date(cs.modified) : currentDate,
+    changeFrequency: 'weekly',
+    priority: 0.6,
+  }));
+};
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [blogRoutes, malwareLogRoutes, snippetsRoutes, caseStudiesRoutes] =
-    await Promise.all([
-      blogSitemap(),
-      malwareLogSitemap(),
-      snippetsSitemap(),
-      caseStudies(),
-    ]);
+  const [
+    blogRoutes,
+    malwareLogRoutes,
+    snippetsRoutes,
+    caseStudiesRoutes,
+    guidesRoutes,
+  ] = await Promise.all([
+    blogSitemap(),
+    malwareLogSitemap(),
+    snippetsSitemap(),
+    caseStudies(),
+    guides(),
+  ]);
 
   const allRoutes: Route[] = [
     ...staticRoutes,
@@ -133,6 +155,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...malwareLogRoutes,
     ...snippetsRoutes,
     ...caseStudiesRoutes,
+    ...guidesRoutes,
   ];
 
   return allRoutes.map((route) => ({
