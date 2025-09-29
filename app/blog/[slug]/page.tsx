@@ -146,9 +146,9 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
             )}
 
             {/* Main Content Body */}
-            <div className='bg-slate-800/50 p-8 border border-slate-700 rounded-lg'>
+            <div className='bg-slate-800/50 p-6 md:p-8 border border-slate-700 rounded-lg'>
               <article
-                className='prose-img:shadow-lg prose-invert prose-li:mb-2 prose-headings:pb-2 prose-img:border prose-headings:border-slate-700 prose-img:border-slate-600 prose-headings:border-b prose-img:rounded-lg max-w-none prose-headings:font-bold hover:prose-a:text-purple-300 prose-a:text-purple-400 prose-em:text-purple-300 prose-headings:text-white prose-ol:text-slate-300 prose-p:text-slate-300 prose-strong:text-white prose-ul:text-slate-300 prose-a:no-underline prose-p:leading-relaxed prose prose-lg'
+                className='prose-img:shadow-lg prose-invert prose-li:mb-2 prose-headings:pb-2 prose-img:border prose-headings:border-slate-700 prose-img:border-slate-600 prose-headings:border-b prose-img:rounded-lg max-w-none prose-headings:font-bold hover:prose-a:text-purple-300 prose-a:text-purple-400 prose-em:text-purple-300 prose-headings:text-white prose-ol:text-slate-300 prose-p:text-slate-300 prose-strong:text-white prose-ul:text-slate-300 prose-a:no-underline prose-code:break-words prose-p:leading-relaxed prose prose-lg'
                 dangerouslySetInnerHTML={{ __html: contentWithIds }}
               />
             </div>
