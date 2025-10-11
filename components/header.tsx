@@ -243,7 +243,8 @@ const Header = () => {
                 <li>
                   <Link
                     prefetch
-                    href='/newsletter'
+                    href='https://mdpabe1.substack.com/'
+                    target='_blank'
                     onClick={() => setIsMobileMenuOpen(false)}
                     className='bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-semibold text-white text-xl transition-colors duration-200'>
                     Newsletter
@@ -352,7 +353,8 @@ const Header = () => {
               <li className='transition-opacity duration-300'>
                 <Link
                   prefetch
-                  href='/newsletter'
+                  href='https://mdpabe1.substack.com/'
+                  target='_blank'
                   className='text-gray-400 hover:text-white'>
                   Newsletter
                 </Link>

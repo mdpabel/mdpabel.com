@@ -62,7 +62,6 @@ const staticRoutes: Route[] = [
   { path: '/refund-policy', changeFrequency: 'yearly', priority: 0.5 },
   { path: '/privacy', changeFrequency: 'yearly', priority: 0.5 },
   { path: '/malware-log', changeFrequency: 'weekly', priority: 0.6 },
-  { path: '/newsletter', changeFrequency: 'monthly', priority: 0.5 },
 ];
 
 // ---- Dynamic sections ----
