@@ -4,6 +4,21 @@ import Footer from '@/components/footer';
 import { Analytics } from '@vercel/analytics/next';
 import TawkTo from '@/components/tawk-chat';
 import { GoogleTagManager } from '@next/third-parties/google';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+};
 
 export default function RootLayout({
   children,
